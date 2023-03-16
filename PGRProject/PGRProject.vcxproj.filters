@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{6aca1edd-d5ab-49e3-a5f1-606775d031f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\objects">
+      <UniqueIdentifier>{6ca6627f-73fb-4130-98d4-d7571ad4734a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\objects\link">
+      <UniqueIdentifier>{ced7c3c1-d003-4259-b627-1a4004e54381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\objects\Island">
+      <UniqueIdentifier>{fa9da21d-c44b-44cc-aed3-cddb0204a698}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PGRProject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WavefrontObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WavefrontObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\simple-fs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\simple-vs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="objects\Link\link.mtl">
+      <Filter>Resource Files\objects\link</Filter>
+    </None>
+    <None Include="objects\Island\Island.mtl">
+      <Filter>Resource Files\objects\Island</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="objects\Link\body.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye1.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye2.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye3.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye4.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye5.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye6.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eye7.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eyebrow1.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eyebrow2.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eyebrow3.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eyebrow4.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eyebrow5.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\eyebrow6.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth1.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth2.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth3.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth4.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth5.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth6.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth7.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth8.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\mouth9.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\pupil.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Link\sheath.png">
+      <Filter>Resource Files\objects\link</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsMM02.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsMM03.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsSS00.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsSS01.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsSS04.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsSS05.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsSS06.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+    <Image Include="objects\Island\OutsSS07.png">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="objects\Link\info.txt">
+      <Filter>Resource Files\objects\link</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="objects\Link\link.obj">
+      <Filter>Resource Files\objects\link</Filter>
+    </Object>
+    <Object Include="objects\Island\Island.obj">
+      <Filter>Resource Files\objects\Island</Filter>
+    </Object>
+  </ItemGroup>
+</Project>
