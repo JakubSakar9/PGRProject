@@ -46,5 +46,6 @@ public:
 	void DissolveMap(std::string filepath);
 	void LightnessMap(std::string filepath);
 
+	glm::vec3 Diffuse();
 	GLuint DiffuseMap();
 };

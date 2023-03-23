@@ -13,6 +13,7 @@ Material::Material(std::string name) {
 
 Material::Material(aiMaterial* sourceMaterial, const std::string& assetsDirectory) {
 	if (sourceMaterial->GetTextureCount(aiTextureType_DIFFUSE) < 1) {
+		m_DiffuseMap = 0;
 		aiColor3D diffuseColor;
 		sourceMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
 		Diffuse(diffuseColor.r, diffuseColor.g, diffuseColor.b);
@@ -86,7 +87,10 @@ void Material::DissolveMap(std::string filepath) {
 void Material::LightnessMap(std::string filepath) {
 }
 
-GLuint Material::DiffuseMap()
-{
+glm::vec3 Material::Diffuse() {
+	return m_Diffuse;
+}
+
+GLuint Material::DiffuseMap() {
 	return m_DiffuseMap;
 }

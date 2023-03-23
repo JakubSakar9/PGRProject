@@ -11,12 +11,16 @@ bool Scene::Init(ShaderProgram *shaderProgram)
     m_ViewCamera.Init();
     m_RootObject = ObjectInstance("Island", true, false);
     m_RootObject.GenObjects(shaderProgram);
+    m_SeaObject = ObjectInstance("Sea", true, false);
+    m_SeaObject.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
+    m_SeaObject.GenObjects(shaderProgram);
     CHECK_GL_ERROR();
     return true;
 }
 
 void Scene::Render(ShaderProgram *shaderProgram)
 {
+    m_SeaObject.Draw(m_ViewCamera.ComputeViewMatrix(), m_ViewCamera.ComputeProjectionMatrix(), shaderProgram);
     m_RootObject.Draw(m_ViewCamera.ComputeViewMatrix(), m_ViewCamera.ComputeProjectionMatrix(), shaderProgram);
     glBindVertexArray(0);
 }
@@ -24,5 +28,6 @@ void Scene::Render(ShaderProgram *shaderProgram)
 void Scene::Update(float deltaTime)
 {
     m_RootObject.Update(deltaTime, &m_RootModelMatrix);
+    m_SeaObject.Update(deltaTime, &m_RootModelMatrix);
     m_ViewCamera.Update(deltaTime);
 }

@@ -22,7 +22,9 @@ public:
 
 		// uniforms locations
 		GLint pvmMatrix;
+		GLint colDiffuse;
 		GLint texDiffuse;
+		GLint useTexDiffuse;
 	};
 
 	Locations locations = { 0, 0 };

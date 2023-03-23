@@ -144,11 +144,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Light.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
-    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\objects\EmptyObject.cpp" />
+    <ClCompile Include="src\objects\Light.cpp" />
+    <ClCompile Include="src\objects\Object.cpp" />
+    <ClCompile Include="src\objects\StaticObject.cpp" />
     <ClCompile Include="src\PGRProject.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
@@ -158,11 +160,13 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Light.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Material.h" />
-    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\objects\EmptyObject.h" />
+    <ClInclude Include="src\objects\Light.h" />
+    <ClInclude Include="src\objects\Object.h" />
+    <ClInclude Include="src\objects\StaticObject.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Scene.h" />
@@ -172,12 +176,21 @@
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="models\Sea\Sea.mtl" />
     <None Include="objects\Island\Island.mtl" />
     <None Include="objects\Link\link.mtl" />
     <None Include="shaders\simple-fs.glsl" />
     <None Include="shaders\simple-vs.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="models\Sea\Sea.SS00.png" />
+    <Image Include="models\Sea\Sea.SS01.png" />
+    <Image Include="models\Sea\Sea.SS02.png" />
+    <Image Include="models\Sea\Sea.SS04.png" />
+    <Image Include="models\Sea\Sea.SS05.png" />
+    <Image Include="models\Sea\Sea.SS06.png" />
+    <Image Include="models\Sea\Sea.SS07.png" />
+    <Image Include="models\Sea\Sea.SS08.png" />
     <Image Include="objects\Island\OutsMM02.png" />
     <Image Include="objects\Island\OutsMM03.png" />
     <Image Include="objects\Island\OutsSS00.png" />
@@ -216,6 +229,10 @@
     <Text Include="objects\Link\info.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Object Include="models\Sea\Sea.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="objects\Island\Island.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

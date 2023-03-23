@@ -60,7 +60,9 @@ bool ShaderProgram::LoadShaders()
 
     // Uniforms
     locations.pvmMatrix = glGetUniformLocation(m_ProgramObject, "u_PVM");
+    locations.colDiffuse = glGetUniformLocation(m_ProgramObject, "u_colDiffuse");
     locations.texDiffuse = glGetUniformLocation(m_ProgramObject, "u_texDiffuse");
+    locations.useTexDiffuse = glGetUniformLocation(m_ProgramObject, "u_useTexDiffuse");
     CHECK_GL_ERROR();
     
     return true;

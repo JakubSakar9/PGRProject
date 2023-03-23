@@ -69,7 +69,7 @@ bool Init(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-    window = new Window(1920, 1080, "PGR Project");
+    window = new Window(1920, 1080, "Outset Island");
     if (!Init(argc, argv)) {
         pgr::dieWithError("Failed to initialize the application");
     }

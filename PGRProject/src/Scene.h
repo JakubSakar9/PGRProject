@@ -2,7 +2,7 @@
 
 #include "pgr.h"
 
-#include "Object.h"
+#include "objects/Object.h"
 #include "Camera.h"
 #include "ResourceManager.h"
 
@@ -12,6 +12,7 @@ private:
 	glm::mat4 m_RootModelMatrix;
 	
 	ObjectInstance m_RootObject;
+	ObjectInstance m_SeaObject;
 	Camera m_ViewCamera;
 	
 public:

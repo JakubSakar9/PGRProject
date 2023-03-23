@@ -2,7 +2,7 @@
 
 #include "pgr.h"
 
-#include "Object.h"
+#include "objects/Object.h"
 #include "Scene.h"
 
 #define DEFAULT_REFRESH_RATE 30

@@ -6,15 +6,15 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "ShaderType.h"
-#include "ShaderProgram.h"
-#include "WavefrontObject.h"
+#include "../ShaderType.h"
+#include "../ShaderProgram.h"
+#include "../WavefrontObject.h"
 
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices)
 #define VERTEX_SIZE 5
 #define INDICES_COUNT 2
 #define DEFAULT_WAVEFRONT_SCALE 0.02f
-#define OBJECT_PATH_PREFIX "objects/"
+#define OBJECT_PATH_PREFIX "models/"
 
 /**
  * \brief Geometry of an object (vertices, triangles).
@@ -50,6 +50,7 @@ protected:
 	
 	ObjectGeometry m_Geometry;
 	ObjectTextures m_Textures;
+	Material* m_Material;
 	ShaderType m_Shader_type;
 	
 	typedef std::vector<ObjectInstance*> ObjectList;
@@ -84,4 +85,6 @@ public:
 	void LoadAssimp(const std::string& filepath, bool joinMeshes);
 
 	void LoadCustom(const std::string& filepath, bool joinMeshes);
+	
+	void Translate(glm::vec3 delta);
 };

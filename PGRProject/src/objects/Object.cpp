@@ -21,10 +21,18 @@ void ObjectInstance::Draw(const glm::mat4& viewMatrix, const glm::mat4& projecti
 		shaderProgram->UseShader();
 		glUniformMatrix4fv(shaderProgram->locations.pvmMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * viewMatrix * m_Global_model_matrix));
 
+		glUniform1i(shaderProgram->locations.useTexDiffuse, m_Material->DiffuseMap());
+		CHECK_GL_ERROR();
+		glm::vec3 colDiffuse = m_Material->Diffuse();
+		glUniform3f(shaderProgram->locations.colDiffuse, colDiffuse.x, colDiffuse.y, colDiffuse.z);
+		CHECK_GL_ERROR();
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_Textures.diffuse);
+		CHECK_GL_ERROR();
+		glBindTexture(GL_TEXTURE_2D, m_Material->DiffuseMap());
+		CHECK_GL_ERROR();
 
 		glBindVertexArray(m_Geometry.vertexArrayObject);
+		CHECK_GL_ERROR();
 		glDrawElements(GL_TRIANGLES, m_Geometry.numTriangles * 3, GL_UNSIGNED_INT, nullptr);
 		CHECK_GL_ERROR();
 	}
@@ -113,9 +121,6 @@ void ObjectInstance::LoadAssimp(const std::string& filepath, bool joinMeshes) {
 	if (joinMeshes) {
 		// TODO
 	}
-	else if (scene->mNumMeshes == 1) {
-		// TODO
-	}
 	else {
 		m_EmptyObject = true;
 
@@ -130,11 +135,16 @@ void ObjectInstance::LoadAssimp(const std::string& filepath, bool joinMeshes) {
 		for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
 			children.push_back(new ObjectInstance(scene->mMeshes[i], materials[scene->mMeshes[i]->mMaterialIndex]));
 		}
+		std::reverse(children.begin(), children.end());
 	}
 }
 
 void ObjectInstance::LoadCustom(const std::string& filepath, bool joinMeshes) {
 	// TODO
+}
+
+void ObjectInstance::Translate(glm::vec3 delta) {
+	m_Position += delta;
 }
 
 glm::mat4 ObjectInstance::ComputeModelMatrix()
@@ -203,7 +213,7 @@ ObjectInstance::ObjectInstance(aiMesh* mesh, Material *material) {
 		m_Geometry.indices[3 * i + 2] = face.mIndices[2];
 	}
 
-	m_Textures.diffuse = material->DiffuseMap();
+	m_Material = material;
 }
 
 ObjectInstance::~ObjectInstance() {
