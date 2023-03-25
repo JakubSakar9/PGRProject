@@ -13,6 +13,7 @@ private:
 	
 	ObjectInstance m_RootObject;
 	ObjectInstance m_SeaObject;
+	ObjectInstance m_LinkObject;
 	Camera m_ViewCamera;
 	
 public:

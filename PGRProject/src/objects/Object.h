@@ -16,27 +16,6 @@
 #define DEFAULT_WAVEFRONT_SCALE 0.02f
 #define OBJECT_PATH_PREFIX "models/"
 
-/**
- * \brief Geometry of an object (vertices, triangles).
- */
-typedef struct _ObjectGeometry {
-	GLuint vertexBufferObject;						// identifier for the buffer with vertex coordinates
-	GLuint elementBufferObject;				// identifier for the element buffer object
-	GLuint vertexArrayObject;				// identifier for the vertex array object
-	
-	unsigned int numTriangles;				// number of triangles in the mesh
-	unsigned int numVertices;				// number of vertices in the mesh
-	unsigned int numAttributesPerVertex;	// legacy
-	unsigned int numAttributes;				// legacy
-	
-	std::vector<unsigned int> indices;		// vertex indices stored in a vector
-	std::vector<float> verticesData;		// vertex attributes stored in a vector
-} ObjectGeometry;
-
-typedef struct _ObjectTextures {
-	GLuint diffuse;
-} ObjectTextures;
-
 class ObjectInstance {
 
 protected:
@@ -45,12 +24,7 @@ protected:
 	glm::quat m_Rotation;
 	glm::mat4 m_LocalModelMatrix;
 	glm::mat4 m_Global_model_matrix;
-
-	bool m_EmptyObject = false;
 	
-	ObjectGeometry m_Geometry;
-	ObjectTextures m_Textures;
-	Material* m_Material;
 	ShaderType m_Shader_type;
 	
 	typedef std::vector<ObjectInstance*> ObjectList;
@@ -59,13 +33,8 @@ protected:
 	glm::mat4 ComputeModelMatrix();
 
 public:
-	ObjectInstance();
-	ObjectInstance(const pgr::MeshData& meshData);
-	ObjectInstance(WavefrontObject* sourceWavefront);
-	ObjectInstance(const std::vector<WavefrontObject*>& sourceWavefront);
-	ObjectInstance(const std::string& name, bool useAssimp, bool joinMeshes);
-	ObjectInstance(aiMesh *mesh, Material *material);
-	~ObjectInstance();
+	ObjectInstance() {}
+	~ObjectInstance() {}
 
 	/** recalculates global matrix and updates all children
 	*
@@ -75,16 +44,8 @@ public:
 
 	/// calls draw on child nodes
 	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram *shaderProgram);
-	
-	// TODO: Complete docs
-	void UseLegacyMesh(const pgr::MeshData& meshData);
 
-	// TODO: Complete docs
-	bool GenObjects(ShaderProgram *shaderProgram);
-
-	void LoadAssimp(const std::string& filepath, bool joinMeshes);
-
-	void LoadCustom(const std::string& filepath, bool joinMeshes);
+	virtual bool GenObjects(ShaderProgram *shaderProgram);
 	
 	void Translate(glm::vec3 delta);
 };

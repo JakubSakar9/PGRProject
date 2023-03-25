@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "objects/EmptyObject.h"
 
 Scene::Scene()
 {
@@ -9,11 +10,12 @@ Scene::Scene()
 bool Scene::Init(ShaderProgram *shaderProgram)
 {
     m_ViewCamera.Init();
-    m_RootObject = ObjectInstance("Island", true, false);
+    m_RootObject = EmptyObject("Island", true);
     m_RootObject.GenObjects(shaderProgram);
-    m_SeaObject = ObjectInstance("Sea", true, false);
-    m_SeaObject.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
+    m_SeaObject = EmptyObject("Sea", true);
     m_SeaObject.GenObjects(shaderProgram);
+    m_LinkObject = EmptyObject("Link", true);
+    m_LinkObject.GenObjects(shaderProgram);
     CHECK_GL_ERROR();
     return true;
 }
@@ -22,6 +24,7 @@ void Scene::Render(ShaderProgram *shaderProgram)
 {
     m_SeaObject.Draw(m_ViewCamera.ComputeViewMatrix(), m_ViewCamera.ComputeProjectionMatrix(), shaderProgram);
     m_RootObject.Draw(m_ViewCamera.ComputeViewMatrix(), m_ViewCamera.ComputeProjectionMatrix(), shaderProgram);
+    m_LinkObject.Draw(m_ViewCamera.ComputeViewMatrix(), m_ViewCamera.ComputeProjectionMatrix(), shaderProgram);
     glBindVertexArray(0);
 }
 

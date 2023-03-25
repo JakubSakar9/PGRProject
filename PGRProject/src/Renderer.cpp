@@ -9,7 +9,7 @@ bool Renderer::Init() {
     
     m_LastTime = glutGet(GLUT_ELAPSED_TIME);
 
-    glClearColor(0.02f, 0.53f, 0.95f, 1.0f);
+    glClearColor(.0f, .1f, .3f, 1.0f);
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glCullFace(GL_BACK);
