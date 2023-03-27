@@ -16,6 +16,11 @@ bool Scene::Init(ShaderProgram *shaderProgram)
     m_SeaObject.GenObjects(shaderProgram);
     m_LinkObject = EmptyObject("Link", true);
     m_LinkObject.GenObjects(shaderProgram);
+    m_LinkObject.Scale(glm::vec3(4.0f));
+    m_LinkObject.Translate(glm::vec3(0.0f, 40.0f, 4000.0f));
+
+    m_AmbientLight = AmbientLight(glm::vec3(.0f, .1f, .3f), .3f);
+    m_DirectionalLight = DirectionalLight(glm::vec3(.2f, .3f, .6f), .7f, glm::vec3(0.5, -0.2, 0.1));
     CHECK_GL_ERROR();
     return true;
 }
@@ -28,9 +33,15 @@ void Scene::Render(ShaderProgram *shaderProgram)
     glBindVertexArray(0);
 }
 
-void Scene::Update(float deltaTime)
+void Scene::Update(float deltaTime, ShaderProgram *shaderProgram)
 {
-    m_RootObject.Update(deltaTime, &m_RootModelMatrix);
-    m_SeaObject.Update(deltaTime, &m_RootModelMatrix);
-    m_ViewCamera.Update(deltaTime);
+    m_RootObject.Update(deltaTime, nullptr, m_ViewCamera.Position());
+    m_SeaObject.Update(deltaTime, nullptr, m_ViewCamera.Position());
+    m_LinkObject.Update(deltaTime, nullptr, m_ViewCamera.Position());
+
+    m_AmbientLight.Update(shaderProgram);
+    CHECK_GL_ERROR();
+    m_DirectionalLight.Update(shaderProgram);
+
+    m_ViewCamera.Update(shaderProgram, deltaTime);
 }

@@ -22,9 +22,6 @@
     <Filter Include="Resource Files\models">
       <UniqueIdentifier>{6ca6627f-73fb-4130-98d4-d7571ad4734a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\models\link">
-      <UniqueIdentifier>{ced7c3c1-d003-4259-b627-1a4004e54381}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\models\Island">
       <UniqueIdentifier>{fa9da21d-c44b-44cc-aed3-cddb0204a698}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="Resource Files\models\Sea">
       <UniqueIdentifier>{95fa238f-2b7d-4200-9a57-984342b75b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\models\link">
+      <UniqueIdentifier>{cb8f9c76-ae66-4716-8d11-1897d9ccdaf0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +76,15 @@
       <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\Light.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\AmbientLight.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\PointLight.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\DirectionalLight.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -122,6 +131,15 @@
     <ClInclude Include="src\objects\Light.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\AmbientLight.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\PointLight.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\DirectionalLight.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple-fs.glsl">
@@ -130,92 +148,17 @@
     <None Include="shaders\simple-vs.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="objects\Link\link.mtl">
-      <Filter>Resource Files\models\link</Filter>
-    </None>
     <None Include="objects\Island\Island.mtl">
       <Filter>Resource Files\models\Island</Filter>
     </None>
     <None Include="models\Sea\Sea.mtl">
       <Filter>Resource Files\models\Sea</Filter>
     </None>
+    <None Include="models\link\link.mtl">
+      <Filter>Resource Files\models\link</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="objects\Link\body.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye1.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye2.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye3.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye4.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye5.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye6.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eye7.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eyebrow1.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eyebrow2.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eyebrow3.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eyebrow4.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eyebrow5.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\eyebrow6.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth1.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth2.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth3.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth4.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth5.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth6.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth7.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth8.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\mouth9.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\pupil.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
-    <Image Include="objects\Link\sheath.png">
-      <Filter>Resource Files\models\link</Filter>
-    </Image>
     <Image Include="objects\Island\OutsMM02.png">
       <Filter>Resource Files\models\Island</Filter>
     </Image>
@@ -264,21 +207,96 @@
     <Image Include="models\Sea\Sea.SS08.png">
       <Filter>Resource Files\models\Sea</Filter>
     </Image>
+    <Image Include="models\link\body.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye1.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye2.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye3.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye4.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye5.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye6.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eye7.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eyebrow1.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eyebrow2.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eyebrow3.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eyebrow4.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eyebrow5.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\eyebrow6.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth1.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth2.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth3.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth4.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth5.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth6.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth7.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth8.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\mouth9.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\pupil.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\sheath.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="objects\Link\info.txt">
-      <Filter>Resource Files\models\link</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="objects\Link\link.obj">
-      <Filter>Resource Files\models\link</Filter>
-    </Object>
     <Object Include="objects\Island\Island.obj">
       <Filter>Resource Files\models\Island</Filter>
     </Object>
     <Object Include="models\Sea\Sea.obj">
       <Filter>Resource Files\models\Sea</Filter>
     </Object>
+    <Object Include="models\link\link.obj">
+      <Filter>Resource Files\models\link</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="models\link\info.txt">
+      <Filter>Resource Files\models\link</Filter>
+    </Text>
   </ItemGroup>
 </Project>

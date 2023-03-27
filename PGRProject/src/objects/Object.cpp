@@ -1,7 +1,7 @@
 #include "Object.h"
 #include <iostream>
 
-void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
 	m_LocalModelMatrix = ComputeModelMatrix();
 
 	// if we have parent, multiply parent's matrix with ours
@@ -12,7 +12,7 @@ void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix)
 	
 	for (auto child : children) {
 		if (child != nullptr)
-			child->Update(deltaTime, &m_Global_model_matrix);
+			child->Update(deltaTime, &m_Global_model_matrix, cameraPos);
 	}
 }
 
@@ -34,6 +34,10 @@ bool ObjectInstance::GenObjects(ShaderProgram *shaderProgram) {
 
 void ObjectInstance::Translate(glm::vec3 delta) {
 	m_Position += delta;
+}
+
+void ObjectInstance::Scale(glm::vec3 scale) {
+	m_Scale *= scale;
 }
 
 glm::mat4 ObjectInstance::ComputeModelMatrix()

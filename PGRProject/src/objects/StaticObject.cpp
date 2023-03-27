@@ -39,14 +39,19 @@ StaticObject::StaticObject(aiMesh* mesh, Material* material)
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
 		const aiVector3D& position = mesh->mVertices[i];
+		const aiVector3D& normals = mesh->mNormals[i];
 		const aiVector3D& texCoords = mesh->mTextureCoords[0][i];
 
 		m_Geometry.verticesData[VERTEX_SIZE * i + 0] = position.x;
 		m_Geometry.verticesData[VERTEX_SIZE * i + 1] = position.y;
 		m_Geometry.verticesData[VERTEX_SIZE * i + 2] = position.z;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 3] = texCoords.x;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 4] = 1 - texCoords.y;
+		m_Geometry.verticesData[VERTEX_SIZE * i + 3] = normals.x;
+		m_Geometry.verticesData[VERTEX_SIZE * i + 4] = normals.y;
+		m_Geometry.verticesData[VERTEX_SIZE * i + 5] = normals.z;
+		m_Geometry.verticesData[VERTEX_SIZE * i + 6] = texCoords.x;
+		m_Geometry.verticesData[VERTEX_SIZE * i + 7] = 1 - texCoords.y;
 	}
+
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
 		const aiFace& face = mesh->mFaces[i];
@@ -79,23 +84,27 @@ void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
 		m_Geometry.indices.begin());
 }
 
-void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ObjectInstance::Update(deltaTime, parentModelMatrix);
+void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
+	UpdateLocalCameraPosition(cameraPos);
+	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
 }
 
 void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
 	shaderProgram->UseShader();
 	glUniformMatrix4fv(shaderProgram->locations.pvmMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * viewMatrix * m_Global_model_matrix));
+	glUniform3f(shaderProgram->locations.localCameraPosition, m_LocalCameraPosition.x, m_LocalCameraPosition.y, m_LocalCameraPosition.z);
 
 	glUniform1i(shaderProgram->locations.useTexDiffuse, m_Material->DiffuseMap());
-	CHECK_GL_ERROR();
 	glm::vec3 colDiffuse = m_Material->Diffuse();
 	glUniform3f(shaderProgram->locations.colDiffuse, colDiffuse.x, colDiffuse.y, colDiffuse.z);
-	CHECK_GL_ERROR();
 	glActiveTexture(GL_TEXTURE0);
-	CHECK_GL_ERROR();
 	glBindTexture(GL_TEXTURE_2D, m_Material->DiffuseMap());
 	CHECK_GL_ERROR();
+
+	glm::vec3 colSpecular = m_Material->Specular();
+	float specularExp = m_Material->SpecularExponent();
+	glUniform3f(shaderProgram->locations.colSpecular, colSpecular.x, colSpecular.y, colSpecular.z);
+	glUniform1f(shaderProgram->locations.specularExponent, specularExp);
 
 	glBindVertexArray(m_Geometry.vertexArrayObject);
 	CHECK_GL_ERROR();
@@ -129,8 +138,10 @@ bool StaticObject::GenObjects(ShaderProgram *shaderProgram) {
 	glBindBuffer(GL_ARRAY_BUFFER, m_Geometry.vertexBufferObject);
 	glEnableVertexAttribArray(shaderProgram->locations.position);
 	glVertexAttribPointer(shaderProgram->locations.position, 3, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) 0);
+	glEnableVertexAttribArray(shaderProgram->locations.normal);
+	glVertexAttribPointer(shaderProgram->locations.normal, 3, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) (3 * sizeof(float)));
 	glEnableVertexAttribArray(shaderProgram->locations.texCoords);
-	glVertexAttribPointer(shaderProgram->locations.texCoords, 2, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) (3 * sizeof(float)));
+	glVertexAttribPointer(shaderProgram->locations.texCoords, 2, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) (6 * sizeof(float)));
 	CHECK_GL_ERROR();
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Geometry.elementBufferObject);
@@ -147,4 +158,10 @@ void StaticObject::LoadAssimp(const std::string& filepath) {
 
 void StaticObject::LoadCustom(const std::string& filepath) {
 	// Not yet implemented
+}
+
+void StaticObject::UpdateLocalCameraPosition(glm::vec3 cameraPos) {
+	glm::mat4 inverseMat = glm::inverse(m_Global_model_matrix);
+	glm::vec4 transformed = inverseMat * glm::vec4(cameraPos, 1.0f);
+	m_LocalCameraPosition = glm::vec3(transformed.x, transformed.y, transformed.z) / transformed.w;
 }

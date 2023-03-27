@@ -13,7 +13,7 @@ bool Camera::Init()
 	return true;
 }
 
-void Camera::Update(float deltaTime)
+void Camera::Update(ShaderProgram* shaderProgram, float deltaTime)
 {
 	glm::vec3 velocity = InputManager::Get().RelativeVelocity() * m_MovementSpeed;
 	glm::vec3 deltaPosition = m_Rotation * velocity;

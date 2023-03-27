@@ -5,7 +5,7 @@ class StaticObject :
 {
 private:
 	typedef struct _ObjectGeometry {
-		GLuint vertexBufferObject;						// identifier for the buffer with vertex coordinates
+		GLuint vertexBufferObject;				// identifier for the buffer with vertex coordinates
 		GLuint elementBufferObject;				// identifier for the element buffer object
 		GLuint vertexArrayObject;				// identifier for the vertex array object
 
@@ -18,12 +18,9 @@ private:
 		std::vector<float> verticesData;		// vertex attributes stored in a vector
 	} ObjectGeometry;
 
-	typedef struct _ObjectTextures {
-		GLuint diffuse;
-	} ObjectTextures;
+	glm::vec3 m_LocalCameraPosition;
 
 	ObjectGeometry m_Geometry;
-	ObjectTextures m_Textures;
 	Material* m_Material;
 public:
 	StaticObject() {}
@@ -40,7 +37,7 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
 
 	/// calls draw on child nodes
 	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram);
@@ -50,5 +47,7 @@ public:
 	void LoadAssimp(const std::string& filepath);
 
 	void LoadCustom(const std::string& filepath);
+
+	void UpdateLocalCameraPosition(glm::vec3 cameraPos);
 };
 

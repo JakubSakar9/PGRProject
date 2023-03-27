@@ -12,19 +12,24 @@ Material::Material(std::string name) {
 }
 
 Material::Material(aiMaterial* sourceMaterial, const std::string& assetsDirectory) {
-	if (sourceMaterial->GetTextureCount(aiTextureType_DIFFUSE) < 1) {
-		m_DiffuseMap = 0;
-		aiColor3D diffuseColor;
-		sourceMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
-		Diffuse(diffuseColor.r, diffuseColor.g, diffuseColor.b);
-	}
-	else {
+	m_DiffuseMap = 0;
+	if (sourceMaterial->GetTextureCount(aiTextureType_DIFFUSE) >= 1) {
 		aiString sourceDiffusePath;
 		if (sourceMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &sourceDiffusePath, nullptr, nullptr, nullptr, nullptr, nullptr) == AI_SUCCESS) {
 			std::string diffusePath(assetsDirectory + sourceDiffusePath.data);
 			DiffuseMap(diffusePath);
 		}
+		
 	}
+	aiColor3D diffuseColor;
+	sourceMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor);
+	Diffuse(diffuseColor.r, diffuseColor.g, diffuseColor.b);
+
+	aiColor3D specularColor;
+	sourceMaterial->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
+	Specular(specularColor.r, specularColor.g, specularColor.b);
+
+	aiGetMaterialFloat(sourceMaterial, AI_MATKEY_SHININESS, &m_SpecularExponent);
 }
 
 void Material::Ambient(float r, float g, float b) {
@@ -89,6 +94,14 @@ void Material::LightnessMap(std::string filepath) {
 
 glm::vec3 Material::Diffuse() {
 	return m_Diffuse;
+}
+
+glm::vec3 Material::Specular() {
+	return m_Specular;
+}
+
+float Material::SpecularExponent() {
+	return m_SpecularExponent;
 }
 
 GLuint Material::DiffuseMap() {

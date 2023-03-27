@@ -18,16 +18,33 @@ public:
 	struct Locations {
 		// vertex attributes locations
 		GLint position;
+		GLint normal;
 		GLint texCoords;
 
 		// uniforms locations
 		GLint pvmMatrix;
+		GLint localCameraPosition;
+
+		struct AmbientLight {
+			GLint color;
+			GLint intensity;
+		} ambientLight;
+
+		struct DirectionalLight {
+			GLint color;
+			GLint direction;
+			GLint intensity;
+		} directionalLight;
+
 		GLint colDiffuse;
 		GLint texDiffuse;
 		GLint useTexDiffuse;
+
+		GLint colSpecular;
+		GLint specularExponent;
 	};
 
-	Locations locations = { 0, 0 };
+	Locations locations;
 
 private:
 	bool LoadShaders();

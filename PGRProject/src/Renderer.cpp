@@ -34,5 +34,5 @@ void Renderer::Render() {
 void Renderer::Update() {
     float deltaTime = glutGet(GLUT_ELAPSED_TIME) - m_LastTime;
     m_LastTime = glutGet(GLUT_ELAPSED_TIME);
-    m_Scene.Update(deltaTime);
+    m_Scene.Update(deltaTime, &m_ShaderProgram);
 }

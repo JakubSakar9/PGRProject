@@ -47,5 +47,7 @@ public:
 	void LightnessMap(std::string filepath);
 
 	glm::vec3 Diffuse();
+	glm::vec3 Specular();
+	float SpecularExponent();
 	GLuint DiffuseMap();
 };

@@ -55,14 +55,27 @@ bool ShaderProgram::LoadShaders()
 
     // Attributes
     locations.position = glGetAttribLocation(m_ProgramObject, "position");
+    locations.normal = glGetAttribLocation(m_ProgramObject, "normal");
     locations.texCoords = glGetAttribLocation(m_ProgramObject, "texCoords");
     CHECK_GL_ERROR();
 
     // Uniforms
     locations.pvmMatrix = glGetUniformLocation(m_ProgramObject, "u_PVM");
+    locations.localCameraPosition = glGetUniformLocation(m_ProgramObject, "u_localCameraPosition");
+
+    locations.ambientLight.color = glGetUniformLocation(m_ProgramObject, "u_ambientLight.color");
+    locations.ambientLight.intensity = glGetUniformLocation(m_ProgramObject, "u_ambientLight.intensity");
+
+    locations.directionalLight.color = glGetUniformLocation(m_ProgramObject, "u_directionalLight.color");
+    locations.directionalLight.direction = glGetUniformLocation(m_ProgramObject, "u_directionalLight.direction");
+    locations.directionalLight.intensity = glGetUniformLocation(m_ProgramObject, "u_directionalLight.intensity");
+
     locations.colDiffuse = glGetUniformLocation(m_ProgramObject, "u_colDiffuse");
     locations.texDiffuse = glGetUniformLocation(m_ProgramObject, "u_texDiffuse");
     locations.useTexDiffuse = glGetUniformLocation(m_ProgramObject, "u_useTexDiffuse");
+
+    locations.colSpecular = glGetUniformLocation(m_ProgramObject, "u_colSpecular");
+    locations.specularExponent = glGetUniformLocation(m_ProgramObject, "u_specularExponent");
     CHECK_GL_ERROR();
     
     return true;

@@ -2,7 +2,7 @@
 # Material Count: 9
 
 newmtl Material.001
-Ns 92.156863
+Ns 2.0
 Ka 0.000000 0.000000 0.000000
 Kd 0.512000 0.512000 0.512000
 Ks 0.500000 0.500000 0.500000
@@ -24,15 +24,15 @@ map_Kd sheath.png
 map_d sheath.png
 
 newmtl Material.003
-Ns 92.156863
+Ns 2.0
 Ka 0.000000 0.000000 0.000000
 Kd 0.512000 0.512000 0.512000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd mouth7.png
-map_d mouth7.png
+map_Kd mouth9.png
+map_d mouth9.png
 
 newmtl Material.004
 Ns 92.156863
@@ -75,8 +75,8 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd eyebrow1.png
-map_d eyebrow1.png
+map_Kd eyebrow2.png
+map_d eyebrow2.png
 
 newmtl Material.008
 Ns 92.156863
@@ -86,8 +86,8 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd eyebrow1.png
-map_d eyebrow1.png
+map_Kd eyebrow2.png
+map_d eyebrow2.png
 
 newmtl Material.009
 Ns 92.156863

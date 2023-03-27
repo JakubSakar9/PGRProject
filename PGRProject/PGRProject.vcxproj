@@ -147,9 +147,12 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
+    <ClCompile Include="src\objects\AmbientLight.cpp" />
+    <ClCompile Include="src\objects\DirectionalLight.cpp" />
     <ClCompile Include="src\objects\EmptyObject.cpp" />
     <ClCompile Include="src\objects\Light.cpp" />
     <ClCompile Include="src\objects\Object.cpp" />
+    <ClCompile Include="src\objects\PointLight.cpp" />
     <ClCompile Include="src\objects\StaticObject.cpp" />
     <ClCompile Include="src\PGRProject.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -163,9 +166,12 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Material.h" />
+    <ClInclude Include="src\objects\AmbientLight.h" />
+    <ClInclude Include="src\objects\DirectionalLight.h" />
     <ClInclude Include="src\objects\EmptyObject.h" />
     <ClInclude Include="src\objects\Light.h" />
     <ClInclude Include="src\objects\Object.h" />
+    <ClInclude Include="src\objects\PointLight.h" />
     <ClInclude Include="src\objects\StaticObject.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\ResourceManager.h" />
@@ -176,13 +182,38 @@
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="models\link\link.mtl" />
     <None Include="models\Sea\Sea.mtl" />
     <None Include="objects\Island\Island.mtl" />
-    <None Include="objects\Link\link.mtl" />
     <None Include="shaders\simple-fs.glsl" />
     <None Include="shaders\simple-vs.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="models\link\body.png" />
+    <Image Include="models\link\eye1.png" />
+    <Image Include="models\link\eye2.png" />
+    <Image Include="models\link\eye3.png" />
+    <Image Include="models\link\eye4.png" />
+    <Image Include="models\link\eye5.png" />
+    <Image Include="models\link\eye6.png" />
+    <Image Include="models\link\eye7.png" />
+    <Image Include="models\link\eyebrow1.png" />
+    <Image Include="models\link\eyebrow2.png" />
+    <Image Include="models\link\eyebrow3.png" />
+    <Image Include="models\link\eyebrow4.png" />
+    <Image Include="models\link\eyebrow5.png" />
+    <Image Include="models\link\eyebrow6.png" />
+    <Image Include="models\link\mouth1.png" />
+    <Image Include="models\link\mouth2.png" />
+    <Image Include="models\link\mouth3.png" />
+    <Image Include="models\link\mouth4.png" />
+    <Image Include="models\link\mouth5.png" />
+    <Image Include="models\link\mouth6.png" />
+    <Image Include="models\link\mouth7.png" />
+    <Image Include="models\link\mouth8.png" />
+    <Image Include="models\link\mouth9.png" />
+    <Image Include="models\link\pupil.png" />
+    <Image Include="models\link\sheath.png" />
     <Image Include="models\Sea\Sea.SS00.png" />
     <Image Include="models\Sea\Sea.SS01.png" />
     <Image Include="models\Sea\Sea.SS02.png" />
@@ -199,36 +230,12 @@
     <Image Include="objects\Island\OutsSS05.png" />
     <Image Include="objects\Island\OutsSS06.png" />
     <Image Include="objects\Island\OutsSS07.png" />
-    <Image Include="objects\Link\body.png" />
-    <Image Include="objects\Link\eye1.png" />
-    <Image Include="objects\Link\eye2.png" />
-    <Image Include="objects\Link\eye3.png" />
-    <Image Include="objects\Link\eye4.png" />
-    <Image Include="objects\Link\eye5.png" />
-    <Image Include="objects\Link\eye6.png" />
-    <Image Include="objects\Link\eye7.png" />
-    <Image Include="objects\Link\eyebrow1.png" />
-    <Image Include="objects\Link\eyebrow2.png" />
-    <Image Include="objects\Link\eyebrow3.png" />
-    <Image Include="objects\Link\eyebrow4.png" />
-    <Image Include="objects\Link\eyebrow5.png" />
-    <Image Include="objects\Link\eyebrow6.png" />
-    <Image Include="objects\Link\mouth1.png" />
-    <Image Include="objects\Link\mouth2.png" />
-    <Image Include="objects\Link\mouth3.png" />
-    <Image Include="objects\Link\mouth4.png" />
-    <Image Include="objects\Link\mouth5.png" />
-    <Image Include="objects\Link\mouth6.png" />
-    <Image Include="objects\Link\mouth7.png" />
-    <Image Include="objects\Link\mouth8.png" />
-    <Image Include="objects\Link\mouth9.png" />
-    <Image Include="objects\Link\pupil.png" />
-    <Image Include="objects\Link\sheath.png" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="objects\Link\info.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <Object Include="models\link\link.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="models\Sea\Sea.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -237,10 +244,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </Object>
-    <Object Include="objects\Link\link.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="models\link\info.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,6 +4,7 @@
 #include "pgr.h"
 
 #include "InputManager.h"
+#include "ShaderProgram.h"
 
 #define DEFAULT_MOVEMENT_SPEED 1.0f
 #define MOUSE_SENSITIVITY 0.4f
@@ -62,6 +63,8 @@ public:
 
 	bool Init();
 
-	void Update(float deltaTime);
+	void Update(ShaderProgram *shaderProgram, float deltaTime);
+
+	inline glm::vec3 Position() { return m_Position; }
 };
 
