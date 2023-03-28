@@ -4,13 +4,9 @@
 
 class PointLight : Light
 {
-public:
-	struct Attenuation {
-		float constant;
-		float linear;
-		float quadratic;
-	};
-	Attenuation m_Attenuation;
+private:
+	glm::vec3 m_Attenuation;
+	unsigned int m_Id;
 public:
 	PointLight() {}
 	PointLight(glm::vec3 color, float intensity, glm::vec3 position, glm::vec3 attenuation);

@@ -17,42 +17,26 @@ private:
 
 	float m_FovDegrees, m_NearPlane, m_FarPlane, m_AspectRatio;
 	float m_MovementSpeed;
+	bool m_dynamic;
 public:
 	inline Camera()
 		: m_FovDegrees(90.0f)
 		, m_NearPlane(0.01f)
 		, m_FarPlane(1000.0f)
 		, m_AspectRatio(1.0f)
+		, m_Position(glm::vec3(0.0f))
 		, m_MovementSpeed(DEFAULT_MOVEMENT_SPEED)
+		, m_dynamic(false)
 	{}
-
-	inline Camera(glm::vec3 position)
+	
+	inline Camera(glm::vec3 position, bool dynamic)
 		: m_FovDegrees(90.0f)
 		, m_NearPlane(0.01f)
 		, m_FarPlane(1000.0f)
 		, m_AspectRatio(1.0f)
 		, m_Position(position)
 		, m_MovementSpeed(DEFAULT_MOVEMENT_SPEED)
-	{}
-	
-	inline Camera(glm::vec3 position, glm::quat rotation)
-		: m_FovDegrees(90.0f)
-		, m_NearPlane(0.01f)
-		, m_FarPlane(1000.0f)
-		, m_AspectRatio(1.0f)
-		, m_Position(position)
-		, m_Rotation(rotation)
-		, m_MovementSpeed(DEFAULT_MOVEMENT_SPEED)
-	{}
-	
-	inline Camera(glm::vec3 position, glm::quat rotation, float fov, float near, float far)
-		: m_FovDegrees(fov)
-		, m_NearPlane(near)
-		, m_FarPlane(far)
-		, m_AspectRatio(1.0f)
-		, m_Position(position)
-		, m_Rotation(rotation)
-		, m_MovementSpeed(DEFAULT_MOVEMENT_SPEED)
+		, m_dynamic(dynamic)
 	{}
 
 	glm::mat4 ComputeViewMatrix();

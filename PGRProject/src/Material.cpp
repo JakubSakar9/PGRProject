@@ -74,6 +74,10 @@ void Material::AmbientMap(std::string filepath) {
 }
 
 void Material::DiffuseMap(std::string filepath) {
+	if (filepath == "NONE") {
+		m_DiffuseMap = 0;
+		return;
+	}
 	m_DiffuseMap = pgr::createTexture(filepath);
 	glActiveTexture(GL_TEXTURE0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);

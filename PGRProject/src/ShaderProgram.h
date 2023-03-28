@@ -10,11 +10,20 @@
 #define DEFAULT_VS_SOURCE "Shaders/simple-vs.glsl"
 #define DEFAULT_FS_SOURCE "Shaders/simple-fs.glsl"
 
+#define MAX_POINT_LIGHTS 4
+
 class ShaderProgram
 {
 private:
 	GLuint m_ProgramObject = 0;
 public:
+	struct PointLightLocations {
+		GLint color;
+		GLint intensity;
+		GLint position;
+		GLint attenuation;
+	};
+	
 	struct Locations {
 		// vertex attributes locations
 		GLint position;
@@ -36,6 +45,8 @@ public:
 			GLint intensity;
 		} directionalLight;
 
+		PointLightLocations pointLights[MAX_POINT_LIGHTS];
+
 		GLint colDiffuse;
 		GLint texDiffuse;
 		GLint useTexDiffuse;
@@ -46,9 +57,14 @@ public:
 
 	Locations locations;
 
+	static glm::vec3 s_cameraPosition;
+	static glm::vec3 s_pointLightPositions[MAX_POINT_LIGHTS];
+	static int s_nextPointLightIndex;
+
 private:
 	bool LoadShaders();
 	bool CreateShader(const std::string &vsSource, const std::string& fsSource);
+	void InitPointLightLocations();
 
 public:
 	ShaderProgram() {}

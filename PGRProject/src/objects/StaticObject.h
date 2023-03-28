@@ -3,7 +3,7 @@
 class StaticObject :
     public ObjectInstance
 {
-private:
+protected:
 	typedef struct _ObjectGeometry {
 		GLuint vertexBufferObject;				// identifier for the buffer with vertex coordinates
 		GLuint elementBufferObject;				// identifier for the element buffer object
@@ -37,17 +37,17 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
+	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
 
 	/// calls draw on child nodes
-	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram);
+	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram);
 
-	bool GenObjects(ShaderProgram* shaderProgram);
+	virtual bool GenObjects(ShaderProgram* shaderProgram);
 
 	void LoadAssimp(const std::string& filepath);
 
 	void LoadCustom(const std::string& filepath);
 
-	void UpdateLocalCameraPosition(glm::vec3 cameraPos);
+	glm::vec3 WorldToLocal(glm::vec3 world);
 };
 

@@ -85,7 +85,7 @@ void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
 }
 
 void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
-	UpdateLocalCameraPosition(cameraPos);
+	m_LocalCameraPosition = WorldToLocal(cameraPos);
 	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
 }
 
@@ -93,6 +93,12 @@ void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projection
 	shaderProgram->UseShader();
 	glUniformMatrix4fv(shaderProgram->locations.pvmMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * viewMatrix * m_Global_model_matrix));
 	glUniform3f(shaderProgram->locations.localCameraPosition, m_LocalCameraPosition.x, m_LocalCameraPosition.y, m_LocalCameraPosition.z);
+
+	for (int i = 0; i < ShaderProgram::s_nextPointLightIndex; i++) {
+		glm::vec3 lightPos = WorldToLocal(ShaderProgram::s_pointLightPositions[i]);
+		glUniform3f(shaderProgram->locations.pointLights[i].position, lightPos.x, lightPos.y, lightPos.z);
+		CHECK_GL_ERROR();
+	}
 
 	glUniform1i(shaderProgram->locations.useTexDiffuse, m_Material->DiffuseMap());
 	glm::vec3 colDiffuse = m_Material->Diffuse();
@@ -160,8 +166,8 @@ void StaticObject::LoadCustom(const std::string& filepath) {
 	// Not yet implemented
 }
 
-void StaticObject::UpdateLocalCameraPosition(glm::vec3 cameraPos) {
+glm::vec3 StaticObject::WorldToLocal(glm::vec3 world) {
 	glm::mat4 inverseMat = glm::inverse(m_Global_model_matrix);
-	glm::vec4 transformed = inverseMat * glm::vec4(cameraPos, 1.0f);
-	m_LocalCameraPosition = glm::vec3(transformed.x, transformed.y, transformed.z) / transformed.w;
+	glm::vec4 transformed = inverseMat * glm::vec4(world, 1.0f);
+	return glm::vec3(transformed.x, transformed.y, transformed.z) / transformed.w;
 }

@@ -153,6 +153,7 @@
     <ClCompile Include="src\objects\Light.cpp" />
     <ClCompile Include="src\objects\Object.cpp" />
     <ClCompile Include="src\objects\PointLight.cpp" />
+    <ClCompile Include="src\objects\Rupee.cpp" />
     <ClCompile Include="src\objects\StaticObject.cpp" />
     <ClCompile Include="src\PGRProject.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="src\objects\Light.h" />
     <ClInclude Include="src\objects\Object.h" />
     <ClInclude Include="src\objects\PointLight.h" />
+    <ClInclude Include="src\objects\Rupee.h" />
     <ClInclude Include="src\objects\StaticObject.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\ResourceManager.h" />
@@ -213,6 +215,7 @@
     <Image Include="models\link\mouth8.png" />
     <Image Include="models\link\mouth9.png" />
     <Image Include="models\link\pupil.png" />
+    <Image Include="models\link\pupil_red.png" />
     <Image Include="models\link\sheath.png" />
     <Image Include="models\Sea\Sea.SS00.png" />
     <Image Include="models\Sea\Sea.SS01.png" />

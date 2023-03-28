@@ -1,5 +1,11 @@
 #include "ShaderProgram.h"
 
+glm::vec3 ShaderProgram::s_cameraPosition;
+
+glm::vec3 ShaderProgram::s_pointLightPositions[MAX_POINT_LIGHTS];
+
+int ShaderProgram::s_nextPointLightIndex;
+
 bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string& fs_source)
 {
     std::cerr << "Creating shaders..." << std::endl;
@@ -31,7 +37,6 @@ bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string
 void ShaderProgram::UseShader()
 {
     glUseProgram(m_ProgramObject);
-
     glUniform1i(locations.texDiffuse, 0);
     CHECK_GL_ERROR();
 }
@@ -74,9 +79,30 @@ bool ShaderProgram::LoadShaders()
     locations.texDiffuse = glGetUniformLocation(m_ProgramObject, "u_texDiffuse");
     locations.useTexDiffuse = glGetUniformLocation(m_ProgramObject, "u_useTexDiffuse");
 
+    InitPointLightLocations();
+
     locations.colSpecular = glGetUniformLocation(m_ProgramObject, "u_colSpecular");
     locations.specularExponent = glGetUniformLocation(m_ProgramObject, "u_specularExponent");
     CHECK_GL_ERROR();
     
     return true;
+}
+
+void ShaderProgram::InitPointLightLocations() {
+    for (int i = 0; i < MAX_POINT_LIGHTS; i++) {
+        char name[128];
+        memset(name, 0, sizeof(name));
+
+        snprintf(name, sizeof(name), "u_pointLights[%d].color", i);
+        locations.pointLights[i].color = glGetUniformLocation(m_ProgramObject, name);
+
+        snprintf(name, sizeof(name), "u_pointLights[%d].intensity", i);
+        locations.pointLights[i].intensity = glGetUniformLocation(m_ProgramObject, name);
+
+        snprintf(name, sizeof(name), "u_pointLights[%d].position", i);
+        locations.pointLights[i].position = glGetUniformLocation(m_ProgramObject, name);
+
+        snprintf(name, sizeof(name), "u_pointLights[%d].attenuation", i);
+        locations.pointLights[i].attenuation = glGetUniformLocation(m_ProgramObject, name);
+    }
 }

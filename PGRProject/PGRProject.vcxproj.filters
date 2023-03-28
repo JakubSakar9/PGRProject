@@ -87,6 +87,9 @@
     <ClCompile Include="src\objects\DirectionalLight.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\Rupee.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files\objects</Filter>
     </ClInclude>
     <ClInclude Include="src\objects\DirectionalLight.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\Rupee.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -280,6 +286,9 @@
       <Filter>Resource Files\models\link</Filter>
     </Image>
     <Image Include="models\link\sheath.png">
+      <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="models\link\pupil_red.png">
       <Filter>Resource Files\models\link</Filter>
     </Image>
   </ItemGroup>

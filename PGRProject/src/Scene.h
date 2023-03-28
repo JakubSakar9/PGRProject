@@ -7,6 +7,8 @@
 #include "ResourceManager.h"
 #include "objects/AmbientLight.h"
 #include "objects/DirectionalLight.h"
+#include "objects/PointLight.h"
+#include "objects/Rupee.h"
 
 class Scene
 {
@@ -16,11 +18,22 @@ private:
 	ObjectInstance m_RootObject;
 	ObjectInstance m_SeaObject;
 	ObjectInstance m_LinkObject;
+	
+	Rupee m_RupeeObject;
 
 	AmbientLight m_AmbientLight;
 	DirectionalLight m_DirectionalLight;
 
-	Camera m_ViewCamera;
+	PointLight m_pointLight1;
+	PointLight m_pointLight2;
+	PointLight m_pointLight3;
+	PointLight m_pointLight4;
+
+	Camera *m_ViewCamera;
+
+	Camera m_DynamicCamera;
+	Camera m_StaticCamera1;
+	Camera m_StaticCamera2;
 	
 public:
 	Scene();
