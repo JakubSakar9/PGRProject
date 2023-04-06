@@ -4,19 +4,19 @@ Rupee::Rupee() {
 	m_Shader_type = SHADER_TYPE_DEFAULT;
 	size_t lenVertices = sizeof(rupeeVertices);
 	size_t lenIndices = sizeof(rupeeIndices);
-	std::copy(rupeeVertices, rupeeVertices + lenVertices, std::back_inserter(m_Geometry.verticesData));
-	std::copy(rupeeIndices, rupeeIndices + lenIndices, std::back_inserter(m_Geometry.indices));
-	m_Geometry.numTriangles = 32;
-	m_Geometry.numVertices = 96;
-	m_Geometry.numAttributes = lenVertices / sizeof(float);
-	m_Geometry.numAttributesPerVertex = VERTEX_SIZE;
-	m_Geometry.numVertices = m_Geometry.numAttributes / m_Geometry.numAttributesPerVertex;
+	std::copy(rupeeVertices, rupeeVertices + lenVertices, std::back_inserter(m_geometry.verticesData));
+	std::copy(rupeeIndices, rupeeIndices + lenIndices, std::back_inserter(m_geometry.indices));
+	m_geometry.numTriangles = 32;
+	m_geometry.numVertices = 96;
+	m_geometry.numAttributes = lenVertices / sizeof(float);
+	m_geometry.numAttributesPerVertex = VERTEX_SIZE;
+	m_geometry.numVertices = m_geometry.numAttributes / m_geometry.numAttributesPerVertex;
 
-	m_Material = new Material("rupeeMaterial");
-	m_Material->Diffuse(1.0f, 0.0f, 0.0f);
-	m_Material->DiffuseMap("NONE");
-	m_Material->Specular(1.0f, 0.2f, 0.2f);
-	m_Material->SpecularExponent(10.0f);
+	m_material = new Material("rupeeMaterial");
+	m_material->Diffuse(1.0f, 0.0f, 0.0f);
+	m_material->DiffuseMap("NONE");
+	m_material->Specular(1.0f, 0.2f, 0.2f);
+	m_material->SpecularExponent(10.0f);
 	m_Scale = glm::vec3(1.0f);
 	m_Position = glm::vec3(0.0f, 10.0f, 345.0f);
 }

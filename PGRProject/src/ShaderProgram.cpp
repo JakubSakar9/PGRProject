@@ -3,8 +3,10 @@
 glm::vec3 ShaderProgram::s_cameraPosition;
 
 glm::vec3 ShaderProgram::s_pointLightPositions[MAX_POINT_LIGHTS];
-
 int ShaderProgram::s_nextPointLightIndex;
+
+glm::vec3 ShaderProgram::s_spotlightPositions[MAX_SPOTLIGHTS];
+int ShaderProgram::s_nextSpotlightIndex;
 
 bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string& fs_source)
 {
@@ -22,11 +24,11 @@ bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string
         return false;
     }
 
-    m_ProgramObject = pgr::createProgram({ vertexShader, fragmentShader});
+    m_programObject = pgr::createProgram({ vertexShader, fragmentShader});
 
     CHECK_GL_ERROR();
     
-    if (m_ProgramObject == 0) {
+    if (m_programObject == 0) {
         std::cerr << "Failed to create program" << std::endl;
         return false;
     }
@@ -36,8 +38,9 @@ bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string
 
 void ShaderProgram::UseShader()
 {
-    glUseProgram(m_ProgramObject);
-    glUniform1i(locations.texDiffuse, 0);
+    glUseProgram(m_programObject);
+    if (m_shaderType == SHADER_TYPE_DEFAULT)
+        glUniform1i(GetLocation("texDiffuse"), 0);
     CHECK_GL_ERROR();
 }
 
@@ -48,61 +51,113 @@ bool ShaderProgram::Init()
         return false;
     }
     return true;
-}   
+}
+
+GLint ShaderProgram::GetLocation(std::string name)
+{
+    auto it = m_locations.find(name);
+    if (it == m_locations.end())
+        return 0;
+    return m_locations.at(name);
+}
 
 bool ShaderProgram::LoadShaders()
 {
-    bool err = !CreateShader(DEFAULT_VS_SOURCE, DEFAULT_FS_SOURCE);
+    bool err = !CreateShader(m_vertexShaderPath, m_fragmentShaderPath);
     if (err) {
         std::cerr << "Failed to create shader" << std::endl;
         return false;
     }
 
-    // Attributes
-    locations.position = glGetAttribLocation(m_ProgramObject, "position");
-    locations.normal = glGetAttribLocation(m_ProgramObject, "normal");
-    locations.texCoords = glGetAttribLocation(m_ProgramObject, "texCoords");
-    CHECK_GL_ERROR();
+    switch (m_shaderType) {
+    case SHADER_TYPE_DEFAULT:
+        LoadDefault();
+        break;
+    case SHADER_TYPE_SKYBOX:
+        LoadSkybox();
+        break;
+    }
 
-    // Uniforms
-    locations.pvmMatrix = glGetUniformLocation(m_ProgramObject, "u_PVM");
-    locations.localCameraPosition = glGetUniformLocation(m_ProgramObject, "u_localCameraPosition");
-
-    locations.ambientLight.color = glGetUniformLocation(m_ProgramObject, "u_ambientLight.color");
-    locations.ambientLight.intensity = glGetUniformLocation(m_ProgramObject, "u_ambientLight.intensity");
-
-    locations.directionalLight.color = glGetUniformLocation(m_ProgramObject, "u_directionalLight.color");
-    locations.directionalLight.direction = glGetUniformLocation(m_ProgramObject, "u_directionalLight.direction");
-    locations.directionalLight.intensity = glGetUniformLocation(m_ProgramObject, "u_directionalLight.intensity");
-
-    locations.colDiffuse = glGetUniformLocation(m_ProgramObject, "u_colDiffuse");
-    locations.texDiffuse = glGetUniformLocation(m_ProgramObject, "u_texDiffuse");
-    locations.useTexDiffuse = glGetUniformLocation(m_ProgramObject, "u_useTexDiffuse");
-
-    InitPointLightLocations();
-
-    locations.colSpecular = glGetUniformLocation(m_ProgramObject, "u_colSpecular");
-    locations.specularExponent = glGetUniformLocation(m_ProgramObject, "u_specularExponent");
     CHECK_GL_ERROR();
     
     return true;
 }
 
+bool ShaderProgram::LoadDefault()
+{
+    ATTRIB_LOC("position");
+    ATTRIB_LOC("normal");
+    ATTRIB_LOC("texCoords");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("pvmMatrix");
+    UNIF_LOC("localCameraPosition");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("colDiffuse");
+    UNIF_LOC("texDiffuse");
+    UNIF_LOC("useTexDiffuse");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("colSpecular");
+    UNIF_LOC("specularExponent");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("ambientLight.color");
+    UNIF_LOC("ambientLight.intensity");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("directionalLight.color");
+    UNIF_LOC("directionalLight.direction");
+    UNIF_LOC("directionalLight.intensity");
+    CHECK_GL_ERROR();
+
+    InitPointLightLocations();
+    CHECK_GL_ERROR();
+
+    InitSpotlightLocations();
+    CHECK_GL_ERROR();
+    return false;
+}
+
+bool ShaderProgram::LoadSkybox()
+{
+    ATTRIB_LOC("position");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("pvMatrix");
+    CHECK_GL_ERROR();
+    return false;
+}
+
 void ShaderProgram::InitPointLightLocations() {
     for (int i = 0; i < MAX_POINT_LIGHTS; i++) {
-        char name[128];
-        memset(name, 0, sizeof(name));
-
-        snprintf(name, sizeof(name), "u_pointLights[%d].color", i);
-        locations.pointLights[i].color = glGetUniformLocation(m_ProgramObject, name);
-
-        snprintf(name, sizeof(name), "u_pointLights[%d].intensity", i);
-        locations.pointLights[i].intensity = glGetUniformLocation(m_ProgramObject, name);
-
-        snprintf(name, sizeof(name), "u_pointLights[%d].position", i);
-        locations.pointLights[i].position = glGetUniformLocation(m_ProgramObject, name);
-
-        snprintf(name, sizeof(name), "u_pointLights[%d].attenuation", i);
-        locations.pointLights[i].attenuation = glGetUniformLocation(m_ProgramObject, name);
+        PL_LOC("color", i);
+        PL_LOC("intensity", i);
+        PL_LOC("position", i);
+        PL_LOC("attenuation", i);
     }
 }
+
+void ShaderProgram::InitSpotlightLocations() {
+    for (int i = 0; i < MAX_SPOTLIGHTS; i++) {
+        SL_LOC("color", i);
+        SL_LOC("intensity", i);
+        SL_LOC("position", i);
+        SL_LOC("attenuation", i);
+        SL_LOC("direction", i);
+        SL_LOC("size", i);
+    }
+}
+
+void ShaderProgram::CreateUniformLocation(std::string cName, std::string shaderName) {
+    GLint location = glGetUniformLocation(m_programObject, shaderName.c_str());
+    m_locations.insert(std::pair<std::string, GLint>(cName, location));
+}
+
+void ShaderProgram::CreateAttributeLocation(std::string cName, std::string shaderName) {
+    GLint location = glGetAttribLocation(m_programObject, shaderName.c_str());
+    m_locations.insert(std::pair<std::string, GLint>(cName, location));
+}
+
+

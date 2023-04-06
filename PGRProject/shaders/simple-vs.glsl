@@ -1,6 +1,6 @@
 #version 140
 
-uniform mat4  u_PVM;   // transformation matrix
+uniform mat4  u_pvmMatrix;   // transformation matrix
 
 in vec3 position;
 in vec3 normal;
@@ -12,7 +12,7 @@ out vec2 texCoords_v;
 
 void main()
 {
-	gl_Position = u_PVM * vec4(position, 1.0f);
+	gl_Position = u_pvmMatrix * vec4(position, 1.0f);
 	position_v = position;
 	texCoords_v = texCoords;
 	normal_v = normal;

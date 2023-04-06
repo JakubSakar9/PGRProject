@@ -30,38 +30,38 @@ StaticObject::StaticObject(aiMesh* mesh, Material* material)
 	m_Shader_type = SHADER_TYPE_DEFAULT;
 	m_Scale = glm::vec3(1.0f);
 
-	m_Geometry.numVertices = mesh->mNumVertices;
-	m_Geometry.numTriangles = mesh->mNumFaces;
-	m_Geometry.numAttributes = mesh->mNumVertices * VERTEX_SIZE;
-	m_Geometry.numAttributesPerVertex = VERTEX_SIZE;
-	m_Geometry.verticesData.resize(m_Geometry.numAttributes);
-	m_Geometry.indices.resize(3 * m_Geometry.numTriangles);
+	m_geometry.numVertices = mesh->mNumVertices;
+	m_geometry.numTriangles = mesh->mNumFaces;
+	m_geometry.numAttributes = mesh->mNumVertices * VERTEX_SIZE;
+	m_geometry.numAttributesPerVertex = VERTEX_SIZE;
+	m_geometry.verticesData.resize(m_geometry.numAttributes);
+	m_geometry.indices.resize(3 * m_geometry.numTriangles);
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
 		const aiVector3D& position = mesh->mVertices[i];
 		const aiVector3D& normals = mesh->mNormals[i];
 		const aiVector3D& texCoords = mesh->mTextureCoords[0][i];
 
-		m_Geometry.verticesData[VERTEX_SIZE * i + 0] = position.x;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 1] = position.y;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 2] = position.z;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 3] = normals.x;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 4] = normals.y;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 5] = normals.z;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 6] = texCoords.x;
-		m_Geometry.verticesData[VERTEX_SIZE * i + 7] = 1 - texCoords.y;
+		m_geometry.verticesData[VERTEX_SIZE * i + 0] = position.x;
+		m_geometry.verticesData[VERTEX_SIZE * i + 1] = position.y;
+		m_geometry.verticesData[VERTEX_SIZE * i + 2] = position.z;
+		m_geometry.verticesData[VERTEX_SIZE * i + 3] = normals.x;
+		m_geometry.verticesData[VERTEX_SIZE * i + 4] = normals.y;
+		m_geometry.verticesData[VERTEX_SIZE * i + 5] = normals.z;
+		m_geometry.verticesData[VERTEX_SIZE * i + 6] = texCoords.x;
+		m_geometry.verticesData[VERTEX_SIZE * i + 7] = 1 - texCoords.y;
 	}
 
 
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
 		const aiFace& face = mesh->mFaces[i];
 
-		m_Geometry.indices[3 * i + 0] = face.mIndices[0];
-		m_Geometry.indices[3 * i + 1] = face.mIndices[1];
-		m_Geometry.indices[3 * i + 2] = face.mIndices[2];
+		m_geometry.indices[3 * i + 0] = face.mIndices[0];
+		m_geometry.indices[3 * i + 1] = face.mIndices[1];
+		m_geometry.indices[3 * i + 2] = face.mIndices[2];
 	}
 
-	m_Material = material;
+	m_material = material;
 }
 
 StaticObject::~StaticObject() {
@@ -70,51 +70,58 @@ StaticObject::~StaticObject() {
 
 
 void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
-	m_Geometry.numAttributesPerVertex = meshData.nAttribsPerVertex;
-	m_Geometry.numAttributes = meshData.nAttribsPerVertex * meshData.nVertices;
-	m_Geometry.numTriangles = meshData.nTriangles;
-	m_Geometry.verticesData.resize(m_Geometry.numAttributes);
-	m_Geometry.indices.resize(3 * m_Geometry.numTriangles);
+	m_geometry.numAttributesPerVertex = meshData.nAttribsPerVertex;
+	m_geometry.numAttributes = meshData.nAttribsPerVertex * meshData.nVertices;
+	m_geometry.numTriangles = meshData.nTriangles;
+	m_geometry.verticesData.resize(m_geometry.numAttributes);
+	m_geometry.indices.resize(3 * m_geometry.numTriangles);
 
 	std::copy(meshData.verticesInterleaved,
-		meshData.verticesInterleaved + m_Geometry.numAttributes,
-		m_Geometry.verticesData.begin());
+		meshData.verticesInterleaved + m_geometry.numAttributes,
+		m_geometry.verticesData.begin());
 	std::copy(meshData.triangles,
-		meshData.triangles + 3 * m_Geometry.numTriangles,
-		m_Geometry.indices.begin());
+		meshData.triangles + 3 * m_geometry.numTriangles,
+		m_geometry.indices.begin());
 }
 
 void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
-	m_LocalCameraPosition = WorldToLocal(cameraPos);
+	m_localCameraPosition = WorldToLocal(cameraPos);
 	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
 }
 
 void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
 	shaderProgram->UseShader();
-	glUniformMatrix4fv(shaderProgram->locations.pvmMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * viewMatrix * m_Global_model_matrix));
-	glUniform3f(shaderProgram->locations.localCameraPosition, m_LocalCameraPosition.x, m_LocalCameraPosition.y, m_LocalCameraPosition.z);
+	glm::mat4x4 pvm = projectionMatrix * viewMatrix * m_Global_model_matrix;
+	shaderProgram->SetUniform("pvmMatrix", pvm);
+	shaderProgram->SetUniform("localCameraPosition", m_localCameraPosition);
 
 	for (int i = 0; i < ShaderProgram::s_nextPointLightIndex; i++) {
 		glm::vec3 lightPos = WorldToLocal(ShaderProgram::s_pointLightPositions[i]);
-		glUniform3f(shaderProgram->locations.pointLights[i].position, lightPos.x, lightPos.y, lightPos.z);
+		shaderProgram->SetUniform(PL("position", i), lightPos);
 		CHECK_GL_ERROR();
 	}
 
-	glUniform1i(shaderProgram->locations.useTexDiffuse, m_Material->DiffuseMap());
-	glm::vec3 colDiffuse = m_Material->Diffuse();
-	glUniform3f(shaderProgram->locations.colDiffuse, colDiffuse.x, colDiffuse.y, colDiffuse.z);
+	for (int i = 0; i < ShaderProgram::s_nextSpotlightIndex; i++) {
+		glm::vec3 lightPos = WorldToLocal(ShaderProgram::s_spotlightPositions[i]);
+		shaderProgram->SetUniform(SL("position", i), lightPos);
+		CHECK_GL_ERROR();
+	}
+
+	shaderProgram->SetUniform("useTexDiffuse", (int) m_material->DiffuseMap());
+	glm::vec3 colDiffuse = m_material->Diffuse();
+	shaderProgram->SetUniform("colDiffuse", colDiffuse);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_Material->DiffuseMap());
+	glBindTexture(GL_TEXTURE_2D, m_material->DiffuseMap());
 	CHECK_GL_ERROR();
 
-	glm::vec3 colSpecular = m_Material->Specular();
-	float specularExp = m_Material->SpecularExponent();
-	glUniform3f(shaderProgram->locations.colSpecular, colSpecular.x, colSpecular.y, colSpecular.z);
-	glUniform1f(shaderProgram->locations.specularExponent, specularExp);
+	glm::vec3 colSpecular = m_material->Specular();
+	float specularExp = m_material->SpecularExponent();
+	shaderProgram->SetUniform("colSpecular", colSpecular);
+	shaderProgram->SetUniform("specularExponent", specularExp);
 
-	glBindVertexArray(m_Geometry.vertexArrayObject);
+	glBindVertexArray(m_geometry.vertexArrayObject);
 	CHECK_GL_ERROR();
-	glDrawElements(GL_TRIANGLES, m_Geometry.numTriangles * 3, GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, m_geometry.numTriangles * 3, GL_UNSIGNED_INT, nullptr);
 	CHECK_GL_ERROR();
 
 	ObjectInstance::Draw(viewMatrix, projectionMatrix, shaderProgram);
@@ -122,35 +129,35 @@ void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projection
 
 bool StaticObject::GenObjects(ShaderProgram *shaderProgram) {
 	// Generating VBOs
-	glGenBuffers(1, &(m_Geometry.vertexBufferObject));
-	glBindBuffer(GL_ARRAY_BUFFER, m_Geometry.vertexBufferObject);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m_Geometry.verticesData.size(), m_Geometry.verticesData.data(), GL_STATIC_DRAW);
+	glGenBuffers(1, &(m_geometry.vertexBufferObject));
+	glBindBuffer(GL_ARRAY_BUFFER, m_geometry.vertexBufferObject);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m_geometry.verticesData.size(), m_geometry.verticesData.data(), GL_STATIC_DRAW);
 	CHECK_GL_ERROR();
 
 	// Generating EBO
-	glGenBuffers(1, &(m_Geometry.elementBufferObject));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Geometry.elementBufferObject);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * m_Geometry.numTriangles * 3, m_Geometry.indices.data(), GL_STATIC_DRAW);
+	glGenBuffers(1, &(m_geometry.elementBufferObject));
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_geometry.elementBufferObject);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * m_geometry.numTriangles * 3, m_geometry.indices.data(), GL_STATIC_DRAW);
 	CHECK_GL_ERROR();
 
 	// Generating VAO
-	glGenVertexArrays(1, &(m_Geometry.vertexArrayObject));
+	glGenVertexArrays(1, &(m_geometry.vertexArrayObject));
 	CHECK_GL_ERROR();
 
 	// Connecting vertex attributes
-	glBindVertexArray(m_Geometry.vertexArrayObject);
+	glBindVertexArray(m_geometry.vertexArrayObject);
 	CHECK_GL_ERROR();
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_Geometry.vertexBufferObject);
-	glEnableVertexAttribArray(shaderProgram->locations.position);
-	glVertexAttribPointer(shaderProgram->locations.position, 3, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(shaderProgram->locations.normal);
-	glVertexAttribPointer(shaderProgram->locations.normal, 3, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) (3 * sizeof(float)));
-	glEnableVertexAttribArray(shaderProgram->locations.texCoords);
-	glVertexAttribPointer(shaderProgram->locations.texCoords, 2, GL_FLOAT, GL_FALSE, m_Geometry.numAttributesPerVertex * sizeof(float), (void*) (6 * sizeof(float)));
+	glBindBuffer(GL_ARRAY_BUFFER, m_geometry.vertexBufferObject);
+	shaderProgram->EnableAttrib("position");
+	shaderProgram->AttribFloat("position", 3, m_geometry.numAttributesPerVertex, 0);
+	shaderProgram->EnableAttrib("normal");
+	shaderProgram->AttribFloat("normal", 3, m_geometry.numAttributesPerVertex, 3);
+	shaderProgram->EnableAttrib("texCoords");
+	shaderProgram->AttribFloat("texCoords", 2, m_geometry.numAttributesPerVertex, 6);
 	CHECK_GL_ERROR();
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Geometry.elementBufferObject);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_geometry.elementBufferObject);
 	CHECK_GL_ERROR();
 
 	glBindVertexArray(0);

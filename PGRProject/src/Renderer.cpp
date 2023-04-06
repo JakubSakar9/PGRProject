@@ -1,13 +1,14 @@
 #include "Renderer.h"
 
 bool Renderer::Init() {
+    bool ret = true;
     ilInit();
-    m_ShaderProgram.Init();
-    m_Scene.Init(&m_ShaderProgram);
+    ret &= InitShaders();
+    ret &= m_scene.Init(m_shaders);
 
     CHECK_GL_ERROR();
     
-    m_LastTime = glutGet(GLUT_ELAPSED_TIME);
+    m_lastTime = glutGet(GLUT_ELAPSED_TIME);
 
     glClearColor(.0f, .1f, .3f, 1.0f);
     
@@ -21,19 +22,27 @@ bool Renderer::Init() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     CHECK_GL_ERROR();
-    return true;
+    return ret;
+}
+
+bool Renderer::InitShaders()
+{
+    bool ret = true;
+    m_shaders.defaultShader->Init();
+    m_shaders.skyboxShader->Init();
+    return ret;
 }
 
 void Renderer::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    m_Scene.Render(&m_ShaderProgram);
+    m_scene.Render(m_shaders);
     CHECK_GL_ERROR();
     glutSwapBuffers();
 }
 
 void Renderer::Update() {
-    float deltaTime = glutGet(GLUT_ELAPSED_TIME) - m_LastTime;
-    m_LastTime = glutGet(GLUT_ELAPSED_TIME);
-    m_Scene.Update(deltaTime, &m_ShaderProgram);
+    float deltaTime = glutGet(GLUT_ELAPSED_TIME) - m_lastTime;
+    m_lastTime = glutGet(GLUT_ELAPSED_TIME);
+    m_scene.Update(deltaTime, m_shaders);
     CHECK_GL_ERROR();
 }

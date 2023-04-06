@@ -1,5 +1,9 @@
 #pragma once
+
 #include "Object.h"
+#include "PointLight.h"
+#include "Spotlight.h"
+
 class StaticObject :
     public ObjectInstance
 {
@@ -18,10 +22,10 @@ protected:
 		std::vector<float> verticesData;		// vertex attributes stored in a vector
 	} ObjectGeometry;
 
-	glm::vec3 m_LocalCameraPosition;
+	glm::vec3 m_localCameraPosition;
 
-	ObjectGeometry m_Geometry;
-	Material* m_Material;
+	ObjectGeometry m_geometry;
+	Material* m_material;
 public:
 	StaticObject() {}
 	StaticObject(const pgr::MeshData& meshData);

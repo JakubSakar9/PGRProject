@@ -20,6 +20,6 @@ void Camera::Update(ShaderProgram* shaderProgram, float deltaTime)
 		glm::vec3 deltaPosition = m_Rotation * velocity;
 		m_Rotation = InputManager::Get().CalculateRotation();
 		m_Position += deltaPosition;
-		ShaderProgram::s_cameraPosition = m_Position;
 	}
+	ShaderProgram::s_cameraPosition = m_Position;
 }

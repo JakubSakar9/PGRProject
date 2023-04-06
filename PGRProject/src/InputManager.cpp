@@ -16,6 +16,17 @@ glm::quat InputManager::CalculateRotation() {
 	return glm::quat(euler);
 }
 
+int InputManager::CameraToSwitch()
+{
+	if (m_SpecialMap.at(GLUT_KEY_F1))
+		return 0;
+	if (m_SpecialMap.at(GLUT_KEY_F2))
+		return 1;
+	if (m_SpecialMap.at(GLUT_KEY_F3))
+		return 2;
+	return -1;
+}
+
 void InputManager::KeyPressedCallback(unsigned char key) {
 	m_KeyMap.insert_or_assign(key, true);
 }
@@ -31,6 +42,8 @@ void InputManager::SpecialPressedCallback(int key) {
 void InputManager::SpecialReleasedCallback(int key) {
 	m_SpecialMap.insert_or_assign(key, false);
 }
+
+
 
 void InputManager::MouseCallback(int x, int y) {
 	m_MousePos.x += (x - m_WindowCenter.x);
@@ -50,6 +63,9 @@ InputManager::InputManager() {
 	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_LEFT, false));
 	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_RIGHT, false));
 	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_SHIFT_L, false));
+	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_F1, false));
+	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_F2, false));
+	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_F3, false));
 
 	m_WindowCenter = glm::vec2();
 	m_WindowCenter.x = glutGet(GLUT_WINDOW_X) + glutGet(GLUT_WINDOW_WIDTH) / 2;

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Resource Files\Shaders">
-      <UniqueIdentifier>{6aca1edd-d5ab-49e3-a5f1-606775d031f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\objects">
       <UniqueIdentifier>{78f156a9-3a0d-4fd0-9a08-f12aa0082c58}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,15 @@
     </Filter>
     <Filter Include="Resource Files\models\link">
       <UniqueIdentifier>{cb8f9c76-ae66-4716-8d11-1897d9ccdaf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{6aca1edd-d5ab-49e3-a5f1-606775d031f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\misc">
+      <UniqueIdentifier>{2fa82df5-b47e-49b5-8d39-f89cacd61579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\misc\skybox">
+      <UniqueIdentifier>{f60bddd8-4008-42e8-96fb-d44d671fc7ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +96,12 @@
     <ClCompile Include="src\objects\Rupee.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\Spotlight.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h">
@@ -146,6 +158,12 @@
     <ClInclude Include="src\objects\Rupee.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\Spotlight.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple-fs.glsl">
@@ -162,6 +180,12 @@
     </None>
     <None Include="models\link\link.mtl">
       <Filter>Resource Files\models\link</Filter>
+    </None>
+    <None Include="shaders\skybox-fs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\skybox-vs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +314,24 @@
     </Image>
     <Image Include="models\link\pupil_red.png">
       <Filter>Resource Files\models\link</Filter>
+    </Image>
+    <Image Include="misc\skybox\nx.png">
+      <Filter>Resource Files\misc\skybox</Filter>
+    </Image>
+    <Image Include="misc\skybox\ny.png">
+      <Filter>Resource Files\misc\skybox</Filter>
+    </Image>
+    <Image Include="misc\skybox\nz.png">
+      <Filter>Resource Files\misc\skybox</Filter>
+    </Image>
+    <Image Include="misc\skybox\px.png">
+      <Filter>Resource Files\misc\skybox</Filter>
+    </Image>
+    <Image Include="misc\skybox\py.png">
+      <Filter>Resource Files\misc\skybox</Filter>
+    </Image>
+    <Image Include="misc\skybox\pz.png">
+      <Filter>Resource Files\misc\skybox</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

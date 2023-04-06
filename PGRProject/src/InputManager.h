@@ -35,5 +35,6 @@ public:
 
 	glm::vec3 RelativeVelocity() const;
 	glm::quat CalculateRotation();
+	int CameraToSwitch();
 };
 

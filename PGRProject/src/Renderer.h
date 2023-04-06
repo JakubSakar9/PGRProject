@@ -10,16 +10,18 @@
 class Renderer
 {
 private:
-	int m_RefreshRate;
-	unsigned int m_RefreshTimeMs;
-	float m_LastTime;
+	int m_refreshRate;
+	unsigned int m_refreshTimeMs;
+	float m_lastTime;
 
-	ShaderProgram m_ShaderProgram;
-	Scene m_Scene;
+	ShaderProgram::Shaders m_shaders;
+	Scene m_scene;
 
 	Renderer()
-		: m_RefreshRate(DEFAULT_REFRESH_RATE), m_LastTime(0) {
-		m_RefreshTimeMs = 1000.0f / m_RefreshRate;
+		: m_refreshRate(DEFAULT_REFRESH_RATE), m_lastTime(0) {
+		m_refreshTimeMs = 1000.0f / m_refreshRate;
+		m_shaders.defaultShader = new ShaderProgram("Shaders/simple-vs.glsl", "Shaders/simple-fs.glsl", SHADER_TYPE_DEFAULT);
+		m_shaders.skyboxShader = new ShaderProgram("Shaders/skybox-vs.glsl", "Shaders/skybox-fs.glsl", SHADER_TYPE_SKYBOX);
 	}
 public:
 	Renderer(const Renderer&) = delete;
@@ -30,9 +32,10 @@ public:
 	}
 
 	bool Init();
+	bool InitShaders();
 	void Render();	
 	void Update();
 
-	inline unsigned int RefreshTimeMs() const { return m_RefreshTimeMs; }
+	inline unsigned int RefreshTimeMs() const { return m_refreshTimeMs; }
 };
 

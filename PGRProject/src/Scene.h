@@ -9,6 +9,8 @@
 #include "objects/DirectionalLight.h"
 #include "objects/PointLight.h"
 #include "objects/Rupee.h"
+#include "objects/Spotlight.h"
+#include "Skybox.h"
 
 class Scene
 {
@@ -21,6 +23,8 @@ private:
 	
 	Rupee m_RupeeObject;
 
+	Skybox m_skybox;
+
 	AmbientLight m_AmbientLight;
 	DirectionalLight m_DirectionalLight;
 
@@ -28,6 +32,9 @@ private:
 	PointLight m_pointLight2;
 	PointLight m_pointLight3;
 	PointLight m_pointLight4;
+
+	Spotlight m_spotlight1;
+	Spotlight m_spotlight2;
 
 	Camera *m_ViewCamera;
 
@@ -38,8 +45,9 @@ private:
 public:
 	Scene();
 
-	bool Init(ShaderProgram *shaderProgram);
-	void Render(ShaderProgram *shaderProgram);
-	void Update(float deltaTime, ShaderProgram *shaderProgram);
+	bool Init(ShaderProgram::Shaders& shaders);
+	void Render(ShaderProgram::Shaders& shaders);
+	void Update(float deltaTime, ShaderProgram::Shaders& shaders);
+	void SwitchCamera();
 };
 
