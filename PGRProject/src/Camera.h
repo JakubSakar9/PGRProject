@@ -14,6 +14,8 @@ class Camera
 private:
 	glm::vec3 m_Position;
 	glm::quat m_Rotation;
+	glm::vec3 m_lBound;
+	glm::vec3 m_uBound;
 
 	float m_FovDegrees, m_NearPlane, m_FarPlane, m_AspectRatio;
 	float m_MovementSpeed;
@@ -25,6 +27,8 @@ public:
 		, m_FarPlane(1000.0f)
 		, m_AspectRatio(1.0f)
 		, m_Position(glm::vec3(0.0f))
+		, m_lBound(glm::vec3(0.0f))
+		, m_uBound(glm::vec3(0.0f))
 		, m_MovementSpeed(DEFAULT_MOVEMENT_SPEED)
 		, m_dynamic(false)
 	{}
@@ -35,11 +39,14 @@ public:
 		, m_FarPlane(1000.0f)
 		, m_AspectRatio(1.0f)
 		, m_Position(position)
+		, m_lBound(glm::vec3(0.0f))
+		, m_uBound(glm::vec3(0.0f))
 		, m_MovementSpeed(DEFAULT_MOVEMENT_SPEED)
 		, m_dynamic(dynamic)
 	{}
 
 	glm::mat4 ComputeViewMatrix();
+	glm::mat4 ComputeSkyboxViewMatrix();
 
 	inline glm::mat4 ComputeProjectionMatrix() {
 		return glm::perspective(glm::radians(m_FovDegrees), 1.0f, m_NearPlane, m_FarPlane);
@@ -48,6 +55,8 @@ public:
 	bool Init();
 
 	void Update(ShaderProgram *shaderProgram, float deltaTime);
+
+	void ChangeBounds(glm::vec3 lBound, glm::vec3 uBound);
 
 	inline glm::vec3 Position() { return m_Position; }
 };

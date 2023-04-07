@@ -2,6 +2,7 @@
 
 void Skybox::GenSkybox(ShaderProgram* shaderProgram) {
 	LoadCubemap();
+
 	
 	// Generating VBO
 	glGenBuffers(1, &(m_geometry.vertexBufferObject));
@@ -24,9 +25,7 @@ void Skybox::GenSkybox(ShaderProgram* shaderProgram) {
 	CHECK_GL_ERROR();
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_geometry.vertexBufferObject);
-	//glEnableVertexAttribArray(shaderProgram->locations.position);
 	shaderProgram->EnableAttrib("position");
-	//glVertexAttribPointer(shaderProgram->locations.position, 3, GL_FLOAT, GL_FALSE, ATTRIBS_PER_VERTEX * sizeof(float), (void*)0);
 	shaderProgram->AttribFloat("position", 3, ATTRIBS_PER_VERTEX, 0);
 	CHECK_GL_ERROR();
 
@@ -38,18 +37,23 @@ void Skybox::GenSkybox(ShaderProgram* shaderProgram) {
 
 void Skybox::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
 	shaderProgram->UseShader();
-	//glUniformMatrix4fv(shaderProgram->locations.pvmMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix * viewMatrix));
-	glm::mat4 pv = projectionMatrix * viewMatrix;
+	glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(100.0f));
+	glm::mat4 pv = projectionMatrix * viewMatrix * model;
 	shaderProgram->SetUniform("pvMatrix", pv);
 	CHECK_GL_ERROR();
 
+	glDepthFunc(GL_LEQUAL);
+	glFrontFace(GL_CW);
+	glBindVertexArray(m_geometry.vertexArrayObject);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_cubemapTex);
 	CHECK_GL_ERROR();
 
-	glBindVertexArray(m_geometry.vertexArrayObject);
 	glDrawElements(GL_TRIANGLES, sizeof(skyboxIndices) / sizeof(unsigned int), GL_UNSIGNED_INT, nullptr);
 	CHECK_GL_ERROR();
+
+	glDepthFunc(GL_LESS);
+	glFrontFace(GL_CCW);
 }
 
 void Skybox::LoadCubemap() {
