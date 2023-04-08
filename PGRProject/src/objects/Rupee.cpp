@@ -17,6 +17,7 @@ Rupee::Rupee() {
 	m_material->DiffuseMap("NONE");
 	m_material->Specular(1.0f, 0.2f, 0.2f);
 	m_material->SpecularExponent(10.0f);
+	m_material->Dissolve(0.4f, false);
 	m_scale = glm::vec3(1.0f);
 	m_position = glm::vec3(0.0f, 10.0f, 345.0f);
 }

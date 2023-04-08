@@ -44,10 +44,10 @@ bool Scene::Init(ShaderProgram::Shaders& shaders)
     glm::vec3 candle = glm::vec3(1.0f, 0.8f, 0.0f);
     glm::vec3 green = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 red = glm::vec3(1.0f, 0.0f, 0.0f);
-    m_pointLight1 = PointLight(candle, 1.0f, glm::vec3(30.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
-    m_pointLight2 = PointLight(candle, 1.0f, glm::vec3(20.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
-    m_pointLight3 = PointLight(candle, 1.0f, glm::vec3(10.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
-    m_pointLight4 = PointLight(candle, 1.0f, glm::vec3(-10.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
+    m_pointLight1 = PointLight(candle, 0.4f, glm::vec3(30.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
+    m_pointLight2 = PointLight(candle, 0.4f, glm::vec3(20.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
+    m_pointLight3 = PointLight(candle, 0.4f, glm::vec3(10.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
+    m_pointLight4 = PointLight(candle, 0.4f, glm::vec3(-10.0f, 10.0f, 350.0f), glm::vec3(1.0f, 0.005f, 0.0f));
 
     m_spotlight1 = Spotlight(green, 1.0f, glm::vec3(0.0f, 10.0f, 370.0f), glm::vec3(1.0f, 0.005f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f), 45.0f);
     m_spotlight2 = Spotlight(red, 1.0f, glm::vec3(14.0f, 15.0f, 373.0f), glm::vec3(1.0f, 0.001f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f), 30.0f);

@@ -22,7 +22,7 @@ protected:
 		std::vector<float> verticesData;		// vertex attributes stored in a vector
 	} ObjectGeometry;
 
-	glm::vec3 m_localCameraPosition;
+	glm::vec3 m_cameraPosition;
 
 	ObjectGeometry m_geometry;
 	Material* m_material;

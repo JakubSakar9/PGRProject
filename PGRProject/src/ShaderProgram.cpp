@@ -2,10 +2,7 @@
 
 glm::vec3 ShaderProgram::s_cameraPosition;
 
-glm::vec3 ShaderProgram::s_pointLightPositions[MAX_POINT_LIGHTS];
 int ShaderProgram::s_nextPointLightIndex;
-
-glm::vec3 ShaderProgram::s_spotlightPositions[MAX_SPOTLIGHTS];
 int ShaderProgram::s_nextSpotlightIndex;
 
 bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string& fs_source)
@@ -90,8 +87,9 @@ bool ShaderProgram::LoadDefault()
     ATTRIB_LOC("texCoords");
     CHECK_GL_ERROR();
 
-    UNIF_LOC("pvmMatrix");
-    UNIF_LOC("localCameraPosition");
+    UNIF_LOC("pvMatrix");
+    UNIF_LOC("mMatrix");
+    UNIF_LOC("cameraPosition");
     CHECK_GL_ERROR();
 
     UNIF_LOC("colDiffuse");
@@ -101,6 +99,9 @@ bool ShaderProgram::LoadDefault()
 
     UNIF_LOC("colSpecular");
     UNIF_LOC("specularExponent");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("dissolveFactor");
     CHECK_GL_ERROR();
 
     UNIF_LOC("ambientLight.color");

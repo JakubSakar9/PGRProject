@@ -85,27 +85,16 @@ void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
 }
 
 void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
-	m_localCameraPosition = WorldToLocal(cameraPos);
+	m_cameraPosition = cameraPos;
 	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
 }
 
 void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
 	shaderProgram->UseShader();
-	glm::mat4x4 pvm = projectionMatrix * viewMatrix * m_globalModelMatrix;
-	shaderProgram->SetUniform("pvmMatrix", pvm);
-	shaderProgram->SetUniform("localCameraPosition", m_localCameraPosition);
-
-	for (int i = 0; i < ShaderProgram::s_nextPointLightIndex; i++) {
-		glm::vec3 lightPos = WorldToLocal(ShaderProgram::s_pointLightPositions[i]);
-		shaderProgram->SetUniform(PL("position", i), lightPos);
-		CHECK_GL_ERROR();
-	}
-
-	for (int i = 0; i < ShaderProgram::s_nextSpotlightIndex; i++) {
-		glm::vec3 lightPos = WorldToLocal(ShaderProgram::s_spotlightPositions[i]);
-		shaderProgram->SetUniform(SL("position", i), lightPos);
-		CHECK_GL_ERROR();
-	}
+	glm::mat4x4 pv = projectionMatrix * viewMatrix;
+	shaderProgram->SetUniform("pvMatrix", pv);
+	shaderProgram->SetUniform("mMatrix", m_globalModelMatrix);
+	shaderProgram->SetUniform("cameraPosition", m_cameraPosition);
 
 	shaderProgram->SetUniform("useTexDiffuse", (int) m_material->DiffuseMap());
 	glm::vec3 colDiffuse = m_material->Diffuse();
@@ -118,6 +107,9 @@ void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projection
 	float specularExp = m_material->SpecularExponent();
 	shaderProgram->SetUniform("colSpecular", colSpecular);
 	shaderProgram->SetUniform("specularExponent", specularExp);
+	
+	float dissolveFactor = m_material->DissolveFactor();
+	shaderProgram->SetUniform("dissolveFactor", dissolveFactor);
 
 	glBindVertexArray(m_geometry.vertexArrayObject);
 	CHECK_GL_ERROR();

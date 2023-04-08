@@ -5,7 +5,7 @@ Material::Material(std::string name) {
 	m_Ambient = glm::vec3();
 	m_Diffuse = glm::vec3();
 	m_Specular = glm::vec3();
-	m_Transmission = glm::vec3();
+	m_Transmission = glm::vec3(0.0f);
 	m_IlluminationModel = 0;
 	m_DissolveFactor = 0.0f;
 	m_DissolveHalo = false;
@@ -29,6 +29,8 @@ Material::Material(aiMaterial* sourceMaterial, const std::string& assetsDirector
 	sourceMaterial->Get(AI_MATKEY_COLOR_SPECULAR, specularColor);
 	Specular(specularColor.r, specularColor.g, specularColor.b);
 
+	aiGetMaterialFloat(sourceMaterial, AI_MATKEY_OPACITY, &m_DissolveFactor);
+	m_DissolveFactor = 1 - m_DissolveFactor;
 	aiGetMaterialFloat(sourceMaterial, AI_MATKEY_SHININESS, &m_SpecularExponent);
 }
 
@@ -53,6 +55,7 @@ void Material::IlluminationModel(int id) {
 }
 
 void Material::Dissolve(float factor, bool halo) {
+	std::cout << factor << std::endl;
 	m_DissolveFactor = factor;
 	m_DissolveHalo = halo;
 }
@@ -106,6 +109,11 @@ glm::vec3 Material::Specular() {
 
 float Material::SpecularExponent() {
 	return m_SpecularExponent;
+}
+
+float Material::DissolveFactor()
+{
+	return m_DissolveFactor;
 }
 
 GLuint Material::DiffuseMap() {

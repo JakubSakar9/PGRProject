@@ -10,9 +10,9 @@ PointLight::PointLight(glm::vec3 color, float intensity, glm::vec3 position, glm
 
 void PointLight::Update(ShaderProgram* shaderProgram) {
 	shaderProgram->UseShader();
+	shaderProgram->SetUniform(PL("position", m_id), m_position);
 	shaderProgram->SetUniform(PL("color", m_id), m_Color);
 	shaderProgram->SetUniform(PL("attenuation", m_id), m_attenuation);
 	shaderProgram->SetUniform(PL("intensity", m_id), m_Intensity);
-	ShaderProgram::s_pointLightPositions[m_id] = m_position;
 	CHECK_GL_ERROR();
 }

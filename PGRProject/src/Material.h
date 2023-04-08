@@ -49,5 +49,6 @@ public:
 	glm::vec3 Diffuse();
 	glm::vec3 Specular();
 	float SpecularExponent();
+	float DissolveFactor();
 	GLuint DiffuseMap();
 };
