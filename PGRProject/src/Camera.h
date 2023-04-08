@@ -5,6 +5,7 @@
 
 #include "InputManager.h"
 #include "ShaderProgram.h"
+#include "BoxCollider.h"
 
 #define DEFAULT_MOVEMENT_SPEED 1.0f
 #define MOUSE_SENSITIVITY 0.4f
@@ -54,7 +55,7 @@ public:
 
 	bool Init();
 
-	void Update(ShaderProgram *shaderProgram, float deltaTime);
+	void Update(ShaderProgram *shaderProgram, std::vector<BoxCollider*> colliders, float deltaTime);
 
 	void ChangeBounds(glm::vec3 lBound, glm::vec3 uBound);
 

@@ -20,15 +20,15 @@ bool Camera::Init()
 	return true;
 }
 
-void Camera::Update(ShaderProgram* shaderProgram, float deltaTime)
-{
+void Camera::Update(ShaderProgram* shaderProgram, std::vector<BoxCollider*> colliders, float deltaTime) {
 	if (m_dynamic) {
+		glm::vec3 prevPosition = m_Position;
 		std::cout << m_Position.x << " " << m_Position.y << " " << m_Position.z << std::endl;;
 		glm::vec3 velocity = InputManager::Get().RelativeVelocity() * m_MovementSpeed;
 		glm::vec3 deltaPosition = m_Rotation * velocity;
 		m_Rotation = InputManager::Get().CalculateRotation();
 		m_Position += deltaPosition;
-		
+
 		m_Position.x = (m_Position.x < m_lBound.x) ? m_lBound.x : m_Position.x;
 		m_Position.y = (m_Position.y < m_lBound.y) ? m_lBound.y : m_Position.y;
 		m_Position.z = (m_Position.z < m_lBound.z) ? m_lBound.z : m_Position.z;
@@ -36,6 +36,23 @@ void Camera::Update(ShaderProgram* shaderProgram, float deltaTime)
 		m_Position.x = (m_Position.x > m_uBound.x) ? m_uBound.x : m_Position.x;
 		m_Position.y = (m_Position.y > m_uBound.y) ? m_uBound.y : m_Position.y;
 		m_Position.z = (m_Position.z > m_uBound.z) ? m_uBound.z : m_Position.z;
+
+		for (auto c : colliders) {
+			glm::vec3 lBound = c->LBound();
+			glm::vec3 uBound = c->UBound();
+
+			std::cout << "lbound " << lBound.x << " " << lBound.y << " " << lBound.z << std::endl;
+			std::cout << "ubound " << uBound.x << " " << uBound.y << " " << uBound.z << std::endl;
+
+			if (m_Position.x > lBound.x
+				&& m_Position.y > lBound.y
+				&& m_Position.z > lBound.z
+				&& m_Position.x < uBound.x
+				&& m_Position.y < uBound.y
+				&& m_Position.z < uBound.z) {
+				m_Position = prevPosition;
+			}
+		}
 	}
 	ShaderProgram::s_cameraPosition = m_Position;
 }

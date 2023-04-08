@@ -81,9 +81,6 @@
     <ClCompile Include="src\objects\EmptyObject.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\Light.cpp">
-      <Filter>Source Files\objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\AmbientLight.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
@@ -163,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="src\Skybox.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoxCollider.h">
+      <Filter>Header Files\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@ EmptyObject::EmptyObject(const std::vector<WavefrontObject*>& sourceWavefront) {
 }
 
 EmptyObject::EmptyObject(const std::string& name, bool useAssimp) {
-	m_Shader_type = SHADER_TYPE_DEFAULT;
+	m_shaderType = SHADER_TYPE_DEFAULT;
 	std::string sourceFilepath = OBJECT_PATH_PREFIX + name + "/" + name + ".obj";
 	if (useAssimp) {
 		LoadAssimp(sourceFilepath);
@@ -13,7 +13,7 @@ EmptyObject::EmptyObject(const std::string& name, bool useAssimp) {
 	else {
 		LoadCustom(sourceFilepath);
 	}
-	m_Scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
+	m_scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
 }
 
 EmptyObject::~EmptyObject() {

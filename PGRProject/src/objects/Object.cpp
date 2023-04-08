@@ -2,17 +2,17 @@
 #include <iostream>
 
 void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
-	m_LocalModelMatrix = ComputeModelMatrix();
+	m_localModelMatrix = ComputeModelMatrix();
 
 	// if we have parent, multiply parent's matrix with ours
 	if (parentModelMatrix != nullptr)
-		m_Global_model_matrix = *parentModelMatrix * m_LocalModelMatrix;
+		m_globalModelMatrix = *parentModelMatrix * m_localModelMatrix;
 	else
-		m_Global_model_matrix = m_LocalModelMatrix;
+		m_globalModelMatrix = m_localModelMatrix;
 	
 	for (auto child : children) {
 		if (child != nullptr)
-			child->Update(deltaTime, &m_Global_model_matrix, cameraPos);
+			child->Update(deltaTime, &m_globalModelMatrix, cameraPos);
 	}
 }
 
@@ -33,17 +33,26 @@ bool ObjectInstance::GenObjects(ShaderProgram *shaderProgram) {
 }
 
 void ObjectInstance::Translate(glm::vec3 delta) {
-	m_Position += delta;
+	m_position += delta;
 }
 
 void ObjectInstance::Scale(glm::vec3 scale) {
-	m_Scale *= scale;
+	m_scale *= scale;
 }
 
+void ObjectInstance::AddCollider(glm::vec3& size) {
+	m_collider = new BoxCollider(size);
+}
+
+void ObjectInstance::UpdateColliders(std::vector<BoxCollider *>& colliders) {
+	if (m_collider) {
+		colliders.push_back(m_collider->Scale(m_globalModelMatrix));
+	}
+}
 glm::mat4 ObjectInstance::ComputeModelMatrix()
 {
-	glm::mat4 modelMat = glm::scale(glm::mat4(), m_Scale);
-	modelMat = glm::toMat4(m_Rotation) * modelMat;
-	modelMat = glm::translate(modelMat, m_Position);
+	glm::mat4 modelMat = glm::scale(glm::mat4(), m_scale);
+	modelMat = glm::toMat4(m_rotation) * modelMat;
+	modelMat = glm::translate(modelMat, m_position);
 	return modelMat;
 }

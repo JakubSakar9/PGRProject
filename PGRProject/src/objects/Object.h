@@ -9,6 +9,7 @@
 #include "../ShaderType.h"
 #include "../ShaderProgram.h"
 #include "../WavefrontObject.h"
+#include "../BoxCollider.h"
 
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices)
 #define VERTEX_SIZE 8
@@ -18,13 +19,14 @@
 class ObjectInstance {
 
 protected:
-	glm::vec3 m_Position;
-	glm::vec3 m_Scale;
-	glm::quat m_Rotation;
-	glm::mat4 m_LocalModelMatrix;
-	glm::mat4 m_Global_model_matrix;
+	glm::vec3 m_position;
+	glm::vec3 m_scale;
+	glm::quat m_rotation;
+	glm::mat4 m_localModelMatrix;
+	glm::mat4 m_globalModelMatrix;
 	
-	ShaderType m_Shader_type;
+	ShaderType m_shaderType;
+	BoxCollider *m_collider = nullptr;
 	
 	typedef std::vector<ObjectInstance*> ObjectList;
 	ObjectList children;
@@ -49,4 +51,8 @@ public:
 	void Translate(glm::vec3 delta);
 
 	void Scale(glm::vec3 scale);
+
+	void AddCollider(glm::vec3 &size);
+
+	void UpdateColliders(std::vector<BoxCollider *>& colliders);
 };

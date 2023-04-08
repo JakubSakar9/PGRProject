@@ -29,6 +29,8 @@ bool Scene::Init(ShaderProgram::Shaders& shaders)
     m_LinkObject.GenObjects(shaders.defaultShader);
     m_LinkObject.Scale(glm::vec3(4.0f));
     m_LinkObject.Translate(glm::vec3(0.0f, 40.0f, 4000.0f));
+    glm::vec3 linkColliderScale = glm::vec3(30.0f, 300.0f, 30.0f);
+    m_LinkObject.AddCollider(linkColliderScale);
 
     m_RupeeObject = Rupee();
     m_RupeeObject.GenObjects(shaders.defaultShader);
@@ -89,7 +91,9 @@ void Scene::Update(float deltaTime, ShaderProgram::Shaders& shaders)
     m_spotlight2.Update(shaders.defaultShader);
     CHECK_GL_ERROR();
 
-    m_ViewCamera->Update(shaders.defaultShader, deltaTime);
+    std::vector<BoxCollider*> colliders;
+    m_LinkObject.UpdateColliders(colliders);
+    m_ViewCamera->Update(shaders.defaultShader, colliders, deltaTime);
 }
 
 void Scene::SwitchCamera() {

@@ -3,7 +3,7 @@
 
 
 Spotlight::Spotlight(glm::vec3 color, float intensity, glm::vec3 position, glm::vec3 attenuation, glm::vec3 direction, float size) {
-	m_Position = position;
+	m_position = position;
 	m_Color = color;
 	m_Intensity = intensity;
 	m_attenuation = attenuation;
@@ -19,6 +19,6 @@ void Spotlight::Update(ShaderProgram* shaderProgram) {
 	shaderProgram->SetUniform(SL("intensity", m_id), m_Intensity);
 	shaderProgram->SetUniform(SL("direction", m_id), m_direction);
 	shaderProgram->SetUniform(SL("size", m_id), glm::radians(m_sizeDegrees));
-	ShaderProgram::s_spotlightPositions[m_id] = m_Position;
+	ShaderProgram::s_spotlightPositions[m_id] = m_position;
 	CHECK_GL_ERROR();
 }

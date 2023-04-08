@@ -150,7 +150,6 @@
     <ClCompile Include="src\objects\AmbientLight.cpp" />
     <ClCompile Include="src\objects\DirectionalLight.cpp" />
     <ClCompile Include="src\objects\EmptyObject.cpp" />
-    <ClCompile Include="src\objects\Light.cpp" />
     <ClCompile Include="src\objects\Object.cpp" />
     <ClCompile Include="src\objects\PointLight.cpp" />
     <ClCompile Include="src\objects\Rupee.cpp" />
@@ -166,6 +165,7 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BoxCollider.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Material.h" />

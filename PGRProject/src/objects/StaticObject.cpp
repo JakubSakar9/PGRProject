@@ -1,7 +1,7 @@
 #include "StaticObject.h"
 
 StaticObject::StaticObject(const pgr::MeshData& meshData) {
-	m_Shader_type = SHADER_TYPE_DEFAULT;
+	m_shaderType = SHADER_TYPE_DEFAULT;
 	UseLegacyMesh(meshData);
 }
 
@@ -14,7 +14,7 @@ StaticObject::StaticObject(const std::vector<WavefrontObject*>& sourceWavefront)
 }
 
 StaticObject::StaticObject(const std::string& name, bool useAssimp) {
-	m_Shader_type = SHADER_TYPE_DEFAULT;
+	m_shaderType = SHADER_TYPE_DEFAULT;
 	std::string sourceFilepath = OBJECT_PATH_PREFIX + name + "/" + name + ".obj";
 	if (useAssimp) {
 		LoadAssimp(sourceFilepath);
@@ -22,13 +22,13 @@ StaticObject::StaticObject(const std::string& name, bool useAssimp) {
 	else {
 		LoadCustom(sourceFilepath);
 	}
-	m_Scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
+	m_scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
 }
 
 StaticObject::StaticObject(aiMesh* mesh, Material* material)
 {
-	m_Shader_type = SHADER_TYPE_DEFAULT;
-	m_Scale = glm::vec3(1.0f);
+	m_shaderType = SHADER_TYPE_DEFAULT;
+	m_scale = glm::vec3(1.0f);
 
 	m_geometry.numVertices = mesh->mNumVertices;
 	m_geometry.numTriangles = mesh->mNumFaces;
@@ -91,7 +91,7 @@ void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, g
 
 void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
 	shaderProgram->UseShader();
-	glm::mat4x4 pvm = projectionMatrix * viewMatrix * m_Global_model_matrix;
+	glm::mat4x4 pvm = projectionMatrix * viewMatrix * m_globalModelMatrix;
 	shaderProgram->SetUniform("pvmMatrix", pvm);
 	shaderProgram->SetUniform("localCameraPosition", m_localCameraPosition);
 
@@ -174,7 +174,7 @@ void StaticObject::LoadCustom(const std::string& filepath) {
 }
 
 glm::vec3 StaticObject::WorldToLocal(glm::vec3 world) {
-	glm::mat4 inverseMat = glm::inverse(m_Global_model_matrix);
+	glm::mat4 inverseMat = glm::inverse(m_globalModelMatrix);
 	glm::vec4 transformed = inverseMat * glm::vec4(world, 1.0f);
 	return glm::vec3(transformed.x, transformed.y, transformed.z) / transformed.w;
 }

@@ -1,7 +1,7 @@
 #include "Rupee.h"
 
 Rupee::Rupee() {
-	m_Shader_type = SHADER_TYPE_DEFAULT;
+	m_shaderType = SHADER_TYPE_DEFAULT;
 	size_t lenVertices = sizeof(rupeeVertices);
 	size_t lenIndices = sizeof(rupeeIndices);
 	std::copy(rupeeVertices, rupeeVertices + lenVertices, std::back_inserter(m_geometry.verticesData));
@@ -17,8 +17,8 @@ Rupee::Rupee() {
 	m_material->DiffuseMap("NONE");
 	m_material->Specular(1.0f, 0.2f, 0.2f);
 	m_material->SpecularExponent(10.0f);
-	m_Scale = glm::vec3(1.0f);
-	m_Position = glm::vec3(0.0f, 10.0f, 345.0f);
+	m_scale = glm::vec3(1.0f);
+	m_position = glm::vec3(0.0f, 10.0f, 345.0f);
 }
 
 void Rupee::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
