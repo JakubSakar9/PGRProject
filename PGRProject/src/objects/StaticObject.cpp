@@ -1,33 +1,10 @@
 #include "StaticObject.h"
 
 StaticObject::StaticObject(const pgr::MeshData& meshData) {
-	m_shaderType = SHADER_TYPE_DEFAULT;
 	UseLegacyMesh(meshData);
 }
 
-StaticObject::StaticObject(WavefrontObject* sourceWavefront) {
-	// Not yet implemented
-}
-
-StaticObject::StaticObject(const std::vector<WavefrontObject*>& sourceWavefront) {
-	// Not yet implemented
-}
-
-StaticObject::StaticObject(const std::string& name, bool useAssimp) {
-	m_shaderType = SHADER_TYPE_DEFAULT;
-	std::string sourceFilepath = OBJECT_PATH_PREFIX + name + "/" + name + ".obj";
-	if (useAssimp) {
-		LoadAssimp(sourceFilepath);
-	}
-	else {
-		LoadCustom(sourceFilepath);
-	}
-	m_scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
-}
-
-StaticObject::StaticObject(aiMesh* mesh, Material* material)
-{
-	m_shaderType = SHADER_TYPE_DEFAULT;
+StaticObject::StaticObject(aiMesh* mesh, Material* material) {
 	m_scale = glm::vec3(1.0f);
 
 	m_geometry.numVertices = mesh->mNumVertices;
@@ -84,12 +61,15 @@ void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
 		m_geometry.indices.begin());
 }
 
-void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
+void StaticObject::Update(float deltaTime,
+	const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
 	m_cameraPosition = cameraPos;
 	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
 }
 
-void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
+void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+	ShaderProgram* shaderProgram = SH(m_shaderType);
+
 	shaderProgram->UseShader();
 	glm::mat4x4 pv = projectionMatrix * viewMatrix;
 	shaderProgram->SetUniform("pvMatrix", pv);
@@ -116,20 +96,25 @@ void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projection
 	glDrawElements(GL_TRIANGLES, m_geometry.numTriangles * 3, GL_UNSIGNED_INT, nullptr);
 	CHECK_GL_ERROR();
 
-	ObjectInstance::Draw(viewMatrix, projectionMatrix, shaderProgram);
+	ObjectInstance::Draw(viewMatrix, projectionMatrix);
 }
 
-bool StaticObject::GenObjects(ShaderProgram *shaderProgram) {
+bool StaticObject::GenObjects(ShaderType shaderType) {
+	m_shaderType = shaderType;
+	ShaderProgram* shaderProgram = SH(shaderType);
+
 	// Generating VBOs
 	glGenBuffers(1, &(m_geometry.vertexBufferObject));
 	glBindBuffer(GL_ARRAY_BUFFER, m_geometry.vertexBufferObject);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m_geometry.verticesData.size(), m_geometry.verticesData.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * m_geometry.verticesData.size(),
+		m_geometry.verticesData.data(), GL_STATIC_DRAW);
 	CHECK_GL_ERROR();
 
 	// Generating EBO
 	glGenBuffers(1, &(m_geometry.elementBufferObject));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_geometry.elementBufferObject);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * m_geometry.numTriangles * 3, m_geometry.indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * m_geometry.numTriangles * 3,
+		m_geometry.indices.data(), GL_STATIC_DRAW);
 	CHECK_GL_ERROR();
 
 	// Generating VAO
@@ -154,19 +139,5 @@ bool StaticObject::GenObjects(ShaderProgram *shaderProgram) {
 
 	glBindVertexArray(0);
 
-	return ObjectInstance::GenObjects(shaderProgram);
-}
-
-void StaticObject::LoadAssimp(const std::string& filepath) {
-	// Not yet implemented
-}
-
-void StaticObject::LoadCustom(const std::string& filepath) {
-	// Not yet implemented
-}
-
-glm::vec3 StaticObject::WorldToLocal(glm::vec3 world) {
-	glm::mat4 inverseMat = glm::inverse(m_globalModelMatrix);
-	glm::vec4 transformed = inverseMat * glm::vec4(world, 1.0f);
-	return glm::vec3(transformed.x, transformed.y, transformed.z) / transformed.w;
+	return ObjectInstance::GenObjects(shaderType);
 }

@@ -12,7 +12,8 @@ Spotlight::Spotlight(glm::vec3 color, float intensity, glm::vec3 position, glm::
 	m_id = ShaderProgram::s_nextSpotlightIndex++;
 }
 
-void Spotlight::Update(ShaderProgram* shaderProgram) {
+void Spotlight::Update(float deltaTime) {
+	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform(SL("position", m_id), m_position);
 	shaderProgram->SetUniform(SL("color", m_id), m_Color);

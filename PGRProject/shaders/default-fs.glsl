@@ -53,8 +53,11 @@ uniform DirectionalLight u_directionalLight;
 uniform PointLight u_pointLights[c_maxPointLights];
 uniform Spotlight u_spotlights[c_maxSpotlights];
 
-vec3 computeDiffuse(vec3 pointLightContributions[c_maxPointLights], vec3 pointLightDirections[c_maxPointLights],
-					vec3 spotlightContributions[c_maxSpotlights], vec3 spotlightDirections[c_maxSpotlights], vec3 normal) {
+vec3 computeDiffuse(vec3 pointLightContributions[c_maxPointLights],
+					vec3 pointLightDirections[c_maxPointLights],
+					vec3 spotlightContributions[c_maxSpotlights],
+					vec3 spotlightDirections[c_maxSpotlights],
+					vec3 normal) {
 	vec3 result = vec3(0.0f, 0.0f, 0.0f);
 	for (int i = 0; i < c_maxPointLights; i++) {
 		float diffuseFactor = dot(normal, -pointLightDirections[i]);
@@ -70,8 +73,11 @@ vec3 computeDiffuse(vec3 pointLightContributions[c_maxPointLights], vec3 pointLi
 	return clamp(result, 0.0f, 1.0f);
 }
 
-vec3 computeSpecular(vec3 pointLightContributions[c_maxPointLights], vec3 pointLightDirections[c_maxPointLights],
-					vec3 spotlightContributions[c_maxSpotlights], vec3 spotlightDirections[c_maxSpotlights], vec3 normal) {
+vec3 computeSpecular(vec3 pointLightContributions[c_maxPointLights],
+					 vec3 pointLightDirections[c_maxPointLights],
+					 vec3 spotlightContributions[c_maxSpotlights],
+					 vec3 spotlightDirections[c_maxSpotlights],
+					 vec3 normal) {
 	vec3 result = vec3(0.0f, 0.0f, 0.0f);
 	vec3 view = normalize(u_cameraPosition - position_v);
 	for (int i = 0; i < c_maxPointLights; i++) {
@@ -103,6 +109,9 @@ void main()
 	if (albedo.a < 0.1) {
 		discard;
 	}
+
+	if (u_dissolveFactor < 0.05f)
+		discard;
 
 	// Computing several light properties ahead of time
 	vec3 pointLightDirections[c_maxPointLights];
@@ -137,12 +146,11 @@ void main()
 	vec3 ambientComponent = u_ambientLight.color * u_ambientLight.intensity;
 	vec3 diffuseComponent = computeDiffuse(pointLightContributions, pointLightDirections, spotlightContributions, spotlightDirections, normalize(normal_v));
 	vec3 specularComponent = computeSpecular(pointLightContributions, pointLightDirections, spotlightContributions, spotlightDirections, normalize(normal_v));
-	vec4 tempColor = albedo * vec4((ambientComponent + diffuseComponent + specularComponent), 1 - u_dissolveFactor);
+	vec4 tempColor = albedo * vec4((ambientComponent + diffuseComponent + specularComponent), u_dissolveFactor);
 	
 	float d = length(position_v - u_cameraPosition);
-	float disparity = 1.0f / (1.0f + d);
-	float fogFactor = clamp(exp2(-disparity * 10.0f), 0.0f, 0.5f);
-	fogFactor /= (1.0f + position_v.y * 0.2f);
+	float fogFactor = clamp(1 - exp(-d * 1000.0f), 0.0f, 0.9f);
+	fogFactor /= (1.0f + position_v.y * 0.05f);
 	vec3 fogColor = vec3(0.4f);
 	
 	fragmentColor = (1 - fogFactor) * tempColor + fogFactor * vec4(fogColor, 1.0f);

@@ -1,7 +1,6 @@
 #include "Rupee.h"
 
 Rupee::Rupee() {
-	m_shaderType = SHADER_TYPE_DEFAULT;
 	size_t lenVertices = sizeof(rupeeVertices);
 	size_t lenIndices = sizeof(rupeeIndices);
 	std::copy(rupeeVertices, rupeeVertices + lenVertices, std::back_inserter(m_geometry.verticesData));
@@ -26,11 +25,11 @@ void Rupee::Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec
 	StaticObject::Update(deltaTime, parentModelMatrix, cameraPos);
 }
 
-void Rupee::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram) {
-	StaticObject::Draw(viewMatrix, projectionMatrix, shaderProgram);
+void Rupee::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+	StaticObject::Draw(viewMatrix, projectionMatrix);
 }
 
-bool Rupee::GenObjects(ShaderProgram* shaderProgram)
-{
-	return StaticObject::GenObjects(shaderProgram);
+bool Rupee::GenObjects(ShaderType shaderType) {
+	m_shaderType = shaderType;
+	return StaticObject::GenObjects(shaderType);
 }

@@ -44,9 +44,9 @@ public:
 	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
 
 	/// calls draw on child nodes
-	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram *shaderProgram);
+	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
-	virtual bool GenObjects(ShaderProgram *shaderProgram);
+	virtual bool GenObjects(ShaderType shaderType);
 	
 	void Translate(glm::vec3 delta);
 

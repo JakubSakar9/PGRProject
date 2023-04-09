@@ -1,5 +1,6 @@
 #pragma once
 #include "StaticObject.h"
+#include "EyeObject.h"
 #include "Object.h"
 
 class EmptyObject :

@@ -17,6 +17,7 @@
 #define UNIF_LOC(s) CreateUniformLocation(std::string(s), std::string("u_") + std::string(s))
 #define PL_LOC(at, idx) {std::string str = std::string("pointLights[" + std::to_string(idx) + std::string("].") + std::string(at)); UNIF_LOC(str);}
 #define SL_LOC(at, idx) {std::string str = std::string("spotlights[" + std::to_string(idx) + std::string("].") + std::string(at)); UNIF_LOC(str);}
+#define SH(st) ShaderProgram::GetShader(st)
 
 class ShaderProgram
 {
@@ -28,12 +29,9 @@ private:
 	std::string m_fragmentShaderPath;
 
 	ShaderType m_shaderType;
-public:
-	struct Shaders {
-		ShaderProgram* defaultShader;
-		ShaderProgram* skyboxShader;
-	};
 
+	static std::map<ShaderType, ShaderProgram*> s_shaders;
+public:
 	static glm::vec3 s_cameraPosition;
 
 	static glm::vec3 s_pointLightPositions[MAX_POINT_LIGHTS];
@@ -46,6 +44,8 @@ private:
 	bool LoadShaders();
 	bool LoadDefault();
 	bool LoadSkybox();
+	bool LoadEye();
+
 	bool CreateShader(const std::string &vsSource, const std::string& fsSource);
 	void InitPointLightLocations();
 	void InitSpotlightLocations();
@@ -54,10 +54,12 @@ private:
 
 public:
 	ShaderProgram() {}
-	inline ShaderProgram(std::string vsPath, std::string fsPath, ShaderType shaderType)
+	ShaderProgram(std::string vsPath, std::string fsPath, ShaderType shaderType)
 		: m_vertexShaderPath(vsPath)
 		, m_fragmentShaderPath(fsPath)
-		, m_shaderType(shaderType) {}
+		, m_shaderType(shaderType) {
+		ShaderProgram::s_shaders.insert(std::pair<ShaderType, ShaderProgram*>(shaderType, this));
+	}
 
 	void UseShader();
 	bool Init();
@@ -93,5 +95,7 @@ public:
 	}
 
 	GLint GetLocation(std::string name);
+
+	static ShaderProgram* GetShader(ShaderType type);
 };
 

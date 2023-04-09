@@ -591,8 +591,8 @@ public:
 	Rupee();
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
-	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram);
+	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
-	bool GenObjects(ShaderProgram* shaderProgram);
+	bool GenObjects(ShaderType shaderType);
 };
 

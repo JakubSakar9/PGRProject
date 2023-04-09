@@ -17,6 +17,12 @@ Material::Material(aiMaterial* sourceMaterial, const std::string& assetsDirector
 		aiString sourceDiffusePath;
 		if (sourceMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &sourceDiffusePath, nullptr, nullptr, nullptr, nullptr, nullptr) == AI_SUCCESS) {
 			std::string diffusePath(assetsDirectory + sourceDiffusePath.data);
+			if (diffusePath.find("eye_anim") != std::string::npos) {
+				m_eye = true;
+			}
+			else {
+				m_eye = false;
+			}
 			DiffuseMap(diffusePath);
 		}
 		
@@ -30,7 +36,7 @@ Material::Material(aiMaterial* sourceMaterial, const std::string& assetsDirector
 	Specular(specularColor.r, specularColor.g, specularColor.b);
 
 	aiGetMaterialFloat(sourceMaterial, AI_MATKEY_OPACITY, &m_DissolveFactor);
-	m_DissolveFactor = 1 - m_DissolveFactor;
+	m_DissolveFactor = m_DissolveFactor;
 	aiGetMaterialFloat(sourceMaterial, AI_MATKEY_SHININESS, &m_SpecularExponent);
 }
 
@@ -55,7 +61,6 @@ void Material::IlluminationModel(int id) {
 }
 
 void Material::Dissolve(float factor, bool halo) {
-	std::cout << factor << std::endl;
 	m_DissolveFactor = factor;
 	m_DissolveHalo = halo;
 }

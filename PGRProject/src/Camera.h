@@ -55,7 +55,7 @@ public:
 
 	bool Init();
 
-	void Update(ShaderProgram *shaderProgram, std::vector<BoxCollider*> colliders, float deltaTime);
+	void Update(std::vector<BoxCollider*> colliders, float deltaTime);
 
 	void ChangeBounds(glm::vec3 lBound, glm::vec3 uBound);
 

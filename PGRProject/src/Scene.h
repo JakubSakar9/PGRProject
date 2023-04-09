@@ -12,6 +12,7 @@
 #include "objects/Spotlight.h"
 #include "Skybox.h"
 
+
 class Scene
 {
 private:
@@ -45,9 +46,9 @@ private:
 public:
 	Scene();
 
-	bool Init(ShaderProgram::Shaders& shaders);
-	void Render(ShaderProgram::Shaders& shaders);
-	void Update(float deltaTime, ShaderProgram::Shaders& shaders);
+	bool Init();
+	void Render();
+	void Update(float deltaTime);
 	void SwitchCamera();
 };
 

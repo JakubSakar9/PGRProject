@@ -4,7 +4,7 @@ bool Renderer::Init() {
     bool ret = true;
     ilInit();
     ret &= InitShaders();
-    ret &= m_scene.Init(m_shaders);
+    ret &= m_scene.Init();
 
     CHECK_GL_ERROR();
     
@@ -28,14 +28,15 @@ bool Renderer::Init() {
 bool Renderer::InitShaders()
 {
     bool ret = true;
-    m_shaders.defaultShader->Init();
-    m_shaders.skyboxShader->Init();
+    for (int st = 0; st != SHADER_TYPE_N; st++) {
+        ShaderProgram::GetShader((ShaderType) st)->Init();
+    }
     return ret;
 }
 
 void Renderer::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    m_scene.Render(m_shaders);
+    m_scene.Render();
     CHECK_GL_ERROR();
     glutSwapBuffers();
 }
@@ -43,6 +44,6 @@ void Renderer::Render() {
 void Renderer::Update() {
     float deltaTime = glutGet(GLUT_ELAPSED_TIME) - m_lastTime;
     m_lastTime = glutGet(GLUT_ELAPSED_TIME);
-    m_scene.Update(deltaTime, m_shaders);
+    m_scene.Update(deltaTime);
     CHECK_GL_ERROR();
 }

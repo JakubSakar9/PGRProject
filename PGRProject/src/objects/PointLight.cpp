@@ -8,7 +8,8 @@ PointLight::PointLight(glm::vec3 color, float intensity, glm::vec3 position, glm
 	m_id = ShaderProgram::s_nextPointLightIndex++;
 }
 
-void PointLight::Update(ShaderProgram* shaderProgram) {
+void PointLight::Update(float deltaTime) {
+	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform(PL("position", m_id), m_position);
 	shaderProgram->SetUniform(PL("color", m_id), m_Color);

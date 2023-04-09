@@ -17,6 +17,6 @@ public:
     Spotlight(glm::vec3 color, float intensity, glm::vec3 position, glm::vec3 attenuation, glm::vec3 direction, float size);
     ~Spotlight() {}
 
-    void Update(ShaderProgram* shaderProgram);
+    void Update(float deltaTime);
 };
 

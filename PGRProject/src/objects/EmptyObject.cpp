@@ -44,7 +44,14 @@ void EmptyObject::LoadAssimp(const std::string& filepath) {
 
 
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
-		ObjectInstance *newObject = new StaticObject(scene->mMeshes[i], materials[scene->mMeshes[i]->mMaterialIndex]);
+		int materialIndex = scene->mMeshes[i]->mMaterialIndex;
+		ObjectInstance* newObject;
+		if (materials[materialIndex]->m_eye) {
+			newObject = new EyeObject(scene->mMeshes[i], materials[materialIndex]);
+		}
+		else {
+			newObject = new StaticObject(scene->mMeshes[i], materials[materialIndex]);
+		}
 		children.push_back(newObject);
 	}
 	std::reverse(children.begin(), children.end());

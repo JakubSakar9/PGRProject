@@ -13,30 +13,30 @@ Scene::Scene()
     m_RootModelMatrix = glm::mat4(1.0f);
 }
 
-bool Scene::Init(ShaderProgram::Shaders& shaders)
+bool Scene::Init()
 {
     m_DynamicCamera.Init();
     m_StaticCamera1.Init();
     m_StaticCamera2.Init();
 
     m_RootObject = EmptyObject("Island", true);
-    m_RootObject.GenObjects(shaders.defaultShader);
+    m_RootObject.GenObjects(SHADER_TYPE_DEFAULT);
 
     m_SeaObject = EmptyObject("Sea", true);
-    m_SeaObject.GenObjects(shaders.defaultShader);
+    m_SeaObject.GenObjects(SHADER_TYPE_DEFAULT);
 
     m_LinkObject = EmptyObject("Link", true);
-    m_LinkObject.GenObjects(shaders.defaultShader);
+    m_LinkObject.GenObjects(SHADER_TYPE_DEFAULT);
     m_LinkObject.Scale(glm::vec3(4.0f));
     m_LinkObject.Translate(glm::vec3(0.0f, 40.0f, 4000.0f));
     glm::vec3 linkColliderScale = glm::vec3(30.0f, 300.0f, 30.0f);
     m_LinkObject.AddCollider(linkColliderScale);
 
     m_RupeeObject = Rupee();
-    m_RupeeObject.GenObjects(shaders.defaultShader);
+    m_RupeeObject.GenObjects(SHADER_TYPE_DEFAULT);
     
     m_skybox = Skybox();
-    m_skybox.GenSkybox(shaders.skyboxShader);
+    m_skybox.GenSkybox(SHADER_TYPE_SKYBOX);
 
     m_AmbientLight = AmbientLight(glm::vec3(.0f, .1f, .3f), .3f);
     m_DirectionalLight = DirectionalLight(glm::vec3(.2f, .3f, .6f), 1.5f, glm::vec3(0.1, -0.1, -0.5));
@@ -55,21 +55,21 @@ bool Scene::Init(ShaderProgram::Shaders& shaders)
     return true;
 }
 
-void Scene::Render(ShaderProgram::Shaders& shaders)
+void Scene::Render()
 {
     glm::mat4 viewMat = m_ViewCamera->ComputeViewMatrix();
     glm::mat4 projMat = m_ViewCamera->ComputeProjectionMatrix();
-    m_SeaObject.Draw(viewMat, projMat, shaders.defaultShader);
-    m_RootObject.Draw(viewMat, projMat, shaders.defaultShader);
-    m_LinkObject.Draw(viewMat, projMat, shaders.defaultShader);
-    m_RupeeObject.Draw(viewMat, projMat, shaders.defaultShader);
+    m_SeaObject.Draw(viewMat, projMat);
+    m_RootObject.Draw(viewMat, projMat);
+    m_LinkObject.Draw(viewMat, projMat);
+    m_RupeeObject.Draw(viewMat, projMat);
 
     viewMat = m_ViewCamera->ComputeSkyboxViewMatrix();
-    m_skybox.Draw(viewMat, projMat, shaders.skyboxShader);
+    m_skybox.Draw(viewMat, projMat);
     glBindVertexArray(0);
 }
 
-void Scene::Update(float deltaTime, ShaderProgram::Shaders& shaders)
+void Scene::Update(float deltaTime)
 {
     SwitchCamera();
     m_RootObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
@@ -77,23 +77,23 @@ void Scene::Update(float deltaTime, ShaderProgram::Shaders& shaders)
     m_LinkObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
     m_RupeeObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
 
-    m_AmbientLight.Update(shaders.defaultShader);
+    m_AmbientLight.Update(deltaTime);
     CHECK_GL_ERROR();
-    m_DirectionalLight.Update(shaders.defaultShader);
+    m_DirectionalLight.Update(deltaTime);
     CHECK_GL_ERROR();
 
-    m_pointLight1.Update(shaders.defaultShader);
-    m_pointLight2.Update(shaders.defaultShader);
-    m_pointLight3.Update(shaders.defaultShader);
-    m_pointLight4.Update(shaders.defaultShader);
+    m_pointLight1.Update(deltaTime);
+    m_pointLight2.Update(deltaTime);
+    m_pointLight3.Update(deltaTime);
+    m_pointLight4.Update(deltaTime);
 
-    m_spotlight1.Update(shaders.defaultShader);
-    m_spotlight2.Update(shaders.defaultShader);
+    m_spotlight1.Update(deltaTime);
+    m_spotlight2.Update(deltaTime);
     CHECK_GL_ERROR();
 
     std::vector<BoxCollider*> colliders;
     m_LinkObject.UpdateColliders(colliders);
-    m_ViewCamera->Update(shaders.defaultShader, colliders, deltaTime);
+    m_ViewCamera->Update(colliders, deltaTime);
 }
 
 void Scene::SwitchCamera() {

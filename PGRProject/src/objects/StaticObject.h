@@ -29,9 +29,6 @@ protected:
 public:
 	StaticObject() {}
 	StaticObject(const pgr::MeshData& meshData);
-	StaticObject(WavefrontObject* sourceWavefront);
-	StaticObject(const std::vector<WavefrontObject*>& sourceWavefront);
-	StaticObject(const std::string& name, bool useAssimp);
 	StaticObject(aiMesh* mesh, Material* material);
 	~StaticObject();
 
@@ -44,14 +41,8 @@ public:
 	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
 
 	/// calls draw on child nodes
-	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram* shaderProgram);
+	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
-	virtual bool GenObjects(ShaderProgram* shaderProgram);
-
-	void LoadAssimp(const std::string& filepath);
-
-	void LoadCustom(const std::string& filepath);
-
-	glm::vec3 WorldToLocal(glm::vec3 world);
+	virtual bool GenObjects(ShaderType shaderType);
 };
 

@@ -16,18 +16,19 @@ void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix,
 	}
 }
 
-void ObjectInstance::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix, ShaderProgram *shaderProgram) {
+void ObjectInstance::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
 	// process all children
 	for (auto child : children) {
 		if (child != nullptr)
-			child->Draw(viewMatrix, projectionMatrix, shaderProgram);
+			child->Draw(viewMatrix, projectionMatrix);
 	}
 }
 
-bool ObjectInstance::GenObjects(ShaderProgram *shaderProgram) {
+bool ObjectInstance::GenObjects(ShaderType shaderType) {
+	m_shaderType = shaderType;
 	for (auto child : children) {
 		if (child != nullptr)
-			child->GenObjects(shaderProgram);
+			child->GenObjects(shaderType);
 	}
 	return true;
 }

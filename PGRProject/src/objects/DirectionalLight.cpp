@@ -6,7 +6,8 @@ DirectionalLight::DirectionalLight(glm::vec3 color, float intensity, glm::vec3 d
 	m_Intensity = intensity;
 }
 
-void DirectionalLight::Update(ShaderProgram* shaderProgram) {
+void DirectionalLight::Update(float deltaTime) {
+	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	glm::vec3 direction = m_rotation * m_Direction;
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform("directionalLight.color", m_Color);

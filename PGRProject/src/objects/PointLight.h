@@ -14,6 +14,6 @@ public:
 	PointLight(glm::vec3 color, float intensity, glm::vec3 position, glm::vec3 attenuation);
 	~PointLight() {}
 
-	void Update(ShaderProgram* shaderProgram);
+	void Update(float deltaTime);
 };
 

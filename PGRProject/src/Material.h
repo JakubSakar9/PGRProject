@@ -24,9 +24,12 @@ private:
 	float m_SpecularExponent;
 	float m_Sharpness;
 	float m_IndexOfRefraction;
+
 	bool m_DissolveHalo;
 	bool m_Antialiased;
 public:
+	bool m_eye = false;
+
 	Material(std::string name);
 
 	Material(aiMaterial* material, const std::string& assetsDirectory);

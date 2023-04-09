@@ -12,5 +12,5 @@ public:
 	DirectionalLight(glm::vec3 color, float intensity, glm::vec3 direction);
 	~DirectionalLight() {}
 
-	void Update(ShaderProgram* shaderProgram);
+	void Update(float deltaTime);
 };

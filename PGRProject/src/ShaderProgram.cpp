@@ -5,8 +5,9 @@ glm::vec3 ShaderProgram::s_cameraPosition;
 int ShaderProgram::s_nextPointLightIndex;
 int ShaderProgram::s_nextSpotlightIndex;
 
-bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string& fs_source)
-{
+std::map<ShaderType, ShaderProgram*> ShaderProgram::s_shaders;
+
+bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string& fs_source) {
     std::cerr << "Creating shaders..." << std::endl;
     GLuint vertexShader = pgr::createShaderFromFile(GL_VERTEX_SHADER, vs_source);
     GLuint fragmentShader = pgr::createShaderFromFile(GL_FRAGMENT_SHADER, fs_source);
@@ -33,16 +34,14 @@ bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string
     return true;
 }
 
-void ShaderProgram::UseShader()
-{
+void ShaderProgram::UseShader() {
     glUseProgram(m_programObject);
     if (m_shaderType == SHADER_TYPE_DEFAULT)
         glUniform1i(GetLocation("texDiffuse"), 0);
     CHECK_GL_ERROR();
 }
 
-bool ShaderProgram::Init()
-{
+bool ShaderProgram::Init() {
     if (!LoadShaders()) {
         std::cerr << "Failed to load shaders" << std::endl;
         return false;
@@ -50,16 +49,18 @@ bool ShaderProgram::Init()
     return true;
 }
 
-GLint ShaderProgram::GetLocation(std::string name)
-{
+GLint ShaderProgram::GetLocation(std::string name) {
     auto it = m_locations.find(name);
     if (it == m_locations.end())
         return 0;
     return m_locations.at(name);
 }
 
-bool ShaderProgram::LoadShaders()
-{
+ShaderProgram* ShaderProgram::GetShader(ShaderType type) {
+    return s_shaders.at(type);
+}
+
+bool ShaderProgram::LoadShaders() {
     bool err = !CreateShader(m_vertexShaderPath, m_fragmentShaderPath);
     if (err) {
         std::cerr << "Failed to create shader" << std::endl;
@@ -73,6 +74,9 @@ bool ShaderProgram::LoadShaders()
     case SHADER_TYPE_SKYBOX:
         LoadSkybox();
         break;
+    case SHADER_TYPE_EYE:
+        LoadEye();
+        break;
     }
 
     CHECK_GL_ERROR();
@@ -80,8 +84,7 @@ bool ShaderProgram::LoadShaders()
     return true;
 }
 
-bool ShaderProgram::LoadDefault()
-{
+bool ShaderProgram::LoadDefault() {
     ATTRIB_LOC("position");
     ATTRIB_LOC("normal");
     ATTRIB_LOC("texCoords");
@@ -121,14 +124,32 @@ bool ShaderProgram::LoadDefault()
     return false;
 }
 
-bool ShaderProgram::LoadSkybox()
-{
+bool ShaderProgram::LoadSkybox() {
     ATTRIB_LOC("position");
     CHECK_GL_ERROR();
 
     UNIF_LOC("pvMatrix");
     CHECK_GL_ERROR();
     return false;
+}
+
+bool ShaderProgram::LoadEye() {
+    ATTRIB_LOC("position");
+    ATTRIB_LOC("texCoords");
+    CHECK_GL_ERROR();
+
+    //UNIF_LOC("colDiffuse");
+    UNIF_LOC("texDiffuse");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("pvMatrix");
+    UNIF_LOC("mMatrix");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("frameId");
+    UNIF_LOC("numFrames");
+    CHECK_GL_ERROR();
+    return true;
 }
 
 void ShaderProgram::InitPointLightLocations() {

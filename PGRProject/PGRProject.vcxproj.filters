@@ -40,6 +40,12 @@
     <Filter Include="Resource Files\misc\skybox">
       <UniqueIdentifier>{f60bddd8-4008-42e8-96fb-d44d671fc7ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\objects\utils">
+      <UniqueIdentifier>{173ed384-b48a-4d6d-ab72-abbd71bbeb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\objects\utils">
+      <UniqueIdentifier>{c8fd4eda-a07f-4131-a63d-02460b2719e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp">
@@ -98,6 +104,12 @@
     </ClCompile>
     <ClCompile Include="src\Skybox.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\EyeObject.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\utils\Nurbs.cpp">
+      <Filter>Source Files\objects\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,12 +176,21 @@
     <ClInclude Include="src\BoxCollider.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\EyeObject.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\utils\Nurbs.h">
+      <Filter>Header Files\objects\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\simple-fs.glsl">
+    <None Include="shaders\default-fs.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="shaders\simple-vs.glsl">
+    <None Include="shaders\default-vs.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="objects\Island\Island.mtl">
@@ -185,6 +206,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="shaders\skybox-vs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\eye-fs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\eye-vs.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -349,5 +376,10 @@
     <Text Include="models\link\info.txt">
       <Filter>Resource Files\models\link</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PGRProject.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
