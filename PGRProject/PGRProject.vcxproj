@@ -193,6 +193,7 @@
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="models\Kargaroc\Kargaroc.mtl" />
     <None Include="models\link\link.mtl" />
     <None Include="models\Sea\Sea.mtl" />
     <None Include="objects\Island\Island.mtl" />
@@ -210,6 +211,10 @@
     <Image Include="misc\skybox\px.png" />
     <Image Include="misc\skybox\py.png" />
     <Image Include="misc\skybox\pz.png" />
+    <Image Include="models\Kargaroc\KargSS00.png" />
+    <Image Include="models\Kargaroc\KargSS01.png" />
+    <Image Include="models\Kargaroc\KargSS02.png" />
+    <Image Include="models\Kargaroc\KargSS03.png" />
     <Image Include="models\link\body.png" />
     <Image Include="models\link\eye1.png" />
     <Image Include="models\link\eye2.png" />
@@ -254,6 +259,10 @@
     <Image Include="objects\Island\OutsSS07.png" />
   </ItemGroup>
   <ItemGroup>
+    <Object Include="models\Kargaroc\Kargaroc.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="models\link\link.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

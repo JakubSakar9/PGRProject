@@ -92,6 +92,7 @@ vec3 computeSpecular(vec3 pointLightContributions[c_maxPointLights],
 	}
 	vec3 reflection = normalize(reflect(u_directionalLight.direction, normal_v));
 	float specularFactor = dot(view, reflection);
+	specularFactor = pow(specularFactor, u_specularExponent);
 	result += specularFactor * u_directionalLight.intensity * u_directionalLight.color;
 	result *= u_colSpecular;
 	return clamp(result, 0.0f, 1.0f);
@@ -144,13 +145,15 @@ void main()
 	float diffuseFactor = dot(normalize(normal_v), -normalize(u_directionalLight.direction));
 
 	vec3 ambientComponent = u_ambientLight.color * u_ambientLight.intensity;
-	vec3 diffuseComponent = computeDiffuse(pointLightContributions, pointLightDirections, spotlightContributions, spotlightDirections, normalize(normal_v));
-	vec3 specularComponent = computeSpecular(pointLightContributions, pointLightDirections, spotlightContributions, spotlightDirections, normalize(normal_v));
+	vec3 diffuseComponent = computeDiffuse(pointLightContributions, pointLightDirections,
+	spotlightContributions, spotlightDirections, normalize(normal_v));
+	vec3 specularComponent = computeSpecular(pointLightContributions, pointLightDirections,
+	spotlightContributions, spotlightDirections, normalize(normal_v));
 	vec4 tempColor = albedo * vec4((ambientComponent + diffuseComponent + specularComponent), u_dissolveFactor);
 	
 	float d = length(position_v - u_cameraPosition);
-	float fogFactor = clamp(1 - exp(-d * 1000.0f), 0.0f, 0.9f);
-	fogFactor /= (1.0f + position_v.y * 0.05f);
+	float fogFactor = clamp(1 - exp2(-d * 0.05f), 0.0f, 1.0f);
+	fogFactor *= exp(-(position_v.y) * 0.1f);
 	vec3 fogColor = vec3(0.4f);
 	
 	fragmentColor = (1 - fogFactor) * tempColor + fogFactor * vec4(fogColor, 1.0f);

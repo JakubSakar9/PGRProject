@@ -46,6 +46,9 @@
     <Filter Include="Source Files\objects\utils">
       <UniqueIdentifier>{c8fd4eda-a07f-4131-a63d-02460b2719e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\models\Kargaroc">
+      <UniqueIdentifier>{24641c8f-ee34-4875-a713-14b97bb32119}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp">
@@ -214,6 +217,9 @@
     <None Include="shaders\eye-vs.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="models\Kargaroc\Kargaroc.mtl">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="objects\Island\OutsMM02.png">
@@ -360,6 +366,18 @@
     <Image Include="misc\skybox\pz.png">
       <Filter>Resource Files\misc\skybox</Filter>
     </Image>
+    <Image Include="models\Kargaroc\KargSS00.png">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
+    <Image Include="models\Kargaroc\KargSS01.png">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
+    <Image Include="models\Kargaroc\KargSS02.png">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
+    <Image Include="models\Kargaroc\KargSS03.png">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Object Include="objects\Island\Island.obj">
@@ -370,6 +388,9 @@
     </Object>
     <Object Include="models\link\link.obj">
       <Filter>Resource Files\models\link</Filter>
+    </Object>
+    <Object Include="models\Kargaroc\Kargaroc.obj">
+      <Filter>Resource Files\models\Kargaroc</Filter>
     </Object>
   </ItemGroup>
   <ItemGroup>

@@ -18,9 +18,10 @@ class Scene
 private:
 	glm::mat4 m_RootModelMatrix;
 	
-	ObjectInstance m_RootObject;
-	ObjectInstance m_SeaObject;
-	ObjectInstance m_LinkObject;
+	ObjectInstance m_rootObject;
+	ObjectInstance m_seaObject;
+	ObjectInstance m_linkObject;
+	ObjectInstance m_birdObject;
 	
 	Rupee m_RupeeObject;
 

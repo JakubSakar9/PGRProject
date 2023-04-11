@@ -19,18 +19,23 @@ bool Scene::Init()
     m_StaticCamera1.Init();
     m_StaticCamera2.Init();
 
-    m_RootObject = EmptyObject("Island", true);
-    m_RootObject.GenObjects(SHADER_TYPE_DEFAULT);
+    m_rootObject = EmptyObject("Island", true);
+    m_rootObject.GenObjects(SHADER_TYPE_DEFAULT);
 
-    m_SeaObject = EmptyObject("Sea", true);
-    m_SeaObject.GenObjects(SHADER_TYPE_DEFAULT);
+    m_seaObject = EmptyObject("Sea", true);
+    m_seaObject.GenObjects(SHADER_TYPE_DEFAULT);
 
-    m_LinkObject = EmptyObject("Link", true);
-    m_LinkObject.GenObjects(SHADER_TYPE_DEFAULT);
-    m_LinkObject.Scale(glm::vec3(4.0f));
-    m_LinkObject.Translate(glm::vec3(0.0f, 40.0f, 4000.0f));
+    m_linkObject = EmptyObject("Link", true);
+    m_linkObject.GenObjects(SHADER_TYPE_DEFAULT);
+    m_linkObject.Scale(glm::vec3(4.0f));
+    m_linkObject.Translate(glm::vec3(0.0f, 40.0f, 4000.0f));
     glm::vec3 linkColliderScale = glm::vec3(30.0f, 300.0f, 30.0f);
-    m_LinkObject.AddCollider(linkColliderScale);
+    m_linkObject.AddCollider(linkColliderScale);
+
+    m_birdObject = EmptyObject("Kargaroc", true);
+    m_birdObject.GenObjects(SHADER_TYPE_DEFAULT);
+    m_birdObject.Scale(glm::vec3(400.0f));
+    m_birdObject.Translate(glm::vec3(0.0f, 0.0f, 0.0f));
 
     m_RupeeObject = Rupee();
     m_RupeeObject.GenObjects(SHADER_TYPE_DEFAULT);
@@ -59,9 +64,10 @@ void Scene::Render()
 {
     glm::mat4 viewMat = m_ViewCamera->ComputeViewMatrix();
     glm::mat4 projMat = m_ViewCamera->ComputeProjectionMatrix();
-    m_SeaObject.Draw(viewMat, projMat);
-    m_RootObject.Draw(viewMat, projMat);
-    m_LinkObject.Draw(viewMat, projMat);
+    m_seaObject.Draw(viewMat, projMat);
+    m_rootObject.Draw(viewMat, projMat);
+    m_linkObject.Draw(viewMat, projMat);
+    m_birdObject.Draw(viewMat, projMat);
     m_RupeeObject.Draw(viewMat, projMat);
 
     viewMat = m_ViewCamera->ComputeSkyboxViewMatrix();
@@ -72,9 +78,10 @@ void Scene::Render()
 void Scene::Update(float deltaTime)
 {
     SwitchCamera();
-    m_RootObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
-    m_SeaObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
-    m_LinkObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
+    m_rootObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
+    m_seaObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
+    m_linkObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
+    m_birdObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
     m_RupeeObject.Update(deltaTime, nullptr, m_ViewCamera->Position());
 
     m_AmbientLight.Update(deltaTime);
@@ -92,7 +99,7 @@ void Scene::Update(float deltaTime)
     CHECK_GL_ERROR();
 
     std::vector<BoxCollider*> colliders;
-    m_LinkObject.UpdateColliders(colliders);
+    m_linkObject.UpdateColliders(colliders);
     m_ViewCamera->Update(colliders, deltaTime);
 }
 
