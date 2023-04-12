@@ -2,14 +2,21 @@
 
 #include <string>
 
+#include "../utils/json.hpp"
 #include "pgr.h"
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include "../BoxCollider.h"
+#include "../ResourceManager.h"
 #include "../ShaderType.h"
 #include "../ShaderProgram.h"
 #include "../WavefrontObject.h"
-#include "../BoxCollider.h"
+
+#include "EmptyObject.h"
+#include "StaticObject.h"
+#include "Rupee.h"
+#include "Camera.h"
 
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices)
 #define VERTEX_SIZE 8
@@ -24,6 +31,8 @@ protected:
 	glm::quat m_rotation;
 	glm::mat4 m_localModelMatrix;
 	glm::mat4 m_globalModelMatrix;
+
+	std::string m_name;
 	
 	ShaderType m_shaderType;
 	BoxCollider *m_collider = nullptr;
@@ -32,6 +41,10 @@ protected:
 	ObjectList children;
 
 	glm::mat4 ComputeModelMatrix();
+
+	void InitTransform(nlohmann::json source);
+
+	void InitChildren(nlohmann::json source);
 
 public:
 	ObjectInstance() {}
@@ -54,5 +67,5 @@ public:
 
 	void AddCollider(glm::vec3 &size);
 
-	void UpdateColliders(std::vector<BoxCollider *>& colliders);
+	void UpdateColliders(std::vector<BoxCollider*>& colliders);
 };

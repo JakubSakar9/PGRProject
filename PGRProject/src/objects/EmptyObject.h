@@ -10,6 +10,7 @@ public:
 	EmptyObject() {}
 	EmptyObject(const std::vector<WavefrontObject*>& sourceWavefront);
 	EmptyObject(const std::string& name, bool useAssimp);
+	EmptyObject(nlohmann::json source);
 	~EmptyObject();
 
 	void LoadAssimp(const std::string& filepath);

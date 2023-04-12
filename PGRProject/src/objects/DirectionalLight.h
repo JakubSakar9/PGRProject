@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../utils/json.hpp"
+
 #include "Light.h"
 
 class DirectionalLight
@@ -10,6 +12,7 @@ private:
 public:
 	DirectionalLight() {}
 	DirectionalLight(glm::vec3 color, float intensity, glm::vec3 direction);
+	DirectionalLight(nlohmann::json source);
 	~DirectionalLight() {}
 
 	void Update(float deltaTime);

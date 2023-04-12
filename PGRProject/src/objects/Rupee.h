@@ -589,6 +589,7 @@ class Rupee
 {
 public:
 	Rupee();
+	Rupee(nlohmann::json source);
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
 	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);

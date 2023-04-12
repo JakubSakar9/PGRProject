@@ -16,6 +16,11 @@ EmptyObject::EmptyObject(const std::string& name, bool useAssimp) {
 	m_scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
 }
 
+EmptyObject::EmptyObject(nlohmann::json source) {
+	InitTransform(source);
+	InitChildren(source);
+}
+
 EmptyObject::~EmptyObject() {
 	ObjectInstance::~ObjectInstance();
 }

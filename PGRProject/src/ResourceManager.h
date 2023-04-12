@@ -7,12 +7,20 @@
 #include <map>
 #include <sstream>
 
+#include "utils/json.hpp"
+
 #include "WavefrontObject.h"
+
+#define MODEL_PREFIX std::string("models/")
 
 class ResourceManager
 {
 private:
+	std::map<std::string, aiMesh*> m_meshPool;
+
 	ResourceManager() {}
+
+	void LoadAssimp(std::string filename, std::string type);
 public:
 	ResourceManager(const ResourceManager&) = delete;
 
@@ -21,10 +29,10 @@ public:
 		return s_Instance;
 	}
 
-	bool Init();
+	//std::vector<WavefrontObject *> LoadWavefrontObj(std::string filepath);
 
-	std::vector<WavefrontObject *> LoadWavefrontObj(std::string filepath);
+	void LoadJson(std::string name);
 
-	std::map<std::string, Material*> LoadWavefrontMtl(std::string filepath);
+	aiMesh *GetMesh(std::string filename, std::string objectName, std::string type);
 };
 

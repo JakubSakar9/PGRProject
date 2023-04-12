@@ -41,6 +41,15 @@ StaticObject::StaticObject(aiMesh* mesh, Material* material) {
 	m_material = material;
 }
 
+StaticObject::StaticObject(nlohmann::json source) {
+	InitTransform(source);
+	InitChildren(source);
+
+	aiMesh* mesh = ResourceManager::Get().GetMesh(
+		source["source"], source["objname"], source["sourceType"]);
+
+}
+
 StaticObject::~StaticObject() {
 	ObjectInstance::~ObjectInstance();
 }

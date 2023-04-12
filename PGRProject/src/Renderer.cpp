@@ -22,6 +22,7 @@ bool Renderer::Init() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     CHECK_GL_ERROR();
+    ResourceManager::Get().LoadJson("Nothing");
     return ret;
 }
 

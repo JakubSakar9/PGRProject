@@ -49,11 +49,11 @@
     <Filter Include="Resource Files\models\Kargaroc">
       <UniqueIdentifier>{24641c8f-ee34-4875-a713-14b97bb32119}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{cdb6081f-b8d4-45b1-9299-e190e4269374}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,11 +114,11 @@
     <ClCompile Include="src\objects\utils\Nurbs.cpp">
       <Filter>Source Files\objects\utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\Camera.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -188,6 +188,12 @@
     <ClInclude Include="src\objects\utils\Nurbs.h">
       <Filter>Header Files\objects\utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\json.hpp">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\Camera.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\default-fs.glsl">
@@ -219,6 +225,9 @@
     </None>
     <None Include="models\Kargaroc\Kargaroc.mtl">
       <Filter>Resource Files\models\Kargaroc</Filter>
+    </None>
+    <None Include="misc\test.json">
+      <Filter>Resource Files\misc</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -366,16 +375,22 @@
     <Image Include="misc\skybox\pz.png">
       <Filter>Resource Files\misc\skybox</Filter>
     </Image>
-    <Image Include="models\Kargaroc\KargSS00.png">
+    <Image Include="models\Kargaroc\Bbkt_eye.1.png">
       <Filter>Resource Files\models\Kargaroc</Filter>
     </Image>
-    <Image Include="models\Kargaroc\KargSS01.png">
+    <Image Include="models\Kargaroc\Bbkt_eye.2.png">
       <Filter>Resource Files\models\Kargaroc</Filter>
     </Image>
-    <Image Include="models\Kargaroc\KargSS02.png">
+    <Image Include="models\Kargaroc\Bbkt_eye.3.png">
       <Filter>Resource Files\models\Kargaroc</Filter>
     </Image>
-    <Image Include="models\Kargaroc\KargSS03.png">
+    <Image Include="models\Kargaroc\Bbkt_eye.4.png">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
+    <Image Include="models\Kargaroc\Bbkt_eye.5.png">
+      <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
+    <Image Include="models\Kargaroc\BbktTX_CI4.png">
       <Filter>Resource Files\models\Kargaroc</Filter>
     </Image>
   </ItemGroup>

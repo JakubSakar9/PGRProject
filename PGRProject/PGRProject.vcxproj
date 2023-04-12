@@ -144,10 +144,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\objects\AmbientLight.cpp" />
+    <ClCompile Include="src\objects\Camera.cpp" />
     <ClCompile Include="src\objects\DirectionalLight.cpp" />
     <ClCompile Include="src\objects\EmptyObject.cpp" />
     <ClCompile Include="src\objects\EyeObject.cpp" />
@@ -169,10 +169,10 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\BoxCollider.h" />
-    <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\objects\AmbientLight.h" />
+    <ClInclude Include="src\objects\Camera.h" />
     <ClInclude Include="src\objects\DirectionalLight.h" />
     <ClInclude Include="src\objects\EmptyObject.h" />
     <ClInclude Include="src\objects\EyeObject.h" />
@@ -189,10 +189,12 @@
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\ShaderType.h" />
     <ClInclude Include="src\Skybox.h" />
+    <ClInclude Include="src\utils\json.hpp" />
     <ClInclude Include="src\WavefrontObject.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="misc\test.json" />
     <None Include="models\Kargaroc\Kargaroc.mtl" />
     <None Include="models\link\link.mtl" />
     <None Include="models\Sea\Sea.mtl" />
@@ -211,10 +213,12 @@
     <Image Include="misc\skybox\px.png" />
     <Image Include="misc\skybox\py.png" />
     <Image Include="misc\skybox\pz.png" />
-    <Image Include="models\Kargaroc\KargSS00.png" />
-    <Image Include="models\Kargaroc\KargSS01.png" />
-    <Image Include="models\Kargaroc\KargSS02.png" />
-    <Image Include="models\Kargaroc\KargSS03.png" />
+    <Image Include="models\Kargaroc\BbktTX_CI4.png" />
+    <Image Include="models\Kargaroc\Bbkt_eye.1.png" />
+    <Image Include="models\Kargaroc\Bbkt_eye.2.png" />
+    <Image Include="models\Kargaroc\Bbkt_eye.3.png" />
+    <Image Include="models\Kargaroc\Bbkt_eye.4.png" />
+    <Image Include="models\Kargaroc\Bbkt_eye.5.png" />
     <Image Include="models\link\body.png" />
     <Image Include="models\link\eye1.png" />
     <Image Include="models\link\eye2.png" />

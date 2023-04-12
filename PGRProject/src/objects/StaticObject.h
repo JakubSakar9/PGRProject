@@ -30,6 +30,7 @@ public:
 	StaticObject() {}
 	StaticObject(const pgr::MeshData& meshData);
 	StaticObject(aiMesh* mesh, Material* material);
+	StaticObject(nlohmann::json source);
 	~StaticObject();
 
 	void UseLegacyMesh(const pgr::MeshData& meshData);
