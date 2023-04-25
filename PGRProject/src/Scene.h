@@ -3,7 +3,7 @@
 #include "pgr.h"
 
 #include "objects/Object.h"
-#include "Camera.h"
+#include "objects/Camera.h"
 #include "ResourceManager.h"
 #include "objects/AmbientLight.h"
 #include "objects/DirectionalLight.h"
@@ -11,42 +11,34 @@
 #include "objects/Rupee.h"
 #include "objects/Spotlight.h"
 #include "Skybox.h"
+#include "objects/EmptyObject.h"
 
 
 class Scene
 {
 private:
-	glm::mat4 m_RootModelMatrix;
+	static Scene* s_usedScene;
+
+	glm::mat4 m_rootModelMatrix;
 	
-	ObjectInstance m_rootObject;
-	ObjectInstance m_seaObject;
-	ObjectInstance m_linkObject;
-	ObjectInstance m_birdObject;
-	
-	Rupee m_RupeeObject;
+	EmptyObject m_rootObject;
 
 	Skybox m_skybox;
 
 	AmbientLight m_AmbientLight;
 	DirectionalLight m_DirectionalLight;
 
-	PointLight m_pointLight1;
-	PointLight m_pointLight2;
-	PointLight m_pointLight3;
-	PointLight m_pointLight4;
-
-	Spotlight m_spotlight1;
-	Spotlight m_spotlight2;
-
-	Camera *m_ViewCamera;
-
-	Camera m_DynamicCamera;
-	Camera m_StaticCamera1;
-	Camera m_StaticCamera2;
+	int m_selectedCamera;
 	
 public:
-	Scene();
+	Scene() {}
 
+	Scene(std::string name);
+
+	static Scene* Get() {
+		return s_usedScene;
+	}
+	
 	bool Init();
 	void Render();
 	void Update(float deltaTime);

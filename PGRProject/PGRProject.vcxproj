@@ -89,6 +89,7 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(PGR_FRAMEWORK_ROOT)include</AdditionalIncludeDirectories>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,6 +107,7 @@
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(PGR_FRAMEWORK_ROOT)include</AdditionalIncludeDirectories>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,6 +159,7 @@
     <ClCompile Include="src\objects\Spotlight.cpp" />
     <ClCompile Include="src\objects\StaticObject.cpp" />
     <ClCompile Include="src\objects\utils\Nurbs.cpp" />
+    <ClCompile Include="src\objects\Water.cpp" />
     <ClCompile Include="src\PGRProject.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
@@ -182,7 +185,9 @@
     <ClInclude Include="src\objects\Rupee.h" />
     <ClInclude Include="src\objects\Spotlight.h" />
     <ClInclude Include="src\objects\StaticObject.h" />
+    <ClInclude Include="src\objects\utils\MeshData.h" />
     <ClInclude Include="src\objects\utils\Nurbs.h" />
+    <ClInclude Include="src\objects\Water.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Scene.h" />
@@ -194,7 +199,9 @@
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="misc\test.json" />
+    <None Include="data\materials.json" />
+    <None Include="data\scenes\outsetIsland.json" />
+    <None Include="data\scenes\test.json" />
     <None Include="models\Kargaroc\Kargaroc.mtl" />
     <None Include="models\link\link.mtl" />
     <None Include="models\Sea\Sea.mtl" />
@@ -205,14 +212,10 @@
     <None Include="shaders\eye-vs.glsl" />
     <None Include="shaders\skybox-fs.glsl" />
     <None Include="shaders\skybox-vs.glsl" />
+    <None Include="shaders\water-fs.glsl" />
+    <None Include="shaders\water-vs.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="misc\skybox\nx.png" />
-    <Image Include="misc\skybox\ny.png" />
-    <Image Include="misc\skybox\nz.png" />
-    <Image Include="misc\skybox\px.png" />
-    <Image Include="misc\skybox\py.png" />
-    <Image Include="misc\skybox\pz.png" />
     <Image Include="models\Kargaroc\BbktTX_CI4.png" />
     <Image Include="models\Kargaroc\Bbkt_eye.1.png" />
     <Image Include="models\Kargaroc\Bbkt_eye.2.png" />
@@ -261,6 +264,8 @@
     <Image Include="objects\Island\OutsSS05.png" />
     <Image Include="objects\Island\OutsSS06.png" />
     <Image Include="objects\Island\OutsSS07.png" />
+    <Image Include="textures\link_body_albedo.png" />
+    <Image Include="textures\link_eye_albedo.png" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="models\Kargaroc\Kargaroc.obj">

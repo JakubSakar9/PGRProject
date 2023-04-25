@@ -1,57 +1,31 @@
 #include <iostream>
 #include <string>
 
+#include "utils/json.hpp"
 #include "pgr.h"
 
 #pragma once
 class Material {
 private:
-	std::string m_Name;
+	std::string m_name;
 
-	glm::vec3 m_Ambient;
-	glm::vec3 m_Diffuse;
-	glm::vec3 m_Specular;
-	glm::vec3 m_Transmission;
+	glm::vec3 m_albedo;
+	glm::vec3 m_emission;
+	float m_specular;
+	float m_roughness;
+	float m_transmission;
 
-	GLuint m_AmbientMap;
-	GLuint m_DiffuseMap;
-	GLuint m_SpecularMap;
-	GLuint m_DissolveMap;
-	GLuint m_LightnessMap;
-
-	int m_IlluminationModel;
-	float m_DissolveFactor;
-	float m_SpecularExponent;
-	float m_Sharpness;
-	float m_IndexOfRefraction;
-
-	bool m_DissolveHalo;
-	bool m_Antialiased;
+	GLuint m_albedoMap;
 public:
-	bool m_eye = false;
+	Material();
+	Material(nlohmann::json source);
 
-	Material(std::string name);
+	void AlbedoMap(std::string filepath);
 
-	Material(aiMaterial* material, const std::string& assetsDirectory);
-
-	void Ambient(float r, float g, float b);
-	void Diffuse(float r, float g, float b);
-	void Specular(float r, float g, float b);
-	void Transmission(float r, float g, float b);
-	void IlluminationModel(int id);
-	void Dissolve(float factor, bool halo);
-	void SpecularExponent(float exponent);
-	void Sharpness(float value);
-	void IOR(float ior);
-	void AmbientMap(std::string filepath);
-	void DiffuseMap(std::string filepath);
-	void SpecularMap(std::string filepath);
-	void DissolveMap(std::string filepath);
-	void LightnessMap(std::string filepath);
-
-	glm::vec3 Diffuse();
-	glm::vec3 Specular();
-	float SpecularExponent();
-	float DissolveFactor();
-	GLuint DiffuseMap();
+	glm::vec3 Albedo();
+	glm::vec3 Emission();
+	float Specular();
+	float Roughness();
+	float Transmission();
+	GLuint AlbedoMap();
 };

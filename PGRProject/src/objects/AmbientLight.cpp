@@ -12,7 +12,7 @@ AmbientLight::AmbientLight(nlohmann::json source) {
 	m_Intensity = source["intensity"];
 }
 
-void AmbientLight::Update(float deltaTime) {
+void AmbientLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform("ambientLight.color", m_Color);

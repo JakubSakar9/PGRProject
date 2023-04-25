@@ -1,7 +1,11 @@
 #pragma once
-#include "StaticObject.h"
+
+#include "Camera.h"
 #include "EyeObject.h"
-#include "Object.h"
+#include "PointLight.h"
+#include "Rupee.h"
+#include "Spotlight.h"
+#include "StaticObject.h"
 
 class EmptyObject :
 	public ObjectInstance
@@ -9,12 +13,11 @@ class EmptyObject :
 public:
 	EmptyObject() {}
 	EmptyObject(const std::vector<WavefrontObject*>& sourceWavefront);
-	EmptyObject(const std::string& name, bool useAssimp);
 	EmptyObject(nlohmann::json source);
 	~EmptyObject();
 
-	void LoadAssimp(const std::string& filepath);
-
 	void LoadCustom(const std::string& filepath);
+
+	void InitChildren(nlohmann::json source);
 };
 

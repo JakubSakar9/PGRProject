@@ -2,7 +2,6 @@
 
 Camera::Camera(nlohmann::json source) {
 	InitTransform(source);
-	InitChildren(source);
 
 	using json = nlohmann::json;
 	json j_bounds = source["bounds"];
@@ -15,29 +14,59 @@ Camera::Camera(nlohmann::json source) {
 	m_movementSpeed = source["movementSpeed"];
 	m_dynamic = source["dynamic"];
 	m_aspectRatio = 1.0f;
+
+	if (m_dynamic) {
+		m_cameraId = 0;
+	}
+	else {
+		m_cameraId = ShaderProgram::AddCamera();
+	}
 }
 
-glm::mat4 Camera::ComputeViewMatrix()
-{
-	glm::vec3 up = m_rotation * glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 forward = m_rotation * glm::vec3(0.0f, 0.0f, -1.0f);
-	return glm::lookAt(m_position, forward + m_position, up);
+glm::mat4 Camera::ComputeViewMatrix() {
+	glm::vec4 posH = m_globalModelMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+	glm::vec3 pos = glm::vec3(posH) / posH.w;
+	glm::vec4 upH = glm::toMat4(m_rotation) * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	glm::vec3 up = glm::vec3(upH) / upH.w;
+	glm::vec4 forwardH = glm::toMat4(m_rotation) * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
+	glm::vec3 forward = glm::vec3(forwardH) / forwardH.w;
+	return glm::lookAt(pos, forward + pos, up);
 }
 
-glm::mat4 Camera::ComputeSkyboxViewMatrix()
-{
+glm::mat4 Camera::ComputeSkyboxViewMatrix() {
 	glm::vec3 up = m_rotation * glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 forward = m_rotation * glm::vec3(0.0f, 0.0f, -1.0f);
 	return glm::lookAt(glm::vec3(0.0f), forward, up);
 }
 
-bool Camera::Init()
-{
+bool Camera::GenObjects() {
 	m_aspectRatio = glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
-	return true;
+	return ObjectInstance::GenObjects();
 }
 
-void Camera::Update(std::vector<BoxCollider*> colliders, float deltaTime) {
+void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+	ObjectInstance::Update(deltaTime, parentModelMatrix);
+	if (m_cameraId == ShaderProgram::ActiveCameraId()) {
+		for (int i = 0; i < SHADER_TYPE_N; i++) {
+			ShaderProgram* program = ShaderProgram::GetShader((ShaderType)i);
+			program->UseShader();
+			glm::mat4 projection = ComputeProjectionMatrix();
+			glm::mat4 pvMatrix;
+			if ((ShaderType)i == SHADER_TYPE_SKYBOX) {
+				glm::mat4 view = ComputeSkyboxViewMatrix();
+				pvMatrix = projection * view;
+			}
+			else {
+				glm::mat4 view = ComputeViewMatrix();
+				pvMatrix = projection * view;
+			}
+			program->SetUniform("pvMatrix", pvMatrix);
+			if ((ShaderType)i == SHADER_TYPE_DEFAULT) {
+				glm::vec3 pos = glm::vec3(m_globalModelMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+				program->SetUniform("cameraPosition", pos);
+			}
+		}
+	}
 	if (m_dynamic) {
 		glm::vec3 prevPosition = m_position;
 		glm::vec3 velocity = InputManager::Get().RelativeVelocity() * m_movementSpeed;
@@ -53,7 +82,7 @@ void Camera::Update(std::vector<BoxCollider*> colliders, float deltaTime) {
 		m_position.y = (m_position.y > m_uBound.y) ? m_uBound.y : m_position.y;
 		m_position.z = (m_position.z > m_uBound.z) ? m_uBound.z : m_position.z;
 
-		for (auto c : colliders) {
+		/*for (auto c : colliders) {
 			glm::vec3 lBound = c->LBound();
 			glm::vec3 uBound = c->UBound();
 
@@ -65,9 +94,8 @@ void Camera::Update(std::vector<BoxCollider*> colliders, float deltaTime) {
 				&& m_position.z < uBound.z) {
 				m_position = prevPosition;
 			}
-		}
+		}*/
 	}
-	ShaderProgram::s_cameraPosition = m_position;
 }
 
 void Camera::ChangeBounds(glm::vec3 lBound, glm::vec3 uBound) {

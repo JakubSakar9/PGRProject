@@ -15,7 +15,7 @@ DirectionalLight::DirectionalLight(nlohmann::json source) {
 	m_Intensity = source["intensity"];
 }
 
-void DirectionalLight::Update(float deltaTime) {
+void DirectionalLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	glm::vec3 direction = m_rotation * m_Direction;
 	shaderProgram->UseShader();

@@ -33,10 +33,39 @@ EyeObject::EyeObject(aiMesh* mesh, Material* material) {
 	m_animTime = 0.0f;
 }
 
-void EyeObject::Update(float deltaTime,
-	const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
-	m_cameraPosition = cameraPos;
+EyeObject::EyeObject(nlohmann::json source) {
+	InitTransform(source);
 
+	MeshData* mesh = ResourceManager::Get().GetMesh(
+		source["source"], source["objName"], source["sourceType"]);
+
+	m_geometry.numVertices = mesh->numVertices;
+	m_geometry.numTriangles = mesh->numFaces;
+	m_geometry.verticesData.resize(5 * m_geometry.numVertices);
+	m_geometry.indices.resize(3 * m_geometry.numTriangles);
+
+	for (unsigned int i = 0; i < mesh->numVertices; i++) {
+		const glm::vec3& position = mesh->vertices[i];
+		const glm::vec2& texCoords = mesh->texCoords[i];
+
+		m_geometry.verticesData[5 * i + 0] = position.x;
+		m_geometry.verticesData[5 * i + 1] = position.y;
+		m_geometry.verticesData[5 * i + 2] = position.z;
+		m_geometry.verticesData[5 * i + 3] = texCoords.x;
+		m_geometry.verticesData[5 * i + 4] = texCoords.y;
+	}
+
+	for (unsigned int i = 0; i < mesh->numFaces; i++) {
+		const glm::ivec3& face = mesh->faces[i];
+		m_geometry.indices[3 * i + 0] = face.x;
+		m_geometry.indices[3 * i + 1] = face.y;
+		m_geometry.indices[3 * i + 2] = face.z;
+	}
+
+	m_material = ResourceManager::Get().GetMaterial(source["material"]);
+}
+
+void EyeObject::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	m_animTime += deltaTime / 1000.0f;
 	if (m_animTime > 1.0f) {
 		m_animTime -= 1.0f;
@@ -53,22 +82,18 @@ void EyeObject::Update(float deltaTime,
 	}
 	m_frameId = animFrames[animKeyframe];
 
-	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
+	ObjectInstance::Update(deltaTime, parentModelMatrix);
 }
 
-void EyeObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+void EyeObject::Draw() {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_EYE);
 
 	shaderProgram->UseShader();
-	glm::mat4x4 pv = projectionMatrix * viewMatrix;
-	shaderProgram->SetUniform("pvMatrix", pv);
 	shaderProgram->SetUniform("mMatrix", m_globalModelMatrix);
 	shaderProgram->SetUniform("frameId", m_frameId);
-	
-	//glm::vec3 colDiffuse = m_material->Diffuse();
-	//shaderProgram->SetUniform("colDiffuse", colDiffuse);
+
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_material->DiffuseMap());
+	glBindTexture(GL_TEXTURE_2D, m_material->AlbedoMap());
 	CHECK_GL_ERROR();
 
 	glBindVertexArray(m_geometry.vertexArrayObject);
@@ -76,10 +101,10 @@ void EyeObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMat
 	glDrawElements(GL_TRIANGLES, m_geometry.numTriangles * 3, GL_UNSIGNED_INT, nullptr);
 	CHECK_GL_ERROR();
 
-	ObjectInstance::Draw(viewMatrix, projectionMatrix);
+	ObjectInstance::Draw();
 }
 
-bool EyeObject::GenObjects(ShaderType shaderType) {
+bool EyeObject::GenObjects() {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_EYE);
 
 	// Generating VBOs
@@ -119,5 +144,5 @@ bool EyeObject::GenObjects(ShaderType shaderType) {
 
 	glBindVertexArray(0);
 
-	return ObjectInstance::GenObjects(shaderType);
+	return ObjectInstance::GenObjects();
 }

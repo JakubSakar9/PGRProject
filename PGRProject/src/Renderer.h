@@ -16,19 +16,7 @@ private:
 
 	Scene m_scene;
 
-	Renderer()
-		: m_refreshRate(DEFAULT_REFRESH_RATE), m_lastTime(0) {
-		m_refreshTimeMs = 1000.0f / m_refreshRate;
-
-		ShaderProgram *defaultShader = new ShaderProgram("Shaders/default-vs.glsl",
-			"Shaders/default-fs.glsl", SHADER_TYPE_DEFAULT);
-
-		ShaderProgram* skyboxShader = new ShaderProgram("Shaders/skybox-vs.glsl",
-			"Shaders/skybox-fs.glsl", SHADER_TYPE_SKYBOX);
-
-		ShaderProgram* eyeShader = new ShaderProgram("Shaders/eye-vs.glsl",
-			"Shaders/eye-fs.glsl", SHADER_TYPE_EYE);
-	}
+	Renderer();
 public:
 	Renderer(const Renderer&) = delete;
 

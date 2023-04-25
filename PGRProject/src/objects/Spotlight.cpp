@@ -14,7 +14,6 @@ Spotlight::Spotlight(glm::vec3 color, float intensity, glm::vec3 position, glm::
 
 Spotlight::Spotlight(nlohmann::json source) {
 	InitTransform(source);
-	InitChildren(source);
 
 	using json = nlohmann::json;
 	json j_color = source["color"];
@@ -28,7 +27,7 @@ Spotlight::Spotlight(nlohmann::json source) {
 	m_id = ShaderProgram::s_nextSpotlightIndex++;
 }
 
-void Spotlight::Update(float deltaTime) {
+void Spotlight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform(SL("position", m_id), m_position);

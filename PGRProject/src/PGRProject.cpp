@@ -52,6 +52,10 @@ bool Init(int argc, char** argv) {
         return false;
     }
 
+    if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR)) {
+        pgr::dieWithError("pgr init failed, required OpenGL not supported?");
+    }
+
     glutReshapeFunc(ReshapeFn);
     glutDisplayFunc(DisplayFn);
     glutKeyboardFunc(KeyboardFn);
@@ -60,10 +64,6 @@ bool Init(int argc, char** argv) {
     glutSpecialUpFunc(SpecialUpFn);
     glutPassiveMotionFunc(PassiveMotionFn);
     glutTimerFunc(Renderer::Get().RefreshTimeMs(), TimerFn, 1);
-
-    if (!pgr::initialize(pgr::OGL_VER_MAJOR, pgr::OGL_VER_MINOR)) {
-        pgr::dieWithError("pgr init failed, required OpenGL not supported?");
-    }
     
     return Renderer::Get().Init();
 }

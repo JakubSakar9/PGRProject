@@ -1,0 +1,137 @@
+[
+	{
+		"name": "rupeeMat",
+		"albedo": [ 1.0, 0.0, 0.0 ],
+		"emission": [ 0.05, 0.0, 0.0 ],
+		"specular": 0.6,
+		"roughness": 0.5,
+		"transmission": 0.8,
+		"albedoMap": "none"
+	},
+	{
+		"name": "waterMat",
+		"albedo": [ 0.2, 0.2, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.3,
+		"roughness": 0.4,
+		"transmission": 0.0,
+		"albedoMap": "none"
+	},
+	{
+		"name": "linkBodyMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.7,
+		"transmission": 0.0,
+		"albedoMap": "link_body_albedo"
+	},
+	{
+		"name": "linkEyeMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.4,
+		"roughness": 0.5,
+		"transmission": 0.0,
+		"albedoMap": "link_eye_albedo"
+	},
+	{
+		"name": "linkEyebrowMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "link_eyebrow_albedo"
+	},
+	{
+		"name": "linkMouthMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "link_mouth_albedo"
+	},
+	{
+		"name": "linkSheathMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "link_sheath_albedo"
+	},
+	{
+		"name": "topTreesMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "toptrees_albedo"
+	},
+	{
+		"name": "roofMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "roof_albedo"
+	},
+	{
+		"name": "woodPartsMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "woodparts_albedo"
+	},
+	{
+		"name": "woodFoundationsMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "woodfoundations_albedo"
+	},
+	{
+		"name": "rockMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "rock_albedo"
+	},
+	{
+		"name": "cliffsMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "cliffs_albedo"
+	},
+	{
+		"name": "grassMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "grass_albedo"
+	},
+	{
+		"name": "flatRockMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "flatrock_albedo"
+	}
+]

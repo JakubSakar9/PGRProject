@@ -15,7 +15,7 @@
 
 #define ATTRIB_LOC(s) CreateAttributeLocation(std::string(s), std::string(s))
 #define UNIF_LOC(s) CreateUniformLocation(std::string(s), std::string("u_") + std::string(s))
-#define PL_LOC(at, idx) {std::string str = std::string("pointLights[" + std::to_string(idx) + std::string("].") + std::string(at)); UNIF_LOC(str);}
+#define PL_LOC(at, idx) {std::string str = std::string("pointLights[" + std::to_string(idx) + std::string("].") + std::string(at));UNIF_LOC(str);}
 #define SL_LOC(at, idx) {std::string str = std::string("spotlights[" + std::to_string(idx) + std::string("].") + std::string(at)); UNIF_LOC(str);}
 #define SH(st) ShaderProgram::GetShader(st)
 
@@ -32,19 +32,18 @@ private:
 
 	static std::map<ShaderType, ShaderProgram*> s_shaders;
 public:
-	static glm::vec3 s_cameraPosition;
-
-	static glm::vec3 s_pointLightPositions[MAX_POINT_LIGHTS];
 	static int s_nextPointLightIndex;
-
-	static glm::vec3 s_spotlightPositions[MAX_SPOTLIGHTS];
 	static int s_nextSpotlightIndex;
+	static int s_nextCameraIndex;
+	static int s_activeCameraIndex;
 
 private:
 	bool LoadShaders();
+	bool LoadBasePBR();
 	bool LoadDefault();
 	bool LoadSkybox();
 	bool LoadEye();
+	bool LoadWater();
 
 	bool CreateShader(const std::string &vsSource, const std::string& fsSource);
 	void InitPointLightLocations();
@@ -97,5 +96,19 @@ public:
 	GLint GetLocation(std::string name);
 
 	static ShaderProgram* GetShader(ShaderType type);
+
+	static void SwitchCamera(int id);
+
+	static int AddCamera();
+
+	static int ActiveCameraId() {
+		return s_activeCameraIndex;
+	}
+
+	void InitLights() {
+		UseShader();
+		SetUniform("numPointLights", s_nextPointLightIndex);
+		SetUniform("numSpotlights", s_nextSpotlightIndex);
+	}
 };
 

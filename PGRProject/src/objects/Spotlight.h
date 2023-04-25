@@ -20,6 +20,6 @@ public:
     Spotlight(nlohmann::json source);
     ~Spotlight() {}
 
-    void Update(float deltaTime);
+    void Update(float deltaTime, const glm::mat4* parentModelMatrix) override;
 };
 

@@ -1,0 +1,365 @@
+{
+    "ambientLight": {
+        "color": [ 0.0, 0.1, 0.3 ],
+        "intensity": 0.3
+    },
+    "directionalLight": {
+        "color": [ 0.1, 0.1, 0.15 ],
+        "intensity": 12.0,
+        "direction": [ 0.3, -0.2, -0.4 ]
+    },
+    "objects": {
+        "name": "root",
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1.0, 1.0, 1.0 ],
+        "type": "empty",
+        "children": [
+            {
+                "name": "dynamicCamera",
+                "position": [ 0.0, 10.0, 350.0 ],
+                "rotation": [ 0.0, 0.0, 0.0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "camera",
+                "dynamic": true,
+                "bounds": [ -180.0, 11.0, 250.0, 38.0, 70.0, 380.0 ],
+                "fov": 45.0,
+                "clipping": [ 0.1, 500.0 ],
+                "movementSpeed": 1.0,
+                "children": []
+            },
+            {
+                "name": "staticCamera1",
+                "position": [ 0.0, 10.0, 350.0 ],
+                "rotation": [ 0.0, 0.0, 0.0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "camera",
+                "dynamic": false,
+                "bounds": [ 0, 0, 0, 0, 0, 0 ],
+                "fov": 45.0,
+                "clipping": [ 0.1, 500.0 ],
+                "movementSpeed": 1.0,
+                "children": []
+            },
+            {
+                "name": "staticCamera2",
+                "position": [ 91.0, 71.0, 434.0 ],
+                "rotation": [ 0.0, 180.0, 0.0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "camera",
+                "dynamic": false,
+                "bounds": [ 0, 0, 0, 0, 0, 0 ],
+                "fov": 45.0,
+                "clipping": [ 0.1, 1000.0 ],
+                "movementSpeed": 1.0,
+                "children": []
+            },
+            {
+                "name": "link",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotation": [ 0, 0, 0 ],
+                "scale": [ 4.0, 4.0, 4.0 ],
+                "type": "empty",
+                "children": []
+            },
+            {
+                "name": "island",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotation": [ 0, 0, 0 ],
+                "scale": [ 0.02, 0.02, 0.02 ],
+                "type": "empty",
+                "children": [
+                    {
+                        "name": "link",
+                        "position": [ 0, 0, 15000 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 5.0, 5.0, 5.0 ],
+                        "type": "empty",
+                        "children": [
+                            {
+                                "name": "body",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj00",
+                                "material": "linkBodyMat",
+                                "children": []
+                            },
+                            {
+                                "name": "leftEye",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "eye",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj01",
+                                "material": "linkEyeMat",
+                                "children": []
+                            },
+                            {
+                                "name": "rightEye",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "eye",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj04",
+                                "material": "linkEyeMat",
+                                "children": []
+                            },
+                            {
+                                "name": "leftEyebrow",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj08",
+                                "material": "linkEyebrowMat",
+                                "children": []
+                            },
+                            {
+                                "name": "rightEyebrow",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj12",
+                                "material": "linkEyebrowMat",
+                                "children": []
+                            },
+                            {
+                                "name": "mouth",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj19",
+                                "material": "linkMouthMat",
+                                "children": []
+                            },
+                            {
+                                "name": "sheath",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "link",
+                                "sourceType": "wavefront",
+                                "objName": "rdmobj23",
+                                "material": "linkSheathMat",
+                                "children": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "topTrees",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n0b0",
+                        "material": "topTreesMat",
+                        "children": []
+                    },
+                    {
+                        "name": "rooves",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n1b1",
+                        "material": "roofMat",
+                        "children": []
+                    },
+                    {
+                        "name": "woodParts",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n2b3",
+                        "material": "woodPartsMat",
+                        "children": []
+                    },
+                    {
+                        "name": "woodFoundations",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n3b2",
+                        "material": "woodFoundationsMat",
+                        "children": []
+                    },
+                    {
+                        "name": "cliffs",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n4b4",
+                        "material": "cliffsMat",
+                        "children": []
+                    },
+                    {
+                        "name": "rock",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n5b5",
+                        "material": "rockMat",
+                        "children": []
+                    },
+                    {
+                        "name": "grass",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n6b6",
+                        "material": "grassMat",
+                        "children": []
+                    },
+                    {
+                        "name": "flatRock",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Island",
+                        "sourceType": "wavefront",
+                        "objName": "n7b7",
+                        "material": "flatRockMat",
+                        "children": []
+                    },
+                    {
+                        "name": "rupee",
+                        "position": [ 0, 0, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "rupee",
+                        "material": "rupeeMat",
+                        "children": []
+                    },
+                    {
+                        "name": "pointLight1",
+                        "position": [ 30.0, 10.0, 350.0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "pointLight",
+                        "color": [ 1.0, 0.8, 0.0 ],
+                        "intensity": 0.1,
+                        "attenuation": [ 1.0, 0.005, 0.0 ],
+                        "children": []
+                    },
+                    {
+                        "name": "pointLight2",
+                        "position": [ 20.0, 10.0, 350.0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "pointLight",
+                        "color": [ 1.0, 0.8, 0.0 ],
+                        "intensity": 0.1,
+                        "attenuation": [ 1.0, 0.005, 0.0 ],
+                        "children": []
+                    },
+                    {
+                        "name": "pointLight3",
+                        "position": [ 10.0, 10.0, 350.0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "pointLight",
+                        "color": [ 1.0, 0.8, 0.0 ],
+                        "intensity": 0.1,
+                        "attenuation": [ 1.0, 0.005, 0.0 ],
+                        "children": []
+                    },
+                    {
+                        "name": "pointLight4",
+                        "position": [ -10.0, 10.0, 350.0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "pointLight",
+                        "color": [ 1.0, 0.8, 0.0 ],
+                        "intensity": 0.1,
+                        "attenuation": [ 1.0, 0.005, 0.0 ],
+                        "children": []
+                    },
+                    {
+                        "name": "spotlight1",
+                        "position": [ 9.0, 15.0, 376.0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "spotlight",
+                        "color": [ 1.0, 0.0, 0.0 ],
+                        "intensity": 1.0,
+                        "attenuation": [ 1.0, 0.005, 0.0 ],
+                        "direction": [ 0.0, -1.0, 0.0 ],
+                        "size": 45,
+                        "children": []
+                    },
+                    {
+                        "name": "spotlight2",
+                        "position": [ 14.0, 15.0, 373.0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "spotlight",
+                        "color": [ 0.0, 1.0, 0.0 ],
+                        "intensity": 1.0,
+                        "attenuation": [ 1.0, 0.005, 0.0 ],
+                        "direction": [ 0.0, -1.0, 0.0 ],
+                        "size": 30,
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "name": "sea",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotation": [ 0, 0, 0 ],
+                "scale": [ 0.1, 0.1, 0.1 ],
+                "type": "empty",
+                "children": [
+                    {
+                        "name": "water",
+                        "position": [ 0, -1, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "static",
+                        "source": "Sea",
+                        "sourceType": "wavefront",
+                        "objName": "n7b7",
+                        "material": "waterMat",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    }
+}

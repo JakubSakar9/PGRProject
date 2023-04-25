@@ -34,12 +34,6 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{6aca1edd-d5ab-49e3-a5f1-606775d031f5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\misc">
-      <UniqueIdentifier>{2fa82df5-b47e-49b5-8d39-f89cacd61579}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\misc\skybox">
-      <UniqueIdentifier>{f60bddd8-4008-42e8-96fb-d44d671fc7ba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\objects\utils">
       <UniqueIdentifier>{173ed384-b48a-4d6d-ab72-abbd71bbeb5a}</UniqueIdentifier>
     </Filter>
@@ -51,6 +45,15 @@
     </Filter>
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{cdb6081f-b8d4-45b1-9299-e190e4269374}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\data">
+      <UniqueIdentifier>{3231f83b-5ec1-4634-b422-ddd39b5255be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\data\scenes">
+      <UniqueIdentifier>{42ceac35-9aea-4a48-a52b-233a2d5bbfb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{9f35b342-ebc4-459f-8313-727677bfd938}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +118,9 @@
       <Filter>Source Files\objects\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\Camera.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\Water.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -194,6 +200,12 @@
     <ClInclude Include="src\objects\Camera.h">
       <Filter>Header Files\objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\utils\MeshData.h">
+      <Filter>Header Files\objects\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\Water.h">
+      <Filter>Header Files\objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\default-fs.glsl">
@@ -226,8 +238,20 @@
     <None Include="models\Kargaroc\Kargaroc.mtl">
       <Filter>Resource Files\models\Kargaroc</Filter>
     </None>
-    <None Include="misc\test.json">
-      <Filter>Resource Files\misc</Filter>
+    <None Include="data\materials.json">
+      <Filter>Resource Files\data</Filter>
+    </None>
+    <None Include="data\scenes\test.json">
+      <Filter>Resource Files\data\scenes</Filter>
+    </None>
+    <None Include="data\scenes\outsetIsland.json">
+      <Filter>Resource Files\data\scenes</Filter>
+    </None>
+    <None Include="shaders\water-fs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="shaders\water-vs.glsl">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -357,24 +381,6 @@
     <Image Include="models\link\pupil_red.png">
       <Filter>Resource Files\models\link</Filter>
     </Image>
-    <Image Include="misc\skybox\nx.png">
-      <Filter>Resource Files\misc\skybox</Filter>
-    </Image>
-    <Image Include="misc\skybox\ny.png">
-      <Filter>Resource Files\misc\skybox</Filter>
-    </Image>
-    <Image Include="misc\skybox\nz.png">
-      <Filter>Resource Files\misc\skybox</Filter>
-    </Image>
-    <Image Include="misc\skybox\px.png">
-      <Filter>Resource Files\misc\skybox</Filter>
-    </Image>
-    <Image Include="misc\skybox\py.png">
-      <Filter>Resource Files\misc\skybox</Filter>
-    </Image>
-    <Image Include="misc\skybox\pz.png">
-      <Filter>Resource Files\misc\skybox</Filter>
-    </Image>
     <Image Include="models\Kargaroc\Bbkt_eye.1.png">
       <Filter>Resource Files\models\Kargaroc</Filter>
     </Image>
@@ -392,6 +398,12 @@
     </Image>
     <Image Include="models\Kargaroc\BbktTX_CI4.png">
       <Filter>Resource Files\models\Kargaroc</Filter>
+    </Image>
+    <Image Include="textures\link_body_albedo.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="textures\link_eye_albedo.png">
+      <Filter>Resource Files\textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

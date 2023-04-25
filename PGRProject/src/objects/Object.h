@@ -6,6 +6,8 @@
 #include "pgr.h"
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 #include "../BoxCollider.h"
 #include "../ResourceManager.h"
@@ -13,13 +15,7 @@
 #include "../ShaderProgram.h"
 #include "../WavefrontObject.h"
 
-#include "EmptyObject.h"
-#include "StaticObject.h"
-#include "Rupee.h"
-#include "Camera.h"
-
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices)
-#define VERTEX_SIZE 8
 #define DEFAULT_WAVEFRONT_SCALE 0.02f
 #define OBJECT_PATH_PREFIX "models/"
 
@@ -38,13 +34,11 @@ protected:
 	BoxCollider *m_collider = nullptr;
 	
 	typedef std::vector<ObjectInstance*> ObjectList;
-	ObjectList children;
+	ObjectList m_children;
 
 	glm::mat4 ComputeModelMatrix();
 
 	void InitTransform(nlohmann::json source);
-
-	void InitChildren(nlohmann::json source);
 
 public:
 	ObjectInstance() {}
@@ -54,12 +48,12 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
+	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix);
 
 	/// calls draw on child nodes
-	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+	virtual void Draw();
 
-	virtual bool GenObjects(ShaderType shaderType);
+	virtual bool GenObjects();
 	
 	void Translate(glm::vec3 delta);
 

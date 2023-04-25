@@ -591,9 +591,9 @@ public:
 	Rupee();
 	Rupee(nlohmann::json source);
 
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
-	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Draw();
 
-	bool GenObjects(ShaderType shaderType);
+	bool GenObjects();
 };
 

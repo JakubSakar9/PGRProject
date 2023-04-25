@@ -43,11 +43,40 @@ StaticObject::StaticObject(aiMesh* mesh, Material* material) {
 
 StaticObject::StaticObject(nlohmann::json source) {
 	InitTransform(source);
-	InitChildren(source);
 
-	aiMesh* mesh = ResourceManager::Get().GetMesh(
-		source["source"], source["objname"], source["sourceType"]);
+	MeshData* mesh = ResourceManager::Get().GetMesh(
+		source["source"], source["objName"], source["sourceType"]);
 
+	m_geometry.numVertices = mesh->numVertices;
+	m_geometry.numTriangles = mesh->numFaces;
+	m_geometry.numAttributes = mesh->numVertices * VERTEX_SIZE;
+	m_geometry.numAttributesPerVertex = VERTEX_SIZE;
+	m_geometry.verticesData.resize(m_geometry.numAttributes);
+	m_geometry.indices.resize(3 * m_geometry.numTriangles);
+
+	for (unsigned int i = 0; i < mesh->numVertices; i++) {
+		const glm::vec3& position = mesh->vertices[i];
+		const glm::vec3& normals = mesh->normals[i];
+		const glm::vec2& texCoords = mesh->texCoords[i];
+
+		m_geometry.verticesData[VERTEX_SIZE * i + 0] = position.x;
+		m_geometry.verticesData[VERTEX_SIZE * i + 1] = position.y;
+		m_geometry.verticesData[VERTEX_SIZE * i + 2] = position.z;
+		m_geometry.verticesData[VERTEX_SIZE * i + 3] = normals.x;
+		m_geometry.verticesData[VERTEX_SIZE * i + 4] = normals.y;
+		m_geometry.verticesData[VERTEX_SIZE * i + 5] = normals.z;
+		m_geometry.verticesData[VERTEX_SIZE * i + 6] = texCoords.x;
+		m_geometry.verticesData[VERTEX_SIZE * i + 7] = texCoords.y;
+	}
+
+	for (unsigned int i = 0; i < mesh->numFaces; i++) {
+		const glm::ivec3& face = mesh->faces[i];
+		m_geometry.indices[3 * i + 0] = face.x;
+		m_geometry.indices[3 * i + 1] = face.y;
+		m_geometry.indices[3 * i + 2] = face.z;
+	}
+
+	m_material = ResourceManager::Get().GetMaterial(source["material"]);
 }
 
 StaticObject::~StaticObject() {
@@ -70,47 +99,51 @@ void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
 		m_geometry.indices.begin());
 }
 
-void StaticObject::Update(float deltaTime,
-	const glm::mat4* parentModelMatrix, glm::vec3 cameraPos) {
-	m_cameraPosition = cameraPos;
-	ObjectInstance::Update(deltaTime, parentModelMatrix, cameraPos);
+void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+	ObjectInstance::Update(deltaTime, parentModelMatrix);
 }
 
-void StaticObject::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+void StaticObject::Draw() {
 	ShaderProgram* shaderProgram = SH(m_shaderType);
 
 	shaderProgram->UseShader();
-	glm::mat4x4 pv = projectionMatrix * viewMatrix;
-	shaderProgram->SetUniform("pvMatrix", pv);
 	shaderProgram->SetUniform("mMatrix", m_globalModelMatrix);
-	shaderProgram->SetUniform("cameraPosition", m_cameraPosition);
 
-	shaderProgram->SetUniform("useTexDiffuse", (int) m_material->DiffuseMap());
-	glm::vec3 colDiffuse = m_material->Diffuse();
-	shaderProgram->SetUniform("colDiffuse", colDiffuse);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_material->DiffuseMap());
+	glm::vec3 colAlbedo = m_material->Albedo();
+	shaderProgram->SetUniform("colAlbedo", colAlbedo);
+	GLint albedoMap = m_material->AlbedoMap();
+	if (albedoMap) {
+		shaderProgram->SetUniform("useTexAlbedo", 1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_material->AlbedoMap());
+	}
+	else {
+		shaderProgram->SetUniform("useTexAlbedo", 0);
+	}
 	CHECK_GL_ERROR();
 
-	glm::vec3 colSpecular = m_material->Specular();
-	float specularExp = m_material->SpecularExponent();
-	shaderProgram->SetUniform("colSpecular", colSpecular);
-	shaderProgram->SetUniform("specularExponent", specularExp);
-	
-	float dissolveFactor = m_material->DissolveFactor();
-	shaderProgram->SetUniform("dissolveFactor", dissolveFactor);
+	glm::vec3 emission = m_material->Emission();
+	shaderProgram->SetUniform("colEmission", emission);
+
+	float specular = m_material->Specular();
+	shaderProgram->SetUniform("specular", specular);
+
+	float roughness = m_material->Roughness();
+	shaderProgram->SetUniform("roughness", roughness);
+
+	float transmission = m_material->Transmission();
+	shaderProgram->SetUniform("transmission", transmission);
 
 	glBindVertexArray(m_geometry.vertexArrayObject);
 	CHECK_GL_ERROR();
 	glDrawElements(GL_TRIANGLES, m_geometry.numTriangles * 3, GL_UNSIGNED_INT, nullptr);
 	CHECK_GL_ERROR();
 
-	ObjectInstance::Draw(viewMatrix, projectionMatrix);
+	ObjectInstance::Draw();
 }
 
-bool StaticObject::GenObjects(ShaderType shaderType) {
-	m_shaderType = shaderType;
-	ShaderProgram* shaderProgram = SH(shaderType);
+bool StaticObject::GenObjects() {
+	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 
 	// Generating VBOs
 	glGenBuffers(1, &(m_geometry.vertexBufferObject));
@@ -148,5 +181,5 @@ bool StaticObject::GenObjects(ShaderType shaderType) {
 
 	glBindVertexArray(0);
 
-	return ObjectInstance::GenObjects(shaderType);
+	return ObjectInstance::GenObjects();
 }

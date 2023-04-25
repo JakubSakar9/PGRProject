@@ -47,9 +47,9 @@ private:
 public:
 	Skybox() {}
 
-	void GenSkybox(ShaderType shaderType);
+	void GenSkybox();
 
-	void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+	void Draw();
 
 	void LoadCubemap();
 };

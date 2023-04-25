@@ -4,18 +4,6 @@ EmptyObject::EmptyObject(const std::vector<WavefrontObject*>& sourceWavefront) {
 	// Not yet implemented
 }
 
-EmptyObject::EmptyObject(const std::string& name, bool useAssimp) {
-	m_shaderType = SHADER_TYPE_DEFAULT;
-	std::string sourceFilepath = OBJECT_PATH_PREFIX + name + "/" + name + ".obj";
-	if (useAssimp) {
-		LoadAssimp(sourceFilepath);
-	}
-	else {
-		LoadCustom(sourceFilepath);
-	}
-	m_scale = glm::vec3(DEFAULT_WAVEFRONT_SCALE);
-}
-
 EmptyObject::EmptyObject(nlohmann::json source) {
 	InitTransform(source);
 	InitChildren(source);
@@ -25,42 +13,38 @@ EmptyObject::~EmptyObject() {
 	ObjectInstance::~ObjectInstance();
 }
 
-void EmptyObject::LoadAssimp(const std::string& filepath) {
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(filepath, ASSIMP_LOAD_FLAGS);
-
-	std::string assetsDirectory;
-	const size_t lastSlashIdx = filepath.rfind('/');
-	if (std::string::npos != lastSlashIdx) {
-		assetsDirectory = filepath.substr(0, lastSlashIdx) + "/";
-	}
-
-	if (!scene) {
-		std::cerr << "Failed to load aiScene" << std::endl;
-		return;
-	}
-
-	std::vector<Material*> materials;
-	for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
-		aiMaterial* importedMaterial = scene->mMaterials[i];
-		Material* currentMaterial = new Material(importedMaterial, assetsDirectory);
-		materials.push_back(currentMaterial);
-	}
-
-
-	for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
-		int materialIndex = scene->mMeshes[i]->mMaterialIndex;
-		ObjectInstance* newObject;
-		if (materials[materialIndex]->m_eye) {
-			newObject = new EyeObject(scene->mMeshes[i], materials[materialIndex]);
-		}
-		else {
-			newObject = new StaticObject(scene->mMeshes[i], materials[materialIndex]);
-		}
-		children.push_back(newObject);
-	}
-	std::reverse(children.begin(), children.end());
+void EmptyObject::LoadCustom(const std::string& filepath) {
 }
 
-void EmptyObject::LoadCustom(const std::string& filepath) {
+void EmptyObject::InitChildren(nlohmann::json source) {
+	using json = nlohmann::json;
+	for (json c : source["children"]) {
+		if (c["type"] == "static") {
+			m_children.push_back(new StaticObject(c));
+		}
+		else if (c["type"] == "empty") {
+			m_children.push_back(new EmptyObject(c));
+		}
+		else if (c["type"] == "eye") {
+			m_children.push_back(new EyeObject(c));
+		}
+		else if (c["type"] == "rupee") {
+			m_children.push_back(new Rupee(c));
+		}
+		else if (c["type"] == "pointLight") {
+			PointLight* pl = new PointLight(c);
+			m_children.push_back(pl);
+		}
+		else if (c["type"] == "spotlight") {
+			Spotlight* sl = new Spotlight(c);
+			m_children.push_back(sl);
+		}
+		else if (c["type"] == "camera") {
+			Camera* cam = new Camera(c);
+			m_children.push_back(cam);
+		}
+		else {
+			std::cerr << "Invalid object type" << std::endl;
+		}
+	}
 }

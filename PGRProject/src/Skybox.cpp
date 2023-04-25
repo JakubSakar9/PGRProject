@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-void Skybox::GenSkybox(ShaderType shaderType) {
+void Skybox::GenSkybox() {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_SKYBOX);
 	
 	LoadCubemap();
@@ -36,13 +36,11 @@ void Skybox::GenSkybox(ShaderType shaderType) {
 	glBindVertexArray(0);
 }
 
-void Skybox::Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) {
+void Skybox::Draw() {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_SKYBOX);
 	
 	shaderProgram->UseShader();
 	glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(100.0f));
-	glm::mat4 pv = projectionMatrix * viewMatrix * model;
-	shaderProgram->SetUniform("pvMatrix", pv);
 	CHECK_GL_ERROR();
 
 	glDepthFunc(GL_LEQUAL);

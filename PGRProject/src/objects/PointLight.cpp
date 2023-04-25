@@ -10,7 +10,6 @@ PointLight::PointLight(glm::vec3 color, float intensity, glm::vec3 position, glm
 
 PointLight::PointLight(nlohmann::json source) {
 	InitTransform(source);
-	InitChildren(source);
 
 	using json = nlohmann::json;
 	json j_color = source["color"];
@@ -21,7 +20,7 @@ PointLight::PointLight(nlohmann::json source) {
 	m_id = ShaderProgram::s_nextPointLightIndex++;
 }
 
-void PointLight::Update(float deltaTime) {
+void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform(PL("position", m_id), m_position);

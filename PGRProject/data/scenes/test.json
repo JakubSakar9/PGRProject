@@ -1,0 +1,42 @@
+{
+    "ambientLight": {
+        "color": [ 0.0, 0.1, 0.3 ],
+        "intensity": 0.3
+    },
+    "directionalLight": {
+        "color": [ 0.3, 0.3, 0.4 ],
+        "intensity": 3.0,
+        "direction": [ 0.4, -0.1, -0.5 ]
+    },
+    "objects": {
+        "name": "root",
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1.0, 1.0, 1.0 ],
+        "type": "empty",
+        "children": [
+            {
+                "name": "dynamicCamera",
+                "position": [ 0.0, 0.0, 10.0 ],
+                "rotation": [ 0.0, 0.0, 0.0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "camera",
+                "dynamic": true,
+                "bounds": [ -400.0, -400.0, -400.0, 400.0, 400.0, 400.0 ],
+                "fov": 45.0,
+                "clipping": [ 0.1, 500.0 ],
+                "movementSpeed": 1.0,
+                "children": []
+            },
+            {
+                "name": "rupee",
+                "position": [ 0, 0, 0 ],
+                "rotation": [ 0, 0, 0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "rupee",
+                "material": "rupeeMat",
+                "children": []
+            }
+        ]
+    }
+}

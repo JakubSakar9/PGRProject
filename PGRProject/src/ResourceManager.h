@@ -9,14 +9,17 @@
 
 #include "utils/json.hpp"
 
-#include "WavefrontObject.h"
+#include "Material.h"
+#include "objects/utils/MeshData.h"
 
 #define MODEL_PREFIX std::string("models/")
 
 class ResourceManager
 {
 private:
-	std::map<std::string, aiMesh*> m_meshPool;
+	std::map<std::string, MeshData*> m_meshPool;
+
+	std::map<std::string, Material*> m_materialPool;
 
 	ResourceManager() {}
 
@@ -33,6 +36,10 @@ public:
 
 	void LoadJson(std::string name);
 
-	aiMesh *GetMesh(std::string filename, std::string objectName, std::string type);
+	void LoadMaterials();
+
+	MeshData *GetMesh(std::string filename, std::string objectName, std::string type);
+
+	Material* GetMaterial(std::string name);
 };
 

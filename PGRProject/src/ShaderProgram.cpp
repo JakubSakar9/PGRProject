@@ -1,9 +1,9 @@
 #include "ShaderProgram.h"
 
-glm::vec3 ShaderProgram::s_cameraPosition;
-
 int ShaderProgram::s_nextPointLightIndex;
 int ShaderProgram::s_nextSpotlightIndex;
+int ShaderProgram::s_activeCameraIndex = 0;
+int ShaderProgram::s_nextCameraIndex = 1;
 
 std::map<ShaderType, ShaderProgram*> ShaderProgram::s_shaders;
 
@@ -37,7 +37,7 @@ bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string
 void ShaderProgram::UseShader() {
     glUseProgram(m_programObject);
     if (m_shaderType == SHADER_TYPE_DEFAULT)
-        glUniform1i(GetLocation("texDiffuse"), 0);
+        glUniform1i(GetLocation("texAlbedo"), 0);
     CHECK_GL_ERROR();
 }
 
@@ -58,6 +58,34 @@ GLint ShaderProgram::GetLocation(std::string name) {
 
 ShaderProgram* ShaderProgram::GetShader(ShaderType type) {
     return s_shaders.at(type);
+}
+
+void ShaderProgram::SwitchCamera(int command) {
+    switch (command) {
+    case 0:
+        s_activeCameraIndex = 0;
+        std::cout << "DEBUG: Switched to dynamic camera (0)" << std::endl;
+        break;
+    case 1:
+        s_activeCameraIndex--;
+        if (s_activeCameraIndex == -1) {
+            s_activeCameraIndex = s_nextCameraIndex - 1;
+        }
+        std::cout << "DEBUG: Switched to camera " << s_activeCameraIndex << std::endl;
+        break;
+    case 2:
+        s_activeCameraIndex++;
+        if (s_activeCameraIndex == s_nextCameraIndex) {
+            s_activeCameraIndex = 0;
+        }
+        std::cout << "DEBUG: Switched to camera " << s_activeCameraIndex << std::endl;
+        break;
+    }
+}
+
+int ShaderProgram::AddCamera() {
+    s_nextCameraIndex++;
+    return s_nextCameraIndex - 1;
 }
 
 bool ShaderProgram::LoadShaders() {
@@ -84,7 +112,8 @@ bool ShaderProgram::LoadShaders() {
     return true;
 }
 
-bool ShaderProgram::LoadDefault() {
+bool ShaderProgram::LoadBasePBR()
+{
     ATTRIB_LOC("position");
     ATTRIB_LOC("normal");
     ATTRIB_LOC("texCoords");
@@ -95,16 +124,18 @@ bool ShaderProgram::LoadDefault() {
     UNIF_LOC("cameraPosition");
     CHECK_GL_ERROR();
 
-    UNIF_LOC("colDiffuse");
-    UNIF_LOC("texDiffuse");
-    UNIF_LOC("useTexDiffuse");
+    UNIF_LOC("colAlbedo");
+
+    UNIF_LOC("colEmission");
     CHECK_GL_ERROR();
 
-    UNIF_LOC("colSpecular");
-    UNIF_LOC("specularExponent");
+    UNIF_LOC("specular");
     CHECK_GL_ERROR();
 
-    UNIF_LOC("dissolveFactor");
+    UNIF_LOC("roughness");
+    CHECK_GL_ERROR();
+
+    UNIF_LOC("transmission");
     CHECK_GL_ERROR();
 
     UNIF_LOC("ambientLight.color");
@@ -120,6 +151,18 @@ bool ShaderProgram::LoadDefault() {
     CHECK_GL_ERROR();
 
     InitSpotlightLocations();
+    CHECK_GL_ERROR();
+    return true;
+}
+
+bool ShaderProgram::LoadDefault() {
+    LoadBasePBR();
+
+    UNIF_LOC("texAlbedo");
+    UNIF_LOC("useTexAlbedo");
+
+    UNIF_LOC("texNormal");
+    UNIF_LOC("useTexNormal");
     CHECK_GL_ERROR();
     return false;
 }
@@ -138,8 +181,7 @@ bool ShaderProgram::LoadEye() {
     ATTRIB_LOC("texCoords");
     CHECK_GL_ERROR();
 
-    //UNIF_LOC("colDiffuse");
-    UNIF_LOC("texDiffuse");
+    UNIF_LOC("texAlbedo");
     CHECK_GL_ERROR();
 
     UNIF_LOC("pvMatrix");
@@ -152,6 +194,16 @@ bool ShaderProgram::LoadEye() {
     return true;
 }
 
+bool ShaderProgram::LoadWater() {
+    LoadBasePBR();
+
+    UNIF_LOC("texNormal1");
+    UNIF_LOC("texNormal2");
+    
+    UNIF_LOC("waveSpeed");
+    return true;
+}
+
 void ShaderProgram::InitPointLightLocations() {
     for (int i = 0; i < MAX_POINT_LIGHTS; i++) {
         PL_LOC("color", i);
@@ -159,6 +211,7 @@ void ShaderProgram::InitPointLightLocations() {
         PL_LOC("position", i);
         PL_LOC("attenuation", i);
     }
+    UNIF_LOC("numPointLights");
 }
 
 void ShaderProgram::InitSpotlightLocations() {
@@ -170,6 +223,7 @@ void ShaderProgram::InitSpotlightLocations() {
         SL_LOC("direction", i);
         SL_LOC("size", i);
     }
+    UNIF_LOC("numSpotlights");
 }
 
 void ShaderProgram::CreateUniformLocation(std::string cName, std::string shaderName) {

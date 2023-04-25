@@ -18,12 +18,18 @@ glm::quat InputManager::CalculateRotation() {
 
 int InputManager::CameraToSwitch()
 {
-	if (m_SpecialMap.at(GLUT_KEY_F1))
+	if (m_SpecialReleasedMap.at(GLUT_KEY_F1)) {
+		m_SpecialReleasedMap.insert_or_assign(GLUT_KEY_F1, false);
 		return 0;
-	if (m_SpecialMap.at(GLUT_KEY_F2))
+	}
+	if (m_SpecialReleasedMap.at(GLUT_KEY_F2)) {
+		m_SpecialReleasedMap.insert_or_assign(GLUT_KEY_F2, false);
 		return 1;
-	if (m_SpecialMap.at(GLUT_KEY_F3))
+	}
+	if (m_SpecialReleasedMap.at(GLUT_KEY_F3)) {
+		m_SpecialReleasedMap.insert_or_assign(GLUT_KEY_F3, false);
 		return 2;
+	}
 	return -1;
 }
 
@@ -32,6 +38,9 @@ void InputManager::KeyPressedCallback(unsigned char key) {
 }
 
 void InputManager::KeyReleasedCallback(unsigned char key) {
+	if (m_KeyMap.at(key)) {
+		m_KeyReleasedMap.insert_or_assign(key, true);
+	}
 	m_KeyMap.insert_or_assign(key, false);
 }
 
@@ -40,6 +49,9 @@ void InputManager::SpecialPressedCallback(int key) {
 }
 
 void InputManager::SpecialReleasedCallback(int key) {
+	if (m_SpecialMap.at(key)) {
+		m_SpecialReleasedMap.insert_or_assign(key, true);
+	}
 	m_SpecialMap.insert_or_assign(key, false);
 }
 
@@ -56,16 +68,17 @@ void InputManager::MouseCallback(int x, int y) {
 InputManager::InputManager() {
 	for (unsigned char i = 0; i < 255; i++) {
 		m_KeyMap.insert(std::pair<unsigned char, bool>(i, false));
+		m_KeyReleasedMap.insert(std::pair<unsigned char, bool>(i, false));
 	}
+	std::vector<GLenum> keys = { GLUT_KEY_UP, GLUT_KEY_DOWN, GLUT_KEY_LEFT, GLUT_KEY_RIGHT,
+		GLUT_KEY_SHIFT_L, GLUT_KEY_F1, GLUT_KEY_F2, GLUT_KEY_F3 };
 
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_UP, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_DOWN, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_LEFT, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_RIGHT, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_SHIFT_L, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_F1, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_F2, false));
-	m_SpecialMap.insert(std::pair<int, bool>(GLUT_KEY_F3, false));
+	for (auto e : keys) {
+		m_SpecialMap.insert(std::pair<int, bool>(e, false));
+	}
+	for (auto e : keys) {
+		m_SpecialReleasedMap.insert(std::pair<int, bool>(e, false));
+	}
 
 	m_WindowCenter = glm::vec2();
 	m_WindowCenter.x = glutGet(GLUT_WINDOW_X) + glutGet(GLUT_WINDOW_WIDTH) / 2;

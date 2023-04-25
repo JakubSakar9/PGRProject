@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Object.h"
-#include "PointLight.h"
-#include "Spotlight.h"
 
 class StaticObject :
     public ObjectInstance
@@ -22,8 +20,6 @@ protected:
 		std::vector<float> verticesData;		// vertex attributes stored in a vector
 	} ObjectGeometry;
 
-	glm::vec3 m_cameraPosition;
-
 	ObjectGeometry m_geometry;
 	Material* m_material;
 public:
@@ -39,11 +35,11 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, glm::vec3 cameraPos);
+	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix);
 
 	/// calls draw on child nodes
-	virtual void Draw(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
+	virtual void Draw();
 
-	virtual bool GenObjects(ShaderType shaderType);
+	virtual bool GenObjects();
 };
 

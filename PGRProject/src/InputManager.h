@@ -21,6 +21,8 @@ private:
 
 	std::map<unsigned char, bool> m_KeyMap;
 	std::map<int, bool> m_SpecialMap;
+	std::map<unsigned char, bool> m_KeyReleasedMap;
+	std::map<int, bool> m_SpecialReleasedMap;
 	
 	glm::vec2 m_MousePos;
 	glm::vec2 m_WindowCenter;
