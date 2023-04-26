@@ -40,13 +40,12 @@ void ObjectInstance::Scale(glm::vec3 scale) {
 	m_scale *= scale;
 }
 
-void ObjectInstance::AddCollider(glm::vec3& size) {
-	m_collider = new BoxCollider(size);
-}
-
 void ObjectInstance::UpdateColliders(std::vector<BoxCollider *>& colliders) {
 	if (m_collider) {
 		colliders.push_back(m_collider->Scale(m_globalModelMatrix));
+	}
+	for (auto* child : m_children) {
+		child->UpdateColliders(colliders);
 	}
 }
 
@@ -73,4 +72,9 @@ void ObjectInstance::InitTransform(nlohmann::json source) {
 	m_rotation = quatX * quatY * quatZ;
 	json j_scale = source["scale"];
 	m_scale = glm::vec3(j_scale[0], j_scale[1], j_scale[2]);
+
+	if (source.contains("collider")) {
+		json j_collider = source["collider"];
+		m_collider = new BoxCollider(glm::vec3(j_collider[0], j_collider[1], j_collider[2]));
+	}
 }

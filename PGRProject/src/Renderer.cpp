@@ -33,6 +33,7 @@ bool Renderer::InitShaders()
         ShaderProgram::GetShader((ShaderType) st)->Init();
     }
     ShaderProgram::GetShader(SHADER_TYPE_DEFAULT)->InitLights();
+    ShaderProgram::GetShader(SHADER_TYPE_WATER)->InitLights();
     return ret;
 }
 

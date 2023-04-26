@@ -9,10 +9,10 @@
 	},
 	{
 		"name": "waterMat",
-		"albedo": [ 0.2, 0.2, 1.0 ],
+		"albedo": [ 0.2, 0.2, 0.4 ],
 		"emission": [ 0.0, 0.0, 0.0 ],
-		"specular": 0.3,
-		"roughness": 0.2,
+		"specular": 0.6,
+		"roughness": 0.1,
 		"transmission": 0.0,
 		"normalMap1": "water_normal1",
 		"normalMap2": "water_normal2"

@@ -24,6 +24,8 @@ private:
 	bool m_dynamic;
 
 	int m_cameraId;
+
+	static std::vector<BoxCollider*> s_colliders;
 public:
 	Camera();
 	Camera(nlohmann::json source);
@@ -42,5 +44,7 @@ public:
 	void ChangeBounds(glm::vec3 lBound, glm::vec3 uBound);
 
 	inline glm::vec3 Position() { return m_position; }
+
+	static void UpdateColliders(std::vector<BoxCollider*> colliders);
 };
 

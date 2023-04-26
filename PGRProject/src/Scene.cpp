@@ -47,6 +47,7 @@ void Scene::Update(float deltaTime)
 
     std::vector<BoxCollider*> colliders;
     m_rootObject.UpdateColliders(colliders);
+    Camera::UpdateColliders(colliders);
 }
 
 void Scene::SwitchCamera() {

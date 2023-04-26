@@ -74,6 +74,7 @@
                         "position": [ 0, 0, 15000 ],
                         "rotation": [ 0, 0, 0 ],
                         "scale": [ 5.0, 5.0, 5.0 ],
+                        "collider": [50.0, 500.0, 50.0],
                         "type": "empty",
                         "children": [
                             {

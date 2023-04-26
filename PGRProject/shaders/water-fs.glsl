@@ -120,7 +120,6 @@ vec3 fSpecular(vec3 H, vec3 L, vec3 N) {
 	float num = distributionFn(H, N) * geometryFn(L, N);
 	float denom = 4.0f * dotS(V, N) * dotS(L, N);
 	float result = num * invS(denom);
-	return vec3(geometryFn(L, N));
 	return vec3(max(result, 0.0f));
 }
 

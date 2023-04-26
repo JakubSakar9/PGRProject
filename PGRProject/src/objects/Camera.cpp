@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+std::vector<BoxCollider*> Camera::s_colliders;
+
 Camera::Camera(nlohmann::json source) {
 	InitTransform(source);
 
@@ -74,15 +76,15 @@ void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 		m_rotation = InputManager::Get().CalculateRotation();
 		m_position += deltaPosition;
 
-		/*m_position.x = (m_position.x < m_lBound.x) ? m_lBound.x : m_position.x;
+		m_position.x = (m_position.x < m_lBound.x) ? m_lBound.x : m_position.x;
 		m_position.y = (m_position.y < m_lBound.y) ? m_lBound.y : m_position.y;
 		m_position.z = (m_position.z < m_lBound.z) ? m_lBound.z : m_position.z;
 
 		m_position.x = (m_position.x > m_uBound.x) ? m_uBound.x : m_position.x;
 		m_position.y = (m_position.y > m_uBound.y) ? m_uBound.y : m_position.y;
-		m_position.z = (m_position.z > m_uBound.z) ? m_uBound.z : m_position.z;*/
+		m_position.z = (m_position.z > m_uBound.z) ? m_uBound.z : m_position.z;
 
-		/*for (auto c : colliders) {
+		for (auto c : s_colliders) {
 			glm::vec3 lBound = c->LBound();
 			glm::vec3 uBound = c->UBound();
 
@@ -94,11 +96,19 @@ void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 				&& m_position.z < uBound.z) {
 				m_position = prevPosition;
 			}
-		}*/
+		}
 	}
 }
 
 void Camera::ChangeBounds(glm::vec3 lBound, glm::vec3 uBound) {
 	m_lBound = lBound;
 	m_uBound = uBound;
+}
+
+void Camera::UpdateColliders(std::vector<BoxCollider*> colliders) {
+	for (BoxCollider* b : s_colliders) {
+		delete b;
+	}
+	s_colliders.clear();
+	s_colliders = colliders;
 }
