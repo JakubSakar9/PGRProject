@@ -41,5 +41,7 @@ public:
 	virtual void Draw();
 
 	virtual bool GenObjects();
+
+	virtual void InitTextures(ShaderProgram *shaderProgram);
 };
 

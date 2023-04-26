@@ -2,6 +2,11 @@
 
 #include "Object.h"
 
+const ShaderType lightShaders[] = {
+	SHADER_TYPE_DEFAULT,
+	SHADER_TYPE_WATER
+};
+
 class Light :
 	public ObjectInstance
 {

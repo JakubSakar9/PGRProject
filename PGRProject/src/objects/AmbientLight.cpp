@@ -13,8 +13,10 @@ AmbientLight::AmbientLight(nlohmann::json source) {
 }
 
 void AmbientLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
-	shaderProgram->UseShader();
-	shaderProgram->SetUniform("ambientLight.color", m_Color);
-	shaderProgram->SetUniform("ambientLight.intensity", m_Intensity);
+	for (ShaderType st : lightShaders) {
+		ShaderProgram* shaderProgram = SH(st);
+		shaderProgram->UseShader();
+		shaderProgram->SetUniform("ambientLight.color", m_Color);
+		shaderProgram->SetUniform("ambientLight.intensity", m_Intensity);
+	}
 }

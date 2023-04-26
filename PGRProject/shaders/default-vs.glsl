@@ -15,7 +15,7 @@ void main()
 {
 	vec4 tmpPosition = u_mMatrix * vec4(position, 1.0f);
 	gl_Position = u_pvMatrix * tmpPosition;
-	position_v = vec3(tmpPosition.x, tmpPosition.y, tmpPosition.z) / tmpPosition.w;
+	position_v = vec3(tmpPosition.x, tmpPosition.y, tmpPosition.z);
 	texCoords_v = texCoords;
 	normal_v = normal;
 }

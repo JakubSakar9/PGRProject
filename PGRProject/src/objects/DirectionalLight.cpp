@@ -16,10 +16,12 @@ DirectionalLight::DirectionalLight(nlohmann::json source) {
 }
 
 void DirectionalLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
-	glm::vec3 direction = m_rotation * m_Direction;
-	shaderProgram->UseShader();
-	shaderProgram->SetUniform("directionalLight.color", m_Color);
-	shaderProgram->SetUniform("directionalLight.direction", direction);
-	shaderProgram->SetUniform("directionalLight.intensity", m_Intensity);
+	for (ShaderType st : lightShaders) {
+		ShaderProgram* shaderProgram = SH(st);
+		glm::vec3 direction = m_rotation * m_Direction;
+		shaderProgram->UseShader();
+		shaderProgram->SetUniform("directionalLight.color", m_Color);
+		shaderProgram->SetUniform("directionalLight.direction", direction);
+		shaderProgram->SetUniform("directionalLight.intensity", m_Intensity);
+	}
 }

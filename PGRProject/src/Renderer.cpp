@@ -64,6 +64,9 @@ Renderer::Renderer() {
     ShaderProgram* eyeShader = new ShaderProgram("Shaders/eye-vs.glsl",
         "Shaders/eye-fs.glsl", SHADER_TYPE_EYE);
     
+    ShaderProgram* waterShader = new ShaderProgram("Shaders/water-vs.glsl",
+        "Shaders/water-fs.glsl", SHADER_TYPE_WATER);
+    
     ResourceManager::Get().LoadMaterials();
     m_scene = Scene("outsetIsland.json");
 }

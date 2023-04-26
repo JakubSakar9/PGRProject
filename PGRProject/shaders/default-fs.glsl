@@ -221,11 +221,16 @@ void main() {
 	finalAlpha += computePointLightAlpha();
 	finalAlpha += computeSpotlightAlpha();
 	int numLights = 1 + u_numPointLights + u_numSpotlights;
-	numLights = 2;
 	finalAlpha /= numLights;
 	if (finalAlpha < 0.05f) {
 		discard;
 	}
+
+	vec3 ambientComponent = u_ambientLight.color * u_ambientLight.intensity * u_colAlbedo;
+	if (u_useTexAlbedo) {
+		ambientComponent *= vec3(texture(u_texAlbedo, texCoords_v));
+	}
+	finalColor += ambientComponent;
 
 	fragmentColor = vec4(finalColor, finalAlpha);
 

@@ -266,6 +266,8 @@
     <Image Include="objects\Island\OutsSS07.png" />
     <Image Include="textures\link_body_albedo.png" />
     <Image Include="textures\link_eye_albedo.png" />
+    <Image Include="textures\water_normal1.png" />
+    <Image Include="textures\water_normal2.png" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="models\Kargaroc\Kargaroc.obj">

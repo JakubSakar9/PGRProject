@@ -6,6 +6,7 @@
 #include "Rupee.h"
 #include "Spotlight.h"
 #include "StaticObject.h"
+#include "Water.h"
 
 class EmptyObject :
 	public ObjectInstance

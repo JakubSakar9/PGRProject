@@ -16,11 +16,15 @@ private:
 	float m_transmission;
 
 	GLuint m_albedoMap;
+	GLuint m_normalMap1;
+	GLuint m_normalMap2;
 public:
 	Material();
 	Material(nlohmann::json source);
 
 	void AlbedoMap(std::string filepath);
+	void NormalMap1(std::string filepath);
+	void NormalMap2(std::string filepath);
 
 	glm::vec3 Albedo();
 	glm::vec3 Emission();
@@ -28,4 +32,6 @@ public:
 	float Roughness();
 	float Transmission();
 	GLuint AlbedoMap();
+	GLuint NormalMap1();
+	GLuint NormalMap2();
 };

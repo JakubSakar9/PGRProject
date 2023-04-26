@@ -21,11 +21,13 @@ PointLight::PointLight(nlohmann::json source) {
 }
 
 void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
-	shaderProgram->UseShader();
-	shaderProgram->SetUniform(PL("position", m_id), m_position);
-	shaderProgram->SetUniform(PL("color", m_id), m_Color);
-	shaderProgram->SetUniform(PL("attenuation", m_id), m_attenuation);
-	shaderProgram->SetUniform(PL("intensity", m_id), m_Intensity);
-	CHECK_GL_ERROR();
+	for (ShaderType st : lightShaders) {
+		ShaderProgram* shaderProgram = SH(st);
+		shaderProgram->UseShader();
+		shaderProgram->SetUniform(PL("position", m_id), m_position);
+		shaderProgram->SetUniform(PL("color", m_id), m_Color);
+		shaderProgram->SetUniform(PL("attenuation", m_id), m_attenuation);
+		shaderProgram->SetUniform(PL("intensity", m_id), m_Intensity);
+		CHECK_GL_ERROR();
+	}
 }

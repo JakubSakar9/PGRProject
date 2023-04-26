@@ -405,6 +405,12 @@
     <Image Include="textures\link_eye_albedo.png">
       <Filter>Resource Files\textures</Filter>
     </Image>
+    <Image Include="textures\water_normal1.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="textures\water_normal2.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Object Include="objects\Island\Island.obj">

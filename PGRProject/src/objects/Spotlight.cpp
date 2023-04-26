@@ -28,13 +28,15 @@ Spotlight::Spotlight(nlohmann::json source) {
 }
 
 void Spotlight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
-	shaderProgram->UseShader();
-	shaderProgram->SetUniform(SL("position", m_id), m_position);
-	shaderProgram->SetUniform(SL("color", m_id), m_Color);
-	shaderProgram->SetUniform(SL("attenuation", m_id), m_attenuation);
-	shaderProgram->SetUniform(SL("intensity", m_id), m_Intensity);
-	shaderProgram->SetUniform(SL("direction", m_id), m_direction);
-	shaderProgram->SetUniform(SL("size", m_id), glm::radians(m_sizeDegrees));
-	CHECK_GL_ERROR();
+	for (ShaderType st : lightShaders) {
+		ShaderProgram* shaderProgram = SH(st);
+		shaderProgram->UseShader();
+		shaderProgram->SetUniform(SL("position", m_id), m_position);
+		shaderProgram->SetUniform(SL("color", m_id), m_Color);
+		shaderProgram->SetUniform(SL("attenuation", m_id), m_attenuation);
+		shaderProgram->SetUniform(SL("intensity", m_id), m_Intensity);
+		shaderProgram->SetUniform(SL("direction", m_id), m_direction);
+		shaderProgram->SetUniform(SL("size", m_id), glm::radians(m_sizeDegrees));
+		CHECK_GL_ERROR();
+	}
 }

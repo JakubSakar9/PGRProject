@@ -1,11 +1,11 @@
 {
     "ambientLight": {
         "color": [ 0.0, 0.1, 0.3 ],
-        "intensity": 0.3
+        "intensity": 0.2
     },
     "directionalLight": {
         "color": [ 0.1, 0.1, 0.15 ],
-        "intensity": 12.0,
+        "intensity": 6.0,
         "direction": [ 0.3, -0.2, -0.4 ]
     },
     "objects": {
@@ -22,9 +22,9 @@
                 "scale": [ 1.0, 1.0, 1.0 ],
                 "type": "camera",
                 "dynamic": true,
-                "bounds": [ -180.0, 11.0, 250.0, 38.0, 70.0, 380.0 ],
+                "bounds": [ -80.0, 11.0, 250.0, 38.0, 70.0, 347.0 ],
                 "fov": 45.0,
-                "clipping": [ 0.1, 500.0 ],
+                "clipping": [ 0.1, 1000.0 ],
                 "movementSpeed": 1.0,
                 "children": []
             },
@@ -343,7 +343,7 @@
                 "name": "sea",
                 "position": [ 0.0, 0.0, 0.0 ],
                 "rotation": [ 0, 0, 0 ],
-                "scale": [ 0.1, 0.1, 0.1 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
                 "type": "empty",
                 "children": [
                     {
@@ -351,10 +351,10 @@
                         "position": [ 0, -1, 0 ],
                         "rotation": [ 0, 0, 0 ],
                         "scale": [ 1.0, 1.0, 1.0 ],
-                        "type": "static",
-                        "source": "Sea",
-                        "sourceType": "wavefront",
-                        "objName": "n7b7",
+                        "type": "water",
+                        "density": 20,
+                        "waveSpeed": 0.1,
+                        "size":  5000,
                         "material": "waterMat",
                         "children": []
                     }

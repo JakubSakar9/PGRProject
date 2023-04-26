@@ -61,7 +61,7 @@ void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 				pvMatrix = projection * view;
 			}
 			program->SetUniform("pvMatrix", pvMatrix);
-			if ((ShaderType)i == SHADER_TYPE_DEFAULT) {
+			if ((ShaderType)i == SHADER_TYPE_DEFAULT || (ShaderType)i == SHADER_TYPE_WATER) {
 				glm::vec3 pos = glm::vec3(m_globalModelMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 				program->SetUniform("cameraPosition", pos);
 			}
@@ -74,13 +74,13 @@ void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 		m_rotation = InputManager::Get().CalculateRotation();
 		m_position += deltaPosition;
 
-		m_position.x = (m_position.x < m_lBound.x) ? m_lBound.x : m_position.x;
+		/*m_position.x = (m_position.x < m_lBound.x) ? m_lBound.x : m_position.x;
 		m_position.y = (m_position.y < m_lBound.y) ? m_lBound.y : m_position.y;
 		m_position.z = (m_position.z < m_lBound.z) ? m_lBound.z : m_position.z;
 
 		m_position.x = (m_position.x > m_uBound.x) ? m_uBound.x : m_position.x;
 		m_position.y = (m_position.y > m_uBound.y) ? m_uBound.y : m_position.y;
-		m_position.z = (m_position.z > m_uBound.z) ? m_uBound.z : m_position.z;
+		m_position.z = (m_position.z > m_uBound.z) ? m_uBound.z : m_position.z;*/
 
 		/*for (auto c : colliders) {
 			glm::vec3 lBound = c->LBound();

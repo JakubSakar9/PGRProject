@@ -28,6 +28,9 @@ void EmptyObject::InitChildren(nlohmann::json source) {
 		else if (c["type"] == "eye") {
 			m_children.push_back(new EyeObject(c));
 		}
+		else if (c["type"] == "water") {
+			m_children.push_back(new Water(c));
+		}
 		else if (c["type"] == "rupee") {
 			m_children.push_back(new Rupee(c));
 		}

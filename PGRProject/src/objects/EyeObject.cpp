@@ -144,5 +144,12 @@ bool EyeObject::GenObjects() {
 
 	glBindVertexArray(0);
 
+	InitTextures(shaderProgram);
+
 	return ObjectInstance::GenObjects();
+}
+
+void EyeObject::InitTextures(ShaderProgram* shaderProgram) {
+	glActiveTexture(GL_TEXTURE0);
+	shaderProgram->SetUniform("texAlbedo", 0);
 }

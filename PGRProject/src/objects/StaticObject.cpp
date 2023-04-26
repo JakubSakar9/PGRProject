@@ -181,5 +181,11 @@ bool StaticObject::GenObjects() {
 
 	glBindVertexArray(0);
 
+	InitTextures(shaderProgram);
+
 	return ObjectInstance::GenObjects();
+}
+
+void StaticObject::InitTextures(ShaderProgram *shaderProgram) {
+	shaderProgram->SetUniform("texAlbedo", 0);
 }

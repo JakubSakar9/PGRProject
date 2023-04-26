@@ -36,8 +36,6 @@ bool ShaderProgram::CreateShader(const std::string& vs_source, const std::string
 
 void ShaderProgram::UseShader() {
     glUseProgram(m_programObject);
-    if (m_shaderType == SHADER_TYPE_DEFAULT)
-        glUniform1i(GetLocation("texAlbedo"), 0);
     CHECK_GL_ERROR();
 }
 
@@ -104,6 +102,9 @@ bool ShaderProgram::LoadShaders() {
         break;
     case SHADER_TYPE_EYE:
         LoadEye();
+        break;
+    case SHADER_TYPE_WATER:
+        LoadWater();
         break;
     }
 
@@ -201,6 +202,7 @@ bool ShaderProgram::LoadWater() {
     UNIF_LOC("texNormal2");
     
     UNIF_LOC("waveSpeed");
+    UNIF_LOC("time");
     return true;
 }
 
