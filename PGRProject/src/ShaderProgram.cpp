@@ -159,6 +159,8 @@ bool ShaderProgram::LoadBasePBR()
 bool ShaderProgram::LoadDefault() {
     LoadBasePBR();
 
+    UNIF_LOC("normalMatrix");
+
     UNIF_LOC("texAlbedo");
     UNIF_LOC("useTexAlbedo");
 

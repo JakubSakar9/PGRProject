@@ -12,6 +12,6 @@ public:
 	AmbientLight(nlohmann::json source);
 	~AmbientLight() {}
 
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 };
 

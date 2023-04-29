@@ -1,11 +1,27 @@
 [
 	{
-		"name": "rupeeMat",
+		"name": "redRupeeMat",
 		"albedo": [ 1.0, 0.0, 0.0 ],
 		"emission": [ 0.05, 0.0, 0.0 ],
 		"specular": 0.6,
-		"roughness": 0.5,
-		"transmission": 0.8
+		"roughness": 0.4,
+		"transmission": 0.6
+	},
+	{
+		"name": "greenRupeeMat",
+		"albedo": [ 0.0, 1.0, 0.0 ],
+		"emission": [ 0.0, 0.05, 0.0 ],
+		"specular": 0.6,
+		"roughness": 0.4,
+		"transmission": 0.6
+	},
+	{
+		"name": "blueRupeeMat",
+		"albedo": [ 0.0, 0.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.05 ],
+		"specular": 0.6,
+		"roughness": 0.4,
+		"transmission": 0.6
 	},
 	{
 		"name": "waterMat",
@@ -133,5 +149,23 @@
 		"roughness": 0.9,
 		"transmission": 0.0,
 		"albedoMap": "flatrock_albedo"
+	},
+	{
+		"name": "kargarocEyeMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "kargaroc_eye_albedo"
+	},
+	{
+		"name": "kargarocBodyMat",
+		"albedo": [ 1.0, 1.0, 1.0 ],
+		"emission": [ 0.0, 0.0, 0.0 ],
+		"specular": 0.0,
+		"roughness": 0.9,
+		"transmission": 0.0,
+		"albedoMap": "kargaroc_body_albedo"
 	}
 ]

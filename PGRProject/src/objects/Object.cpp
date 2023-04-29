@@ -1,8 +1,10 @@
 #include "Object.h"
 #include <iostream>
 
-void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	m_localModelMatrix = ComputeModelMatrix();
+
+	m_globalRotation = parentRotation * m_rotation;
 
 	// if we have parent, multiply parent's matrix with ours
 	if (parentModelMatrix != nullptr)
@@ -12,7 +14,7 @@ void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix)
 	
 	for (auto child : m_children) {
 		if (child != nullptr)
-			child->Update(deltaTime, &m_globalModelMatrix);
+			child->Update(deltaTime, &m_globalModelMatrix, m_globalRotation);
 	}
 }
 

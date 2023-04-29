@@ -38,11 +38,11 @@ void Scene::Render() {
 void Scene::Update(float deltaTime)
 {
     SwitchCamera();
-    m_rootObject.Update(deltaTime, nullptr);
+    m_rootObject.Update(deltaTime, nullptr, glm::quat());
 
-    m_AmbientLight.Update(deltaTime, nullptr);
+    m_AmbientLight.Update(deltaTime, nullptr, glm::quat());
     CHECK_GL_ERROR();
-    m_DirectionalLight.Update(deltaTime, nullptr);
+    m_DirectionalLight.Update(deltaTime, nullptr, glm::quat());
     CHECK_GL_ERROR();
 
     std::vector<BoxCollider*> colliders;

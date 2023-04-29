@@ -15,5 +15,5 @@ public:
 	DirectionalLight(nlohmann::json source);
 	~DirectionalLight() {}
 
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 };

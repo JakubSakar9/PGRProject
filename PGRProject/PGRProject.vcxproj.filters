@@ -114,14 +114,14 @@
     <ClCompile Include="src\objects\EyeObject.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\utils\Nurbs.cpp">
-      <Filter>Source Files\objects\utils</Filter>
-    </ClCompile>
     <ClCompile Include="src\objects\Camera.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\Water.cpp">
       <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\utils\Circle.cpp">
+      <Filter>Source Files\objects\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +191,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\utils\Nurbs.h">
-      <Filter>Header Files\objects\utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\json.hpp">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
@@ -205,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="src\objects\Water.h">
       <Filter>Header Files\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\utils\AnimationCurve.h">
+      <Filter>Header Files\objects\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\utils\Circle.h">
+      <Filter>Header Files\objects\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

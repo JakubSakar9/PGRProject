@@ -39,7 +39,7 @@ public:
 
 	bool GenObjects();
 
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 
 	void ChangeBounds(glm::vec3 lBound, glm::vec3 uBound);
 

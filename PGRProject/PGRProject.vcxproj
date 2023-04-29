@@ -158,7 +158,7 @@
     <ClCompile Include="src\objects\Rupee.cpp" />
     <ClCompile Include="src\objects\Spotlight.cpp" />
     <ClCompile Include="src\objects\StaticObject.cpp" />
-    <ClCompile Include="src\objects\utils\Nurbs.cpp" />
+    <ClCompile Include="src\objects\utils\Circle.cpp" />
     <ClCompile Include="src\objects\Water.cpp" />
     <ClCompile Include="src\PGRProject.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -185,8 +185,9 @@
     <ClInclude Include="src\objects\Rupee.h" />
     <ClInclude Include="src\objects\Spotlight.h" />
     <ClInclude Include="src\objects\StaticObject.h" />
+    <ClInclude Include="src\objects\utils\AnimationCurve.h" />
+    <ClInclude Include="src\objects\utils\Circle.h" />
     <ClInclude Include="src\objects\utils\MeshData.h" />
-    <ClInclude Include="src\objects\utils\Nurbs.h" />
     <ClInclude Include="src\objects\Water.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\ResourceManager.h" />

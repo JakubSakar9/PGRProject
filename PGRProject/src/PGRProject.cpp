@@ -15,6 +15,7 @@ void TimerFn(int previousTime) {
     glutPostRedisplay();
     glutTimerFunc(Renderer::Get().RefreshTimeMs(), TimerFn, 0);
     Renderer::Get().Update();
+    window->Update();
 }
 
 void ReshapeFn(int w, int h) {
@@ -41,6 +42,10 @@ void PassiveMotionFn(int x, int y) {
     InputManager::Get().MouseCallback(x, y);
 }
 
+void MouseFn(int button, int state, int x, int y) {
+    InputManager::Get().MouseClickCallback(button, state, x, y);
+}
+
 bool Init(int argc, char** argv) {
     glutInit(&argc, argv);
 
@@ -63,6 +68,7 @@ bool Init(int argc, char** argv) {
     glutSpecialFunc(SpecialFn);
     glutSpecialUpFunc(SpecialUpFn);
     glutPassiveMotionFunc(PassiveMotionFn);
+    glutMouseFunc(MouseFn);
     glutTimerFunc(Renderer::Get().RefreshTimeMs(), TimerFn, 1);
     
     return Renderer::Get().Init();

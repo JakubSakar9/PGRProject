@@ -65,7 +65,7 @@ EyeObject::EyeObject(nlohmann::json source) {
 	m_material = ResourceManager::Get().GetMaterial(source["material"]);
 }
 
-void EyeObject::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+void EyeObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	m_animTime += deltaTime / 1000.0f;
 	if (m_animTime > 1.0f) {
 		m_animTime -= 1.0f;
@@ -82,7 +82,7 @@ void EyeObject::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	}
 	m_frameId = animFrames[animKeyframe];
 
-	ObjectInstance::Update(deltaTime, parentModelMatrix);
+	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }
 
 void EyeObject::Draw() {

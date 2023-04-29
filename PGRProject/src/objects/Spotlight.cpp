@@ -27,7 +27,7 @@ Spotlight::Spotlight(nlohmann::json source) {
 	m_id = ShaderProgram::s_nextSpotlightIndex++;
 }
 
-void Spotlight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+void Spotlight::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	for (ShaderType st : lightShaders) {
 		ShaderProgram* shaderProgram = SH(st);
 		shaderProgram->UseShader();
@@ -39,4 +39,5 @@ void Spotlight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 		shaderProgram->SetUniform(SL("size", m_id), glm::radians(m_sizeDegrees));
 		CHECK_GL_ERROR();
 	}
+	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }

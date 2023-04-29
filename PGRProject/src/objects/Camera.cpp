@@ -46,8 +46,8 @@ bool Camera::GenObjects() {
 	return ObjectInstance::GenObjects();
 }
 
-void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ObjectInstance::Update(deltaTime, parentModelMatrix);
+void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
+	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 	if (m_cameraId == ShaderProgram::ActiveCameraId()) {
 		for (int i = 0; i < SHADER_TYPE_N; i++) {
 			ShaderProgram* program = ShaderProgram::GetShader((ShaderType)i);

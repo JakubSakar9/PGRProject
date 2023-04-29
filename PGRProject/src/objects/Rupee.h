@@ -2,6 +2,8 @@
 
 #include "StaticObject.h"
 
+#include "../InputManager.h"
+
 const float rupeeVertices[] = {
 	  0.000,
 	  1.60000002,
@@ -587,13 +589,17 @@ const unsigned int rupeeIndices[] = {
 class Rupee
 	: public StaticObject
 {
+private:
+	static int s_rupeeId;
+	int m_rupeeId;
+
+	bool m_rotating;
 public:
 	Rupee();
 	Rupee(nlohmann::json source);
 
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 	void Draw();
 
 	bool GenObjects();
 };
-

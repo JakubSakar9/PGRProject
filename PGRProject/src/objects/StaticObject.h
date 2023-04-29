@@ -35,7 +35,7 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 
 	/// calls draw on child nodes
 	virtual void Draw();

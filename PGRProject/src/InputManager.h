@@ -13,19 +13,23 @@ public:
 		return instance;
 	}
 private:
-	static InputManager s_Instance;
+	static InputManager s_instance;
 
-	const float c_MouseSensitivity = 0.05;
+	const float c_mouseSensitivity = 0.05;
 
-	bool m_FirstMouse = true;
+	bool m_firstMouse = true;
+	bool m_pickingMode = false;
+	bool m_mouseState = false;
 
-	std::map<unsigned char, bool> m_KeyMap;
-	std::map<int, bool> m_SpecialMap;
-	std::map<unsigned char, bool> m_KeyReleasedMap;
-	std::map<int, bool> m_SpecialReleasedMap;
+	int m_stencilValue = -1;
+
+	std::map<unsigned char, bool> m_keyMap;
+	std::map<int, bool> m_specialMap;
+	std::map<unsigned char, bool> m_keyReleasedMap;
+	std::map<int, bool> m_specialReleasedMap;
 	
-	glm::vec2 m_MousePos;
-	glm::vec2 m_WindowCenter;
+	glm::vec2 m_mousePos;
+	glm::vec2 m_windowCenter;
 	
 	InputManager();
 public:
@@ -34,9 +38,12 @@ public:
 	void SpecialPressedCallback(int key);
 	void SpecialReleasedCallback(int key);
 	void MouseCallback(int x, int y);
+	void MouseClickCallback(int button, int state, int x, int y);
+	void QueryWindowInput();
 
 	glm::vec3 RelativeVelocity() const;
 	glm::quat CalculateRotation();
 	int CameraToSwitch();
+	int ReadStencils();
 };
 

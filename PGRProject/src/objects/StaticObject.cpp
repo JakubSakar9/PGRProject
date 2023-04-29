@@ -99,8 +99,8 @@ void StaticObject::UseLegacyMesh(const pgr::MeshData& meshData) {
 		m_geometry.indices.begin());
 }
 
-void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
-	ObjectInstance::Update(deltaTime, parentModelMatrix);
+void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
+	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }
 
 void StaticObject::Draw() {
@@ -108,6 +108,9 @@ void StaticObject::Draw() {
 
 	shaderProgram->UseShader();
 	shaderProgram->SetUniform("mMatrix", m_globalModelMatrix);
+
+	glm::mat4 normalMat = glm::toMat4(m_globalRotation);
+	shaderProgram->SetUniform("normalMatrix", normalMat);
 
 	glm::vec3 colAlbedo = m_material->Albedo();
 	shaderProgram->SetUniform("colAlbedo", colAlbedo);

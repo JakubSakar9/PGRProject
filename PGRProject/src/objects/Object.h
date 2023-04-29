@@ -25,6 +25,7 @@ protected:
 	glm::vec3 m_position;
 	glm::vec3 m_scale;
 	glm::quat m_rotation;
+	glm::quat m_globalRotation;
 	glm::mat4 m_localModelMatrix;
 	glm::mat4 m_globalModelMatrix;
 
@@ -36,7 +37,7 @@ protected:
 	typedef std::vector<ObjectInstance*> ObjectList;
 	ObjectList m_children;
 
-	glm::mat4 ComputeModelMatrix();
+	virtual glm::mat4 ComputeModelMatrix();
 
 	void InitTransform(nlohmann::json source);
 
@@ -48,7 +49,7 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 
 	/// calls draw on child nodes
 	virtual void Draw();

@@ -50,7 +50,7 @@ Water::~Water() {
 	ObjectInstance::~ObjectInstance();
 }
 
-void Water::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+void Water::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	m_time += deltaTime;
 
 	ShaderProgram* shaderProgram = SH(m_shaderType);
@@ -58,7 +58,7 @@ void Water::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 	shaderProgram->SetUniform("waveSpeed", m_waveSpeed);
 	shaderProgram->SetUniform("time", m_time);
 
-	ObjectInstance::Update(deltaTime, parentModelMatrix);
+	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }
 
 void Water::Draw() {

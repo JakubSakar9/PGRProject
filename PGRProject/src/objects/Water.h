@@ -37,7 +37,7 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 
 	void Draw();
 

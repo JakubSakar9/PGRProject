@@ -28,8 +28,8 @@ public:
 	ResourceManager(const ResourceManager&) = delete;
 
 	static ResourceManager& Get() {
-		static ResourceManager s_Instance;
-		return s_Instance;
+		static ResourceManager s_instance;
+		return s_instance;
 	}
 
 	//std::vector<WavefrontObject *> LoadWavefrontObj(std::string filepath);

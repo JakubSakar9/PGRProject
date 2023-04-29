@@ -38,5 +38,7 @@ public:
 	~Window() {}
 
 	bool Init();
+
+	void Update();
 };
 

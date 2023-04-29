@@ -20,7 +20,7 @@ PointLight::PointLight(nlohmann::json source) {
 	m_id = ShaderProgram::s_nextPointLightIndex++;
 }
 
-void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
+void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	for (ShaderType st : lightShaders) {
 		ShaderProgram* shaderProgram = SH(st);
 		shaderProgram->UseShader();
@@ -30,4 +30,5 @@ void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix) {
 		shaderProgram->SetUniform(PL("intensity", m_id), m_Intensity);
 		CHECK_GL_ERROR();
 	}
+	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }

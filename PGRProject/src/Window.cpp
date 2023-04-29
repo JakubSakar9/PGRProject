@@ -10,3 +10,7 @@ bool Window::Init()
 	glutSetCursor(GLUT_CURSOR_NONE);
 	return true;
 }
+
+void Window::Update() {
+	InputManager::Get().QueryWindowInput();
+}

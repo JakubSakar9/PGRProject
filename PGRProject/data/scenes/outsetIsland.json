@@ -22,7 +22,7 @@
                 "scale": [ 1.0, 1.0, 1.0 ],
                 "type": "camera",
                 "dynamic": true,
-                "bounds": [ -80.0, 11.0, 250.0, 38.0, 70.0, 347.0 ],
+                "bounds": [ -80.0, 11.0, 250.0, 60.0, 70.0, 347.0 ],
                 "fov": 45.0,
                 "clipping": [ 0.1, 1000.0 ],
                 "movementSpeed": 1.0,
@@ -55,14 +55,6 @@
                 "children": []
             },
             {
-                "name": "link",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotation": [ 0, 0, 0 ],
-                "scale": [ 4.0, 4.0, 4.0 ],
-                "type": "empty",
-                "children": []
-            },
-            {
                 "name": "island",
                 "position": [ 0.0, 0.0, 0.0 ],
                 "rotation": [ 0, 0, 0 ],
@@ -71,10 +63,10 @@
                 "children": [
                     {
                         "name": "link",
-                        "position": [ 0, 0, 15000 ],
+                        "position": [ 0, 50, 15000 ],
                         "rotation": [ 0, 0, 0 ],
                         "scale": [ 5.0, 5.0, 5.0 ],
-                        "collider": [50.0, 500.0, 50.0],
+                        "collider": [ 50.0, 500.0, 50.0 ],
                         "type": "empty",
                         "children": [
                             {
@@ -260,12 +252,30 @@
                         "children": []
                     },
                     {
-                        "name": "rupee",
-                        "position": [ 0, 0, 0 ],
+                        "name": "redRupee",
+                        "position": [ 0, 500, 16000 ],
                         "rotation": [ 0, 0, 0 ],
-                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "scale": [ 100.0, 100.0, 100.0 ],
                         "type": "rupee",
-                        "material": "rupeeMat",
+                        "material": "redRupeeMat",
+                        "children": []
+                    },
+                    {
+                        "name": "greenRupee",
+                        "position": [ 1000, 500, 16000 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 100.0, 100.0, 100.0 ],
+                        "type": "rupee",
+                        "material": "greenRupeeMat",
+                        "children": []
+                    },
+                    {
+                        "name": "blueRupee",
+                        "position": [ 2000, 500, 16000 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 100.0, 100.0, 100.0 ],
+                        "type": "rupee",
+                        "material": "blueRupeeMat",
                         "children": []
                     },
                     {
@@ -337,6 +347,55 @@
                         "direction": [ 0.0, -1.0, 0.0 ],
                         "size": 30,
                         "children": []
+                    },
+                    {
+                        "name": "kargaroc",
+                        "position": [ 0, 2000, 15000 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 20.0, 20.0, 20.0 ],
+                        "circle": {
+                            "radius": 1000.0,
+                            "period": 10000.0
+                        },
+                        "type": "empty",
+                        "children": [
+                            {
+                                "name": "body",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "Kargaroc",
+                                "sourceType": "wavefront",
+                                "objName": "body",
+                                "material": "kargarocBodyMat",
+                                "children": []
+                            },
+                            {
+                                "name": "leftEye",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "Kargaroc",
+                                "sourceType": "wavefront",
+                                "objName": "eye.l",
+                                "material": "kargarocEyeMat",
+                                "children": []
+                            },
+                            {
+                                "name": "rightEye",
+                                "position": [ 0, 0, 0 ],
+                                "rotation": [ 0, 0, 0 ],
+                                "scale": [ 1.0, 1.0, 1.0 ],
+                                "type": "static",
+                                "source": "Kargaroc",
+                                "sourceType": "wavefront",
+                                "objName": "eye.r",
+                                "material": "kargarocEyeMat",
+                                "children": []
+                            }
+                        ]
                     }
                 ]
             },

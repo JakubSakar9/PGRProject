@@ -21,8 +21,8 @@ public:
 	Renderer(const Renderer&) = delete;
 
 	static Renderer& Get() {
-		static Renderer s_Instance;
-		return s_Instance;
+		static Renderer s_instance;
+		return s_instance;
 	}
 
 	bool Init();

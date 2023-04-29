@@ -18,6 +18,6 @@ public:
 	PointLight(nlohmann::json source);
 	~PointLight() {}
 
-	void Update(float deltaTime, const glm::mat4* parentModelMatrix) override;
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) override;
 };
 
