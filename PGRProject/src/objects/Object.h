@@ -13,7 +13,6 @@
 #include "../ResourceManager.h"
 #include "../ShaderType.h"
 #include "../ShaderProgram.h"
-#include "../WavefrontObject.h"
 
 #define ASSIMP_LOAD_FLAGS (aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices)
 #define DEFAULT_WAVEFRONT_SCALE 0.02f

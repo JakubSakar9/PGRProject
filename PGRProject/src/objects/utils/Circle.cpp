@@ -8,5 +8,6 @@ glm::vec3 Circle::SamplePosition(float t) {
 
 glm::quat Circle::SampleRotation(float t) {
 	float param = remainder(t, m_period) / m_period;
-	return glm::quat(glm::vec3(0.0f, -2 * param * glm::pi<float>(), 0.0f));
+	glm::quat ret = glm::quat(glm::vec3(0.0f, -2 * param * glm::pi<float>(), 0.0f));
+	return ret;
 }

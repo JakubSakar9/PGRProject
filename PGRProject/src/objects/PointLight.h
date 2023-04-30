@@ -12,6 +12,8 @@ class PointLight
 private:
 	glm::vec3 m_attenuation;
 	unsigned int m_id;
+	float m_pulsePeriod;
+	float m_time = 0.0f;
 public:
 	PointLight() {}
 	PointLight(glm::vec3 color, float intensity, glm::vec3 position, glm::vec3 attenuation);

@@ -49,7 +49,6 @@ protected:
 
 public:
 	EyeObject() {}
-	EyeObject(aiMesh* mesh, Material* material);
 
 	EyeObject(nlohmann::json source);
 

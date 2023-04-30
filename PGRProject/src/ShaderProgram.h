@@ -10,7 +10,7 @@
 #define DEFAULT_VS_SOURCE "Shaders/simple-vs.glsl"
 #define DEFAULT_FS_SOURCE "Shaders/simple-fs.glsl"
 
-#define MAX_POINT_LIGHTS 4
+#define MAX_POINT_LIGHTS 10
 #define MAX_SPOTLIGHTS 2
 
 #define ATTRIB_LOC(s) CreateAttributeLocation(std::string(s), std::string(s))

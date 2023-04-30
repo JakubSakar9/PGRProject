@@ -1,38 +1,5 @@
 #include "EyeObject.h"
 
-EyeObject::EyeObject(aiMesh* mesh, Material* material) {
-	m_scale = glm::vec3(1.0f);
-
-	m_geometry.numVertices = mesh->mNumVertices;
-	m_geometry.numTriangles = mesh->mNumFaces;
-	m_geometry.verticesData.resize(5 * m_geometry.numVertices);
-	m_geometry.indices.resize(3 * m_geometry.numTriangles);
-
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-		const aiVector3D& position = mesh->mVertices[i];
-		const aiVector3D& normals = mesh->mNormals[i];
-		const aiVector3D& texCoords = mesh->mTextureCoords[0][i];
-
-		m_geometry.verticesData[5 * i + 0] = position.x;
-		m_geometry.verticesData[5 * i + 1] = position.y;
-		m_geometry.verticesData[5 * i + 2] = position.z;
-		m_geometry.verticesData[5 * i + 3] = texCoords.x;
-		m_geometry.verticesData[5 * i + 4] = 1 - texCoords.y;
-	}
-
-
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
-		const aiFace& face = mesh->mFaces[i];
-
-		m_geometry.indices[3 * i + 0] = face.mIndices[0];
-		m_geometry.indices[3 * i + 1] = face.mIndices[1];
-		m_geometry.indices[3 * i + 2] = face.mIndices[2];
-	}
-
-	m_material = material;
-	m_animTime = 0.0f;
-}
-
 EyeObject::EyeObject(nlohmann::json source) {
 	InitTransform(source);
 

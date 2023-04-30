@@ -28,16 +28,14 @@ Camera::Camera(nlohmann::json source) {
 glm::mat4 Camera::ComputeViewMatrix() {
 	glm::vec4 posH = m_globalModelMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	glm::vec3 pos = glm::vec3(posH) / posH.w;
-	glm::vec4 upH = glm::toMat4(m_rotation) * glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
-	glm::vec3 up = glm::vec3(upH) / upH.w;
-	glm::vec4 forwardH = glm::toMat4(m_rotation) * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
-	glm::vec3 forward = glm::vec3(forwardH) / forwardH.w;
+	glm::vec3 up = m_globalRotation * glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 forward = m_globalRotation * glm::vec3(0.0f, 0.0f, -1.0f);
 	return glm::lookAt(pos, forward + pos, up);
 }
 
 glm::mat4 Camera::ComputeSkyboxViewMatrix() {
-	glm::vec3 up = m_rotation * glm::vec3(0.0f, 1.0f, 0.0f);
-	glm::vec3 forward = m_rotation * glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 up = m_globalRotation * glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 forward = m_globalRotation * glm::vec3(0.0f, 0.0f, -1.0f);
 	return glm::lookAt(glm::vec3(0.0f), forward, up);
 }
 
@@ -49,6 +47,7 @@ bool Camera::GenObjects() {
 void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 	if (m_cameraId == ShaderProgram::ActiveCameraId()) {
+		//std::cout << m_globalRotation.y << std::endl;
 		for (int i = 0; i < SHADER_TYPE_N; i++) {
 			ShaderProgram* program = ShaderProgram::GetShader((ShaderType)i);
 			program->UseShader();

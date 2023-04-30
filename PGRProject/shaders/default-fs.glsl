@@ -1,7 +1,7 @@
 #version 140
 
 const float c_pi = 3.14159265;
-const int c_maxPointLights = 4;
+const int c_maxPointLights = 10;
 const int c_maxSpotlights = 2;
 
 struct AmbientLight {

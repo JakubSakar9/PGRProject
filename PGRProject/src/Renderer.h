@@ -1,5 +1,8 @@
 #pragma once
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_impl_glut.h"
 #include "pgr.h"
 
 #include "objects/Object.h"
@@ -29,6 +32,7 @@ public:
 	bool InitShaders();
 	void Render();	
 	void Update();
+	void RenderGui();
 
 	inline unsigned int RefreshTimeMs() const { return m_refreshTimeMs; }
 };

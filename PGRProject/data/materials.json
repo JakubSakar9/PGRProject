@@ -34,6 +34,14 @@
 		"normalMap2": "water_normal2"
 	},
 	{
+		"name": "windowHighlightsMat",
+		"albedo": [ 0.0, 0.0, 0.0 ],
+		"emission": [ 1.0, 0.8, 0.0 ],
+		"specular": 0.0,
+		"roughness": 1.0,
+		"transmission": 0.0
+	},
+	{
 		"name": "linkBodyMat",
 		"albedo": [ 1.0, 1.0, 1.0 ],
 		"emission": [ 0.0, 0.0, 0.0 ],

@@ -41,6 +41,7 @@ void Renderer::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     m_scene.Render();
     CHECK_GL_ERROR();
+    RenderGui();
     glutSwapBuffers();
 }
 
@@ -51,10 +52,29 @@ void Renderer::Update() {
     CHECK_GL_ERROR();
 }
 
+void Renderer::RenderGui() {
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGLUT_NewFrame();
+    ImGui::NewFrame();
+    ImGuiIO& io = ImGui::GetIO();
+
+    {
+        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+        ImGui::End();
+    }
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    //glViewport(0, 0, (GLsizei)io.DisplaySize.x, (GLsizei)io.DisplaySize.y);
+    //glUseProgram(0);
+}
+
 Renderer::Renderer() {
     m_refreshRate = DEFAULT_REFRESH_RATE;
     m_lastTime = 0;
-    m_refreshTimeMs = 1000.0f / m_refreshRate;
+        m_refreshTimeMs = 1000.0f / m_refreshRate;
 
     ShaderProgram* defaultShader = new ShaderProgram("Shaders/default-vs.glsl",
         "Shaders/default-fs.glsl", SHADER_TYPE_DEFAULT);

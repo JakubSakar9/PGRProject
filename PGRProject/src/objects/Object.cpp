@@ -68,10 +68,14 @@ void ObjectInstance::InitTransform(nlohmann::json source) {
 	json j_position = source["position"];
 	m_position = glm::vec3(j_position[0], j_position[1], j_position[2]);
 	json j_rotation = source["rotation"];
-	glm::quat quatX = glm::quat(glm::radians((float) j_rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
+	/*glm::quat quatX = glm::quat(glm::radians((float) j_rotation[0]), glm::vec3(1.0f, 0.0f, 0.0f));
 	glm::quat quatY = glm::quat(glm::radians((float) j_rotation[1]), glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::quat quatZ = glm::quat(glm::radians((float) j_rotation[2]), glm::vec3(0.0f, 0.0f, 1.0f));
-	m_rotation = quatX * quatY * quatZ;
+	m_rotation = quatX * quatY * quatZ;*/
+	float angleX = glm::radians((float)j_rotation[0]);
+	float angleY = glm::radians((float)j_rotation[1]);
+	float angleZ = glm::radians((float)j_rotation[2]);
+	m_rotation = glm::quat(glm::vec3(angleX, angleY, angleZ));
 	json j_scale = source["scale"];
 	m_scale = glm::vec3(j_scale[0], j_scale[1], j_scale[2]);
 

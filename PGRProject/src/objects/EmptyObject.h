@@ -19,7 +19,6 @@ private:
 	glm::mat4 ComputeModelMatrix(float time);
 public:
 	EmptyObject() {}
-	EmptyObject(const std::vector<WavefrontObject*>& sourceWavefront);
 	EmptyObject(nlohmann::json source);
 	~EmptyObject();
 

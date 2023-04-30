@@ -146,6 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\imgui\imgui.cpp" />
+    <ClCompile Include="src\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\imgui\imgui_impl_glut.cpp" />
+    <ClCompile Include="src\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\objects\AmbientLight.cpp" />
@@ -166,12 +173,20 @@
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
-    <ClCompile Include="src\WavefrontObject.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\BoxCollider.h" />
+    <ClInclude Include="src\imgui\imconfig.h" />
+    <ClInclude Include="src\imgui\imgui.h" />
+    <ClInclude Include="src\imgui\imgui_impl_glut.h" />
+    <ClInclude Include="src\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="src\imgui\imgui_internal.h" />
+    <ClInclude Include="src\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\imgui\imstb_truetype.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\objects\AmbientLight.h" />
@@ -196,7 +211,6 @@
     <ClInclude Include="src\ShaderType.h" />
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\utils\json.hpp" />
-    <ClInclude Include="src\WavefrontObject.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>

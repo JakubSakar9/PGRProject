@@ -16,10 +16,6 @@ glm::mat4 EmptyObject::ComputeModelMatrix(float time)
 	return trMat * rotMat * scaleMat;
 }
 
-EmptyObject::EmptyObject(const std::vector<WavefrontObject*>& sourceWavefront) {
-	// Not yet implemented
-}
-
 EmptyObject::EmptyObject(nlohmann::json source) {
 	using json = nlohmann::json;
 	InitTransform(source);

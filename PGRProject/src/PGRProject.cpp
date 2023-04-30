@@ -4,6 +4,9 @@
 #include "Window.h"
 #include "Renderer.h"
 #include "InputManager.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glut.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 Window* window;
 
@@ -18,32 +21,34 @@ void TimerFn(int previousTime) {
     window->Update();
 }
 
-void ReshapeFn(int w, int h) {
-    glViewport(0, 0, w, h);
-}
-
 void KeyboardFn(unsigned char key, int x, int y) {
     InputManager::Get().KeyPressedCallback(key);
+    ImGui_ImplGLUT_KeyboardFunc(key, x, y);
 }
 
 void KeyboardUpFn(unsigned char key, int x, int y) {
     InputManager::Get().KeyReleasedCallback(key);
+    ImGui_ImplGLUT_KeyboardUpFunc(key, x, y);
 }
 
 void SpecialFn(int key, int x, int y) {
     InputManager::Get().SpecialPressedCallback(key);
+    ImGui_ImplGLUT_SpecialFunc(key, x, y);
 }
 
 void SpecialUpFn(int key, int x, int y) {
     InputManager::Get().SpecialReleasedCallback(key);
+    ImGui_ImplGLUT_SpecialUpFunc(key, x, y);
 }
 
 void PassiveMotionFn(int x, int y) {
     InputManager::Get().MouseCallback(x, y);
+    ImGui_ImplGLUT_MotionFunc(x, y);
 }
 
 void MouseFn(int button, int state, int x, int y) {
     InputManager::Get().MouseClickCallback(button, state, x, y);
+    ImGui_ImplGLUT_MouseFunc(button, state, x, y);
 }
 
 bool Init(int argc, char** argv) {
@@ -61,7 +66,7 @@ bool Init(int argc, char** argv) {
         pgr::dieWithError("pgr init failed, required OpenGL not supported?");
     }
 
-    glutReshapeFunc(ReshapeFn);
+    glutReshapeFunc(ImGui_ImplGLUT_ReshapeFunc);
     glutDisplayFunc(DisplayFn);
     glutKeyboardFunc(KeyboardFn);
     glutKeyboardUpFunc(KeyboardUpFn);
@@ -70,6 +75,15 @@ bool Init(int argc, char** argv) {
     glutPassiveMotionFunc(PassiveMotionFn);
     glutMouseFunc(MouseFn);
     glutTimerFunc(Renderer::Get().RefreshTimeMs(), TimerFn, 1);
+
+    //ImGui init
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGLUT_Init();
+    ImGui_ImplOpenGL3_Init();
+    //ImGui_ImplGLUT_InstallFuncs();
     
     return Renderer::Get().Init();
 }
@@ -81,4 +95,8 @@ int main(int argc, char** argv) {
     }
 
     glutMainLoop();
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGLUT_Shutdown();
+    ImGui::DestroyContext();
 }
