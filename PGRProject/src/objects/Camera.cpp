@@ -39,15 +39,15 @@ glm::mat4 Camera::ComputeSkyboxViewMatrix() {
 	return glm::lookAt(glm::vec3(0.0f), forward, up);
 }
 
-bool Camera::GenObjects() {
+bool Camera::GenObjects(std::vector<ObjectInstance*>& transparentObjects) {
 	m_aspectRatio = glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
-	return ObjectInstance::GenObjects();
+	return ObjectInstance::GenObjects(transparentObjects);
 }
 
 void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 	if (m_cameraId == ShaderProgram::ActiveCameraId()) {
-		//std::cout << m_globalRotation.y << std::endl;
+		ShaderProgram::s_activeCameraPosition = m_globalPosition;
 		for (int i = 0; i < SHADER_TYPE_N; i++) {
 			ShaderProgram* program = ShaderProgram::GetShader((ShaderType)i);
 			program->UseShader();
@@ -63,8 +63,7 @@ void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix, const g
 			}
 			program->SetUniform("pvMatrix", pvMatrix);
 			if ((ShaderType)i == SHADER_TYPE_DEFAULT || (ShaderType)i == SHADER_TYPE_WATER) {
-				glm::vec3 pos = glm::vec3(m_globalModelMatrix * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
-				program->SetUniform("cameraPosition", pos);
+				program->SetUniform("cameraPosition", m_globalPosition);
 			}
 		}
 	}
@@ -110,4 +109,24 @@ void Camera::UpdateColliders(std::vector<BoxCollider*> colliders) {
 	}
 	s_colliders.clear();
 	s_colliders = colliders;
+}
+
+void Camera::ShowProperties() {
+	ObjectInstance::ShowProperties();
+	if (ImGui::CollapsingHeader("Camera Properties")) {
+		ImGui::DragFloat("Near Plane", &m_nearPlane);
+		ImGui::DragFloat("Far Plane", &m_farPlane);
+		ImGui::DragFloat("FOV", &m_fovDegrees);
+		if (m_dynamic) {
+			float lBound[3] = { m_lBound.x, m_lBound.y, m_lBound.z };
+			ImGui::DragFloat3("Lower Bound", lBound);
+			m_lBound = glm::vec3(lBound[0], lBound[1], lBound[2]);
+
+			float uBound[3] = { m_uBound.x, m_uBound.y, m_uBound.z };
+			ImGui::DragFloat3("Upper Bound", uBound);
+			m_uBound = glm::vec3(uBound[0], uBound[1], uBound[2]);
+
+			ImGui::DragFloat("Movement Speed", &m_movementSpeed);
+		}
+	}
 }

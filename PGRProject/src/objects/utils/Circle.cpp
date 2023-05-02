@@ -11,3 +11,10 @@ glm::quat Circle::SampleRotation(float t) {
 	glm::quat ret = glm::quat(glm::vec3(0.0f, -2 * param * glm::pi<float>(), 0.0f));
 	return ret;
 }
+
+void Circle::ShowProperties() {
+	if (ImGui::CollapsingHeader("Circle Path")) {
+		ImGui::DragFloat("Radius", &m_radius);
+		ImGui::DragFloat("Period", &m_period);
+	}
+}

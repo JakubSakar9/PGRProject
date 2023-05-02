@@ -71,7 +71,7 @@ void EyeObject::Draw() {
 	ObjectInstance::Draw();
 }
 
-bool EyeObject::GenObjects() {
+bool EyeObject::GenObjects(std::vector<ObjectInstance*>& transparentObjects) {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_EYE);
 
 	// Generating VBOs
@@ -113,10 +113,14 @@ bool EyeObject::GenObjects() {
 
 	InitTextures(shaderProgram);
 
-	return ObjectInstance::GenObjects();
+	return ObjectInstance::GenObjects(transparentObjects);
 }
 
 void EyeObject::InitTextures(ShaderProgram* shaderProgram) {
 	glActiveTexture(GL_TEXTURE0);
 	shaderProgram->SetUniform("texAlbedo", 0);
+}
+
+void EyeObject::ShowProperties() {
+	ObjectInstance::ShowProperties();
 }

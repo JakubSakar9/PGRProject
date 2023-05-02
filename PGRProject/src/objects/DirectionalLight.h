@@ -8,7 +8,7 @@ class DirectionalLight
 	: public Light
 {
 private:
-	glm::vec3 m_Direction;
+	glm::vec3 m_direction;
 public:
 	DirectionalLight() {}
 	DirectionalLight(glm::vec3 color, float intensity, glm::vec3 direction);
@@ -16,4 +16,8 @@ public:
 	~DirectionalLight() {}
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
+
+	void ShowProperties() override;
+
+	void RenderGraph() override;
 };

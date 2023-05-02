@@ -601,5 +601,7 @@ public:
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 	void Draw();
 
-	bool GenObjects();
+	bool GenObjects(std::vector<ObjectInstance *>& transparentObjects);
+
+	void ShowProperties() override;
 };

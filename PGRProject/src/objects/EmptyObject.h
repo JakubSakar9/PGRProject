@@ -27,5 +27,7 @@ public:
 	void InitChildren(nlohmann::json source);
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
+
+	void ShowProperties() override;
 };
 

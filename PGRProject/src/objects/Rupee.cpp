@@ -36,6 +36,10 @@ void Rupee::Update(float deltaTime, const glm::mat4* parentModelMatrix, const gl
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }
 
+void Rupee::ShowProperties() {
+	ObjectInstance::ShowProperties();
+}
+
 void Rupee::Draw() {
 	glEnable(GL_STENCIL_TEST);
 	glStencilOp(GL_ZERO, GL_KEEP, GL_REPLACE);
@@ -44,6 +48,8 @@ void Rupee::Draw() {
 	glDisable(GL_STENCIL_TEST);
 }
 
-bool Rupee::GenObjects() {
-	return StaticObject::GenObjects();
+bool Rupee::GenObjects(std::vector<ObjectInstance *>& transparentObjects) {
+	m_transparent = true;
+	transparentObjects.push_back(this);
+	return StaticObject::GenObjects(transparentObjects);
 }

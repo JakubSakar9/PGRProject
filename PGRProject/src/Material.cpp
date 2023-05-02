@@ -115,3 +115,23 @@ GLuint Material::NormalMap1() {
 GLuint Material::NormalMap2() {
 	return m_normalMap2;
 }
+
+void Material::ShowProperties() {
+	if (ImGui::CollapsingHeader("Material Properties")) {
+		ImGui::Text((std::string("Name: ") + m_name).c_str());
+
+		float albedo[3] = { m_albedo.x, m_albedo.y, m_albedo.z };
+		ImGui::ColorPicker3("Albedo", albedo);
+		m_albedo = glm::vec3(albedo[0], albedo[1], albedo[2]);
+
+		float emission[3] = { m_emission.x, m_emission.y, m_emission.z };
+		ImGui::ColorPicker3("emission", emission);
+		m_emission = glm::vec3(emission[0], emission[1], emission[2]);
+
+		ImGui::SliderFloat("Specular", &m_specular, 0.0f, 1.0f);
+
+		ImGui::SliderFloat("Roughness", &m_roughness, 0.0f, 1.0f);
+		
+		ImGui::SliderFloat("Transmission", &m_transmission, 0.0f, 1.0f);
+	}
+}

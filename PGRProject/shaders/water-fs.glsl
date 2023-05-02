@@ -67,7 +67,7 @@ vec3 V = normalize(u_cameraPosition - position_v);
 float A = u_roughness * u_roughness;
 
 // Safe dot product
-inline float dotS(vec3 a, vec3 b) {
+float dotS(vec3 a, vec3 b) {
 	return max(dot(a, b), 0.0f);
 }
 

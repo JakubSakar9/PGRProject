@@ -56,13 +56,15 @@ public:
 	*
 	* Derived classes should also call this method (using SceneNode::update()).
 	*/
-	virtual void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
+	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 
 	/// calls draw on child nodes
-	virtual void Draw();
+	void Draw();
 
-	virtual bool GenObjects();
+	bool GenObjects(std::vector<ObjectInstance *>& transparentObjects);
 
 	void InitTextures(ShaderProgram* shaderProgram);
+
+	void ShowProperties() override;
 };
 

@@ -36,8 +36,10 @@ public:
 	/// calls draw on child nodes
 	virtual void Draw();
 
-	virtual bool GenObjects();
+	virtual bool GenObjects(std::vector<ObjectInstance *>& transparentObjects);
 
 	virtual void InitTextures(ShaderProgram *shaderProgram);
+
+	virtual void ShowProperties();
 };
 

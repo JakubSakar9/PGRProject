@@ -12,7 +12,8 @@ class PointLight
 private:
 	glm::vec3 m_attenuation;
 	unsigned int m_id;
-	float m_pulsePeriod;
+	float m_pulseFrequency;
+	float m_pulseSmoothness;
 	float m_time = 0.0f;
 public:
 	PointLight() {}
@@ -21,5 +22,7 @@ public:
 	~PointLight() {}
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) override;
+
+	void ShowProperties() override;
 };
 

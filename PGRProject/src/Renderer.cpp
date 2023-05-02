@@ -57,18 +57,27 @@ void Renderer::RenderGui() {
     ImGui_ImplGLUT_NewFrame();
     ImGui::NewFrame();
     ImGuiIO& io = ImGui::GetIO();
+    CHECK_GL_ERROR();
 
-    {
-        ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+    if (InputManager::Get().IsGuiVisible()) {
+        
+        ImGui::Begin("Scene graph", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+        m_scene.RenderGraph();
+        ImGui::End();
 
-        ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+        //SetCursorPos();
+        ImGui::Begin("Properties", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+        m_scene.ShowProperties();
         ImGui::End();
     }
+    CHECK_GL_ERROR();
 
     ImGui::Render();
+    CHECK_GL_ERROR();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    //glViewport(0, 0, (GLsizei)io.DisplaySize.x, (GLsizei)io.DisplaySize.y);
-    //glUseProgram(0);
+    CHECK_GL_ERROR();
+    glViewport(0, 0, (GLsizei)io.DisplaySize.x, (GLsizei)io.DisplaySize.y);
+    CHECK_GL_ERROR();
 }
 
 Renderer::Renderer() {

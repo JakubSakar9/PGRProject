@@ -66,7 +66,7 @@ vec3 V = normalize(u_cameraPosition - position_v);
 float A = u_roughness * u_roughness;
 
 // Safe dot product
-inline float dotS(vec3 a, vec3 b) {
+float dotS(vec3 a, vec3 b) {
 	return max(dot(a, b), 0.0f);
 }
 
@@ -135,7 +135,7 @@ float BRDFAlpha(vec3 H) {
 	float ks = fresnelFn(H);
 	float kd = 1 - ks;
 	float alpha = ks + kd * (1- u_transmission);
-	if (u_useTexAlbedo) {
+	if (u_useTexAlbedo > 0) {
 		alpha *= texture(u_texAlbedo, texCoords_v).w;
 	}
 	return alpha;
@@ -227,7 +227,7 @@ void main() {
 	}
 
 	vec3 ambientComponent = u_ambientLight.color * u_ambientLight.intensity * u_colAlbedo;
-	if (u_useTexAlbedo) {
+	if (u_useTexAlbedo > 0) {
 		ambientComponent *= vec3(texture(u_texAlbedo, texCoords_v));
 	}
 	finalColor += ambientComponent;

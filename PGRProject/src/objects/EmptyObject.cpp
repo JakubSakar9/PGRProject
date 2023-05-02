@@ -92,3 +92,11 @@ void EmptyObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, co
 			child->Update(deltaTime, &m_globalModelMatrix, m_globalRotation);
 	}
 }
+
+void EmptyObject::ShowProperties() {
+	ObjectInstance::ShowProperties();
+
+	if (m_curve) {
+		m_curve->ShowProperties();
+	}
+}

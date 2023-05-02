@@ -88,7 +88,7 @@ void StaticObject::Draw() {
 	ObjectInstance::Draw();
 }
 
-bool StaticObject::GenObjects() {
+bool StaticObject::GenObjects(std::vector<ObjectInstance*>& transparentObjects) {
 	ShaderProgram* shaderProgram = SH(SHADER_TYPE_DEFAULT);
 
 	// Generating VBOs
@@ -129,9 +129,15 @@ bool StaticObject::GenObjects() {
 
 	InitTextures(shaderProgram);
 
-	return ObjectInstance::GenObjects();
+	return ObjectInstance::GenObjects(transparentObjects);
 }
 
 void StaticObject::InitTextures(ShaderProgram *shaderProgram) {
 	shaderProgram->SetUniform("texAlbedo", 0);
+}
+
+void StaticObject::ShowProperties() {
+	ObjectInstance::ShowProperties();
+
+	m_material->ShowProperties();
 }

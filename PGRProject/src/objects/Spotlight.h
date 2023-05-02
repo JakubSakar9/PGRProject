@@ -21,5 +21,7 @@ public:
     ~Spotlight() {}
 
     void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) override;
+
+    void ShowProperties() override;
 };
 

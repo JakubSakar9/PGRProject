@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "../imgui/imgui.h"
 #include "../utils/json.hpp"
 #include "pgr.h"
 #include <glm/gtx/quaternion.hpp>
@@ -29,6 +30,7 @@ protected:
 	glm::mat4 m_globalModelMatrix;
 
 	std::string m_name;
+	bool m_clicked = false;
 	
 	ShaderType m_shaderType;
 	BoxCollider *m_collider = nullptr;
@@ -41,6 +43,9 @@ protected:
 	void InitTransform(nlohmann::json source);
 
 public:
+	glm::vec3 m_globalPosition = glm::vec3(0.0f);
+	bool m_transparent = false;
+
 	ObjectInstance() {}
 	~ObjectInstance() {}
 
@@ -53,7 +58,7 @@ public:
 	/// calls draw on child nodes
 	virtual void Draw();
 
-	virtual bool GenObjects();
+	virtual bool GenObjects(std::vector<ObjectInstance*> &transparentObjects);
 	
 	void Translate(glm::vec3 delta);
 
@@ -62,4 +67,10 @@ public:
 	void AddCollider(glm::vec3 &size);
 
 	void UpdateColliders(std::vector<BoxCollider*>& colliders);
+
+	virtual void RenderGraph();
+
+	ObjectInstance *SelectObject();
+
+	virtual void ShowProperties();
 };

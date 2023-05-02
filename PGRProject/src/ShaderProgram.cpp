@@ -4,6 +4,7 @@ int ShaderProgram::s_nextPointLightIndex;
 int ShaderProgram::s_nextSpotlightIndex;
 int ShaderProgram::s_activeCameraIndex = 0;
 int ShaderProgram::s_nextCameraIndex = 1;
+glm::vec3 ShaderProgram::s_activeCameraPosition = glm::vec3(0.0f);
 
 std::map<ShaderType, ShaderProgram*> ShaderProgram::s_shaders;
 

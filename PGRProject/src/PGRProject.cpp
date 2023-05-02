@@ -72,8 +72,10 @@ bool Init(int argc, char** argv) {
     glutKeyboardUpFunc(KeyboardUpFn);
     glutSpecialFunc(SpecialFn);
     glutSpecialUpFunc(SpecialUpFn);
+    glutMotionFunc(ImGui_ImplGLUT_MotionFunc);
     glutPassiveMotionFunc(PassiveMotionFn);
     glutMouseFunc(MouseFn);
+    
     glutTimerFunc(Renderer::Get().RefreshTimeMs(), TimerFn, 1);
 
     //ImGui init
@@ -83,7 +85,6 @@ bool Init(int argc, char** argv) {
     ImGui::StyleColorsDark();
     ImGui_ImplGLUT_Init();
     ImGui_ImplOpenGL3_Init();
-    //ImGui_ImplGLUT_InstallFuncs();
     
     return Renderer::Get().Init();
 }

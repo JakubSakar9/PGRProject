@@ -17,13 +17,14 @@ PointLight::PointLight(nlohmann::json source) {
 	m_intensity = source["intensity"];
 	json j_attenuation = source["attenuation"];
 	m_attenuation = glm::vec3(j_attenuation[0], j_attenuation[1], j_attenuation[2]);
-	m_pulsePeriod = source["pulse"];
+	m_pulseFrequency = source["pulseFrequency"];
+	m_pulseSmoothness = source["pulseSmoothness"];
 	m_id = ShaderProgram::s_nextPointLightIndex++;
 }
 
 void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	m_time += deltaTime;
-	float effectiveIntensity = (glm::sin(m_time * glm::pi<float>() / m_pulsePeriod) + 7) * m_intensity / 8.0f;
+	float effectiveIntensity = (glm::cos(2.0f * m_time * glm::pi<float>() * m_pulseFrequency) + m_pulseSmoothness) * m_intensity / (m_pulseSmoothness + 1.0f);
 	for (ShaderType st : lightShaders) {
 		ShaderProgram* shaderProgram = SH(st);
 		shaderProgram->UseShader();
@@ -34,4 +35,24 @@ void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix, con
 		CHECK_GL_ERROR();
 	}
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
+}
+
+void PointLight::ShowProperties() {
+	ObjectInstance::ShowProperties();
+	if (ImGui::CollapsingHeader("Properties")) {
+		float color[3] = { m_color.x, m_color.y, m_color.z };
+		ImGui::ColorPicker3("Color", color);
+		m_color = glm::vec3(color[0], color[1], color[2]);
+
+		float attenuation[3] = { m_attenuation.x, m_attenuation.y, m_attenuation.z };
+		ImGui::SliderFloat3("Attenuation", attenuation, 0.0f, 1.0f);
+		m_attenuation = glm::vec3(attenuation[0], attenuation[1], attenuation[2]);
+
+		ImGui::SliderFloat("Intensity", &m_intensity, 0.0f, 10.0f);
+	}
+
+	if (ImGui::CollapsingHeader("Pulse")) {
+		ImGui::SliderFloat("Frequency", &m_pulseFrequency, 0.0f, 1.0f);
+		ImGui::SliderFloat("Smoothness", &m_pulseSmoothness, 1.0f, 16.0f);
+	}
 }

@@ -45,5 +45,8 @@ public:
 	glm::quat CalculateRotation();
 	int CameraToSwitch();
 	int ReadStencils();
+	bool IsGuiVisible() {
+		return m_pickingMode;
+	}
 };
 

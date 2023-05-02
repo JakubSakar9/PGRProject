@@ -37,7 +37,7 @@ public:
 		return glm::perspective(glm::radians(m_fovDegrees), 1.0f, m_nearPlane, m_farPlane);
 	}
 
-	bool GenObjects();
+	bool GenObjects(std::vector<ObjectInstance*>& transparentObjects);
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
 
@@ -46,5 +46,7 @@ public:
 	inline glm::vec3 Position() { return m_position; }
 
 	static void UpdateColliders(std::vector<BoxCollider*> colliders);
+
+	void ShowProperties() override;
 };
 

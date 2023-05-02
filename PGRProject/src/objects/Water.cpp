@@ -97,7 +97,7 @@ void Water::Draw() {
 	ObjectInstance::Draw();
 }
 
-bool Water::GenObjects() {
+bool Water::GenObjects(std::vector<ObjectInstance*>& transparentObjects) {
 	ShaderProgram* shaderProgram = SH(m_shaderType);
 
 	// Generating VBOs
@@ -134,10 +134,18 @@ bool Water::GenObjects() {
 
 	InitTextures(shaderProgram);
 
-	return ObjectInstance::GenObjects();
+	return ObjectInstance::GenObjects(transparentObjects);
 }
 
 void Water::InitTextures(ShaderProgram* shaderProgram) {
 	shaderProgram->SetUniform("texNormal1", 0);
 	shaderProgram->SetUniform("texNormal2", 1);
+}
+
+void Water::ShowProperties() {
+	ObjectInstance::ShowProperties();
+	if (ImGui::CollapsingHeader("Water Properties")) {
+		ImGui::InputFloat("Wave Speed", &m_waveSpeed);
+	}
+	m_material->ShowProperties();
 }

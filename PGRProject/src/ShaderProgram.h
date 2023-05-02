@@ -37,6 +37,8 @@ public:
 	static int s_nextCameraIndex;
 	static int s_activeCameraIndex;
 
+	static glm::vec3 s_activeCameraPosition;
+
 private:
 	bool LoadShaders();
 	bool LoadBasePBR();

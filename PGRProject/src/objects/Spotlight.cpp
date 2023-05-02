@@ -41,3 +41,23 @@ void Spotlight::Update(float deltaTime, const glm::mat4* parentModelMatrix, cons
 	}
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }
+
+void Spotlight::ShowProperties() {
+	ObjectInstance::ShowProperties();
+	if (ImGui::CollapsingHeader("Properties")) {
+		float color[3] = { m_color.x, m_color.y, m_color.z };
+		ImGui::ColorPicker3("Color", color);
+		m_color = glm::vec3(color[0], color[1], color[2]);
+
+		float direction[3] = { m_direction.x, m_direction.y, m_direction.z };
+		ImGui::SliderFloat3("Direction", direction, -1.0f, 1.0f);
+		m_direction = glm::vec3(direction[0], direction[1], direction[2]);
+
+		float attenuation[3] = { m_attenuation.x, m_attenuation.y, m_attenuation.z };
+		ImGui::SliderFloat3("Attenuation", attenuation, 0.0f, 1.0f);
+		m_attenuation = glm::vec3(attenuation[0], attenuation[1], attenuation[2]);
+
+		ImGui::DragFloat("Intensity", &m_intensity);
+		ImGui::DragFloat("Size", &m_sizeDegrees);
+	}
+}

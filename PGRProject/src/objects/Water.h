@@ -41,8 +41,10 @@ public:
 
 	void Draw();
 
-	bool GenObjects();
+	bool GenObjects(std::vector<ObjectInstance *>& transparentObjects);
 
 	void InitTextures(ShaderProgram* shaderProgram);
+
+	void ShowProperties() override;
 };
 

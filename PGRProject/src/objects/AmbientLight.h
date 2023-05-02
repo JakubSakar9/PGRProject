@@ -13,5 +13,9 @@ public:
 	~AmbientLight() {}
 
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
+
+	void ShowProperties() override;
+
+	void RenderGraph() override;
 };
 

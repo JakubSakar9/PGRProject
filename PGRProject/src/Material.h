@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "imgui/imgui.h"
 #include "utils/json.hpp"
 #include "pgr.h"
 
@@ -34,4 +35,6 @@ public:
 	GLuint AlbedoMap();
 	GLuint NormalMap1();
 	GLuint NormalMap2();
+
+	void ShowProperties();
 };

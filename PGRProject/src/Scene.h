@@ -22,11 +22,14 @@ private:
 	glm::mat4 m_rootModelMatrix;
 	
 	EmptyObject m_rootObject;
+	ObjectInstance* m_selectedObject = nullptr;
 
 	Skybox m_skybox;
 
 	AmbientLight m_AmbientLight;
 	DirectionalLight m_DirectionalLight;
+
+	std::vector<ObjectInstance*> m_transparentObjects;
 
 	int m_selectedCamera;
 	
@@ -41,7 +44,10 @@ public:
 	
 	bool Init();
 	void Render();
+	void RenderTransparent();
 	void Update(float deltaTime);
 	void SwitchCamera();
+	void RenderGraph();
+	void ShowProperties();
 };
 

@@ -19,4 +19,21 @@ void AmbientLight::Update(float deltaTime, const glm::mat4* parentModelMatrix, c
 		shaderProgram->SetUniform("ambientLight.color", m_color);
 		shaderProgram->SetUniform("ambientLight.intensity", m_intensity);
 	}
-};
+}
+void AmbientLight::ShowProperties() {
+	ImGui::Text("Ambient Light");
+	if (ImGui::CollapsingHeader("Properties")) {
+		float color[3] = { m_color.x, m_color.y, m_color.z };
+		ImGui::ColorPicker3("Color", color);
+		m_color = glm::vec3(color[0], color[1], color[2]);
+
+		ImGui::DragFloat("Intensity", &m_intensity);
+	}
+}
+
+void AmbientLight::RenderGraph() {
+	ImGui::Text("Ambient Light");
+	if (ImGui::IsItemClicked() && (ImGui::GetMousePos().x - ImGui::GetItemRectMin().x) > ImGui::GetTreeNodeToLabelSpacing()) {
+		m_clicked = true;
+	}
+}

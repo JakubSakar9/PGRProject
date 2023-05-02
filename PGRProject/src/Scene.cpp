@@ -20,7 +20,7 @@ Scene::Scene(std::string name) {
 
 bool Scene::Init()
 {
-    m_rootObject.GenObjects();
+    m_rootObject.GenObjects(m_transparentObjects);
     
     m_skybox = Skybox();
     m_skybox.GenSkybox();
@@ -35,8 +35,19 @@ void Scene::Render() {
     glBindVertexArray(0);
 }
 
-void Scene::Update(float deltaTime)
-{
+void Scene::RenderTransparent() {
+    std::sort(m_transparentObjects.begin(), m_transparentObjects.end(), [](ObjectInstance *o1, ObjectInstance *o2)
+        {
+            float d1 = glm::distance(o1->m_globalPosition, ShaderProgram::s_activeCameraPosition);
+            float d2 = glm::distance(o2->m_globalPosition, ShaderProgram::s_activeCameraPosition);
+            return d1 > d2;
+        });
+    for (ObjectInstance* o : m_transparentObjects) {
+        o->Draw();
+    }
+}
+
+void Scene::Update(float deltaTime) {
     SwitchCamera();
     m_rootObject.Update(deltaTime, nullptr, glm::quat());
 
@@ -53,4 +64,21 @@ void Scene::Update(float deltaTime)
 void Scene::SwitchCamera() {
     int cameraCommand = InputManager::Get().CameraToSwitch();
     ShaderProgram::SwitchCamera(cameraCommand);
+}
+
+void Scene::RenderGraph() {
+    m_AmbientLight.RenderGraph();
+    m_DirectionalLight.RenderGraph();
+    m_rootObject.RenderGraph();
+}
+
+void Scene::ShowProperties() {
+    ObjectInstance* objPtr = m_rootObject.SelectObject();
+    objPtr = objPtr ? objPtr : m_AmbientLight.SelectObject();
+    objPtr = objPtr ? objPtr : m_DirectionalLight.SelectObject();
+    m_selectedObject = (objPtr) ? objPtr : m_selectedObject;
+    if (m_selectedObject)
+        m_selectedObject->ShowProperties();
+    else
+        ImGui::Text("No object selected");
 }

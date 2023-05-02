@@ -42,6 +42,40 @@
                 "children": []
             },
             {
+                "name": "staticCamera3",
+                "position": [ 92.0, 38.0, 276.0 ],
+                "rotation": [ 0.0, 120.0, 0.0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "camera",
+                "dynamic": false,
+                "bounds": [ 0, 0, 0, 0, 0, 0 ],
+                "fov": 90.0,
+                "clipping": [ 0.1, 1000.0 ],
+                "movementSpeed": 1.0,
+                "children": []
+            },
+            {
+                "name": "sea",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotation": [ 0, 0, 0 ],
+                "scale": [ 1.0, 1.0, 1.0 ],
+                "type": "empty",
+                "children": [
+                    {
+                        "name": "water",
+                        "position": [ 0, 0.1, 0 ],
+                        "rotation": [ 0, 0, 0 ],
+                        "scale": [ 1.0, 1.0, 1.0 ],
+                        "type": "water",
+                        "density": 20,
+                        "waveSpeed": 0.1,
+                        "size": 5000,
+                        "material": "waterMat",
+                        "children": []
+                    }
+                ]
+            },
+            {
                 "name": "island",
                 "position": [ 0.0, 0.0, 0.0 ],
                 "rotation": [ 0, 0, 0 ],
@@ -254,7 +288,7 @@
                         "name": "redRupee",
                         "position": [ 0, 500, 16000 ],
                         "rotation": [ 0, 0, 0 ],
-                        "scale": [ 100.0, 100.0, 100.0 ],
+                        "scale": [ 100.0, 100.0, 60.0 ],
                         "type": "rupee",
                         "material": "redRupeeMat",
                         "children": []
@@ -263,7 +297,7 @@
                         "name": "greenRupee",
                         "position": [ 1000, 500, 16000 ],
                         "rotation": [ 0, 0, 0 ],
-                        "scale": [ 100.0, 100.0, 100.0 ],
+                        "scale": [ 100.0, 100.0, 60.0 ],
                         "type": "rupee",
                         "material": "greenRupeeMat",
                         "children": []
@@ -272,7 +306,7 @@
                         "name": "blueRupee",
                         "position": [ 2000, 500, 16000 ],
                         "rotation": [ 0, 0, 0 ],
-                        "scale": [ 100.0, 100.0, 100.0 ],
+                        "scale": [ 100.0, 100.0, 60.0 ],
                         "type": "rupee",
                         "material": "blueRupeeMat",
                         "children": []
@@ -286,7 +320,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -298,7 +333,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -310,7 +346,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -322,7 +359,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -334,7 +372,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -346,7 +385,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -358,7 +398,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -370,7 +411,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -382,7 +424,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -394,7 +437,8 @@
                         "color": [ 1.0, 0.8, 0.0 ],
                         "intensity": 2.0,
                         "attenuation": [ 0.0, 0.015, 0.05 ],
-                        "pulse": 50.0,
+                        "pulseFrequency": 0.02,
+                        "pulseSmoothness": 7.0,
                         "children": []
                     },
                     {
@@ -484,27 +528,6 @@
                                 "children": []
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                "name": "sea",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotation": [ 0, 0, 0 ],
-                "scale": [ 1.0, 1.0, 1.0 ],
-                "type": "empty",
-                "children": [
-                    {
-                        "name": "water",
-                        "position": [ 0, 0.1, 0 ],
-                        "rotation": [ 0, 0, 0 ],
-                        "scale": [ 1.0, 1.0, 1.0 ],
-                        "type": "water",
-                        "density": 20,
-                        "waveSpeed": 0.1,
-                        "size":  5000,
-                        "material": "waterMat",
-                        "children": []
                     }
                 ]
             }

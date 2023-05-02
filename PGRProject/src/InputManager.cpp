@@ -1,10 +1,11 @@
 #include "InputManager.h"
 
 glm::vec3 InputManager::RelativeVelocity() const {
-	int forward = (int)(m_keyMap.at('w') || m_specialMap.at(GLUT_KEY_UP));
-	int backwards = (int)(m_keyMap.at('s') || m_specialMap.at(GLUT_KEY_DOWN));
-	int left = (int)(m_keyMap.at('a') || m_specialMap.at(GLUT_KEY_LEFT));
-	int right = (int)(m_keyMap.at('d') || m_specialMap.at(GLUT_KEY_RIGHT));
+	if (m_pickingMode) return glm::vec3(0.0f);
+	int forward = (int)(m_keyMap.at('w') || (int)(m_keyMap.at('W')) || m_specialMap.at(GLUT_KEY_UP));
+	int backwards = (int)(m_keyMap.at('s') || (int)(m_keyMap.at('S')) || m_specialMap.at(GLUT_KEY_DOWN));
+	int left = (int)(m_keyMap.at('a') || (int)(m_keyMap.at('A')) || m_specialMap.at(GLUT_KEY_LEFT));
+	int right = (int)(m_keyMap.at('d') || (int)(m_keyMap.at('D')) || m_specialMap.at(GLUT_KEY_RIGHT));
 	int up = (int) m_keyMap.at(' ');
 	int down = (int) m_specialMap.at(GLUT_KEY_SHIFT_L);
 	return glm::vec3(right - left, up - down, backwards - forward);
