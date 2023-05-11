@@ -1,6 +1,6 @@
 #include "Rupee.h"
 
-int Rupee::s_rupeeId = 1;
+int Rupee::s_numRupees = 1;
 
 Rupee::Rupee(nlohmann::json source) {
 	InitTransform(source);
@@ -18,18 +18,18 @@ Rupee::Rupee(nlohmann::json source) {
 
 	m_material = ResourceManager::Get().GetMaterial(source["material"]);
 
-	m_rupeeId = s_rupeeId++;
+	m_rupeeId = s_numRupees++;
 }
 
 void Rupee::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	if (InputManager::Get().ReadStencils() == m_rupeeId) {
-		m_rotating = true;
+		m_spinning = true;
 	}
 	else {
-		m_rotating = false;
+		m_spinning = false;
 	}
 
-	if (m_rotating) {
+	if (m_spinning) {
 		glm::quat rupeeRotation = glm::quat(glm::vec3(0.0f, 0.1f * deltaTime, 0.0f));
 		m_rotation = rupeeRotation * m_rotation;
 	}

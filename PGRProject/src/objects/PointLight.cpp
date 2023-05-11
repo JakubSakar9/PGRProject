@@ -24,6 +24,9 @@ PointLight::PointLight(nlohmann::json source) {
 
 void PointLight::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	m_time += deltaTime;
+	if (m_pulseSmoothness < 1.0f) {
+		m_pulseSmoothness = 1.0f;
+	}
 	float effectiveIntensity = (glm::cos(2.0f * m_time * glm::pi<float>() * m_pulseFrequency) + m_pulseSmoothness) * m_intensity / (m_pulseSmoothness + 1.0f);
 	for (ShaderType st : lightShaders) {
 		ShaderProgram* shaderProgram = SH(st);

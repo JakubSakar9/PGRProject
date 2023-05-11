@@ -39,11 +39,6 @@ glm::mat4 Camera::ComputeSkyboxViewMatrix() {
 	return glm::lookAt(glm::vec3(0.0f), forward, up);
 }
 
-bool Camera::GenObjects(std::vector<ObjectInstance*>& transparentObjects) {
-	m_aspectRatio = glutGet(GLUT_WINDOW_WIDTH) / glutGet(GLUT_WINDOW_HEIGHT);
-	return ObjectInstance::GenObjects(transparentObjects);
-}
-
 void Camera::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 	if (m_cameraId == ShaderProgram::ActiveCameraId()) {
@@ -117,6 +112,7 @@ void Camera::ShowProperties() {
 		ImGui::DragFloat("Near Plane", &m_nearPlane);
 		ImGui::DragFloat("Far Plane", &m_farPlane);
 		ImGui::DragFloat("FOV", &m_fovDegrees);
+		ImGui::InputFloat("Aspect ratio", &m_aspectRatio);
 		if (m_dynamic) {
 			float lBound[3] = { m_lBound.x, m_lBound.y, m_lBound.z };
 			ImGui::DragFloat3("Lower Bound", lBound);

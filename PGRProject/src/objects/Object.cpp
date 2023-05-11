@@ -24,7 +24,7 @@ void ObjectInstance::Update(float deltaTime, const glm::mat4* parentModelMatrix,
 void ObjectInstance::Draw() {
 	// process all children
 	for (auto child : m_children) {
-		if (child != nullptr || !child->m_transparent)
+		if (child != nullptr && !child->m_transparent)
 			child->Draw();
 	}
 }

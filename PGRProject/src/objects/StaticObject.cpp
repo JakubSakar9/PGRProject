@@ -38,10 +38,6 @@ StaticObject::StaticObject(nlohmann::json source) {
 	m_material = ResourceManager::Get().GetMaterial(source["material"]);
 }
 
-StaticObject::~StaticObject() {
-	ObjectInstance::~ObjectInstance();
-}
-
 void StaticObject::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	ObjectInstance::Update(deltaTime, parentModelMatrix, parentRotation);
 }
@@ -133,6 +129,7 @@ bool StaticObject::GenObjects(std::vector<ObjectInstance*>& transparentObjects) 
 }
 
 void StaticObject::InitTextures(ShaderProgram *shaderProgram) {
+	shaderProgram->UseShader();
 	shaderProgram->SetUniform("texAlbedo", 0);
 }
 

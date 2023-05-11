@@ -46,10 +46,6 @@ Water::Water(nlohmann::json source) {
 	m_material = ResourceManager::Get().GetMaterial(source["material"]);
 }
 
-Water::~Water() {
-	ObjectInstance::~ObjectInstance();
-}
-
 void Water::Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation) {
 	m_time += deltaTime;
 

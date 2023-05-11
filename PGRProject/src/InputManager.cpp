@@ -109,8 +109,6 @@ InputManager::InputManager() {
 
 	for (auto e : keys) {
 		m_specialMap.insert(std::pair<int, bool>(e, false));
-	}
-	for (auto e : keys) {
 		m_specialReleasedMap.insert(std::pair<int, bool>(e, false));
 	}
 

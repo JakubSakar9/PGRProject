@@ -40,13 +40,6 @@ void ResourceManager::LoadAssimp(std::string filename, std::string type) {
 	}
 }
 
-void ResourceManager::LoadJson(std::string name) {
-	using json = nlohmann::json;
-	std::ifstream f("misc/test.json");
-	json data = json::parse(f);
-	AmbientLight ambientLight(data["ambientLight"]);
-}
-
 void ResourceManager::LoadMaterials()
 {
 	using json = nlohmann::json;

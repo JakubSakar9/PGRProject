@@ -29,13 +29,6 @@ EmptyObject::EmptyObject(nlohmann::json source) {
 	m_time = 0.0f;
 }
 
-EmptyObject::~EmptyObject() {
-	ObjectInstance::~ObjectInstance();
-}
-
-void EmptyObject::LoadCustom(const std::string& filepath) {
-}
-
 void EmptyObject::InitChildren(nlohmann::json source) {
 	using json = nlohmann::json;
 	for (json c : source["children"]) {

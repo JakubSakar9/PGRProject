@@ -45,6 +45,7 @@ bool ShaderProgram::Init() {
         std::cerr << "Failed to load shaders" << std::endl;
         return false;
     }
+    m_ready = true;
     return true;
 }
 

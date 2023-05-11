@@ -5,8 +5,6 @@ bool Renderer::Init() {
     ret &= InitShaders();
     ret &= m_scene.Init();
     CHECK_GL_ERROR();
-
-    m_scene.Init();
     
     m_lastTime = glutGet(GLUT_ELAPSED_TIME);
 
@@ -75,6 +73,7 @@ void Renderer::RenderGui() {
     ImGui::Render();
     CHECK_GL_ERROR();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    /*GLenum gl_err = */glGetError();
     CHECK_GL_ERROR();
     glViewport(0, 0, (GLsizei)io.DisplaySize.x, (GLsizei)io.DisplaySize.y);
     CHECK_GL_ERROR();

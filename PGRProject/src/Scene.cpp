@@ -32,6 +32,7 @@ bool Scene::Init()
 void Scene::Render() {
     m_skybox.Draw();
     m_rootObject.Draw();
+    RenderTransparent();
     glBindVertexArray(0);
 }
 
@@ -42,6 +43,7 @@ void Scene::RenderTransparent() {
             float d2 = glm::distance(o2->m_globalPosition, ShaderProgram::s_activeCameraPosition);
             return d1 > d2;
         });
+
     for (ObjectInstance* o : m_transparentObjects) {
         o->Draw();
     }

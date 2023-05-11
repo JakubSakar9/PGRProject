@@ -4,6 +4,9 @@
 
 #include "../InputManager.h"
 
+/// <summary>
+/// Hardcoded array that contains positions, normals and texture coordinates of individual vertices in the rupee mesh.
+/// </summary>
 const float rupeeVertices[] = {
 	  0.000,
 	  1.60000002,
@@ -487,6 +490,9 @@ const float rupeeVertices[] = {
 	 0.75
 };
 
+/// <summary>
+/// A hardcoded array that contains indices of rupee vertices for each triangle in the mesh.
+/// </summary>
 const unsigned int rupeeIndices[] = {
 0 ,
 1 ,
@@ -586,22 +592,58 @@ const unsigned int rupeeIndices[] = {
 59
 };
 
+/// <summary>
+/// A class that represents a hardcoded rupee object, which is also the only type of object in the scene that is semi-transparent.
+/// </summary>
 class Rupee
 	: public StaticObject
 {
 private:
-	static int s_rupeeId;
+	static int s_numRupees;
+
+	/// <summary>
+	/// An unique identifier for the rupee object that is stored to a stencil buffer when rendering the rupee in order to identify it.
+	/// </summary>
 	int m_rupeeId;
 
-	bool m_rotating;
+	/// <summary>
+	/// A flag that is used to determine if the rupee is spinning.
+	/// </summary>
+	bool m_spinning;
 public:
+	/// <summary>
+	/// Default constructor for the Rupee class. Do not use.
+	/// </summary>
 	Rupee();
+
+	/// <summary>
+	/// The Rupee class constructor. Used to load the rupee from a JSON file.
+	/// </summary>
+	/// <param name="source">- JSON object that contains the rupee data.</param>
 	Rupee(nlohmann::json source);
 
+	/// <summary>
+	/// A function that is called for each object in the scene for every frame. Each object updates all of its child objects. The function always calculates a global model matrix and propagates it to all child objects.
+	/// </summary>
+	/// <param name="deltaTime">- elapsed time from the last frame.</param>
+	/// <param name="parentModelMatrix">- 4x4 matrix that describes the transformation of the parent object to world coordinates.</param>
+	/// <param name="parentRotation">- quaternion that describes the rotation of the parent object relative to the world.</param>
 	void Update(float deltaTime, const glm::mat4* parentModelMatrix, const glm::quat& parentRotation);
+
+	/// <summary>
+	/// Calls draw on all children of the given ObjectInstance. If the given object represents any geometry, it is drawn on the screen using an OpenGL draw call.
+	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// Generates all neccessary OpenGL objects. Pushes a pointer to the object into the <paramref name="transparentObjects"></paramref> list.
+	/// </summary>
+	/// <param name="transparentObjects">- vector with pointers to all objects that are marked as transparent.</param>
+	/// <returns>false if any errors were encountered, true otherwise.</returns>
 	bool GenObjects(std::vector<ObjectInstance *>& transparentObjects);
 
+	/// <summary>
+	/// Generates ImGui objects that will display properties of the object
+	/// </summary>
 	void ShowProperties() override;
 };

@@ -7,7 +7,7 @@ bool Window::Init()
 	glutInitWindowSize(m_Width, m_Height);
 	glutCreateWindow(m_Title.c_str());
 	glutFullScreen();
-	glutSetCursor(GLUT_CURSOR_NONE);
+	glutSetCursor(GLUT_CURSOR_NONE);	
 	return true;
 }
 
