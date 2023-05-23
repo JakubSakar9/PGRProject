@@ -1,3 +1,12 @@
+//----------------------------------------------------------------------------------------
+/**
+ * \file       AmbientLight.cpp
+ * \author     Jakub Sakar
+ * \date       2023/05/23
+ *
+*/
+//----------------------------------------------------------------------------------------
+
 #include "AmbientLight.h"
 
 AmbientLight::AmbientLight(glm::vec3 color, float ambientIntensity) {

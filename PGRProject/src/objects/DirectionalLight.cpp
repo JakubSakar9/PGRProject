@@ -1,3 +1,12 @@
+//----------------------------------------------------------------------------------------
+/**
+ * \file       DirectionalLight.cpp
+ * \author     Jakub Sakar
+ * \date       2023/05/23
+ *
+*/
+//----------------------------------------------------------------------------------------
+
 #include "DirectionalLight.h"
 
 DirectionalLight::DirectionalLight(glm::vec3 color, float intensity, glm::vec3 direction) {
